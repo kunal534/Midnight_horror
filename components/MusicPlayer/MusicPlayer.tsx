@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { musicTracks, musicConfig, type MusicTrack } from '@/config/music.config';
 import './MusicPlayer.css';
 
@@ -138,7 +139,7 @@ export default function MusicPlayer() {
               <div className="minimized-track-info">
                 <div className="minimized-track-cover">
                   {currentTrack.cover ? (
-                    <img src={getCoverUrl(currentTrack.cover) || ''} alt={currentTrack.title} />
+                    <Image src={getCoverUrl(currentTrack.cover) || ''} alt={currentTrack.title} width={60} height={60} />
                   ) : (
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
@@ -245,10 +246,12 @@ export default function MusicPlayer() {
             <div className="current-track">
               <div className="track-cover-container">
                 {currentTrack.cover ? (
-                  <img 
+                  <Image 
                     src={getCoverUrl(currentTrack.cover) || ''} 
                     alt={currentTrack.title}
                     className="track-cover"
+                    width={300}
+                    height={300}
                   />
                 ) : (
                   <div className="track-cover-placeholder">
@@ -371,10 +374,12 @@ export default function MusicPlayer() {
                     )}
                   </div>
                   {track.cover ? (
-                    <img 
+                    <Image 
                       src={getCoverUrl(track.cover) || ''} 
                       alt={track.title}
                       className="track-item-cover"
+                      width={150}
+                      height={150}
                     />
                   ) : (
                     <div className="track-item-cover-placeholder">

@@ -115,7 +115,7 @@ export default function Feedback() {
 
             {submitStatus === 'success' && (
               <div className="submit-message success">
-                Thank you for your feedback! I'll get back to you soon.
+                Thank you for your feedback! I&apos;ll get back to you soon.
               </div>
             )}
 

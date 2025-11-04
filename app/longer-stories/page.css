@@ -9,11 +9,40 @@
 }
 
 .page-header h1 {
-  font-size: 3rem;
-  color: var(--text-primary);
+  font-family: 'Creepster', 'Nosifer', cursive;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: #ff0000;
   margin-bottom: 15px;
-  font-weight: 800;
-  text-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+  font-weight: 400;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.8),
+    0 0 20px rgba(139, 0, 0, 0.6),
+    0 0 30px rgba(139, 0, 0, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.9),
+    2px 2px 0px rgba(139, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px rgba(255, 0, 0, 0.8),
+      0 0 20px rgba(139, 0, 0, 0.6),
+      0 0 30px rgba(139, 0, 0, 0.4),
+      0 4px 20px rgba(0, 0, 0, 0.9),
+      2px 2px 0px rgba(139, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow: 
+      0 0 15px rgba(255, 0, 0, 1),
+      0 0 30px rgba(139, 0, 0, 0.8),
+      0 0 45px rgba(139, 0, 0, 0.6),
+      0 4px 20px rgba(0, 0, 0, 0.9),
+      2px 2px 0px rgba(139, 0, 0, 0.7);
+  }
 }
 
 .page-subtitle {
@@ -183,11 +212,20 @@
 }
 
 .story-header h2 {
-  font-size: 2.8rem;
-  color: var(--text-primary);
+  font-family: 'Creepster', 'Nosifer', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #ff0000;
   margin-bottom: 15px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.7),
+    0 0 20px rgba(139, 0, 0, 0.5),
+    0 4px 15px rgba(0, 0, 0, 0.8),
+    2px 2px 0px rgba(139, 0, 0, 0.4);
+  filter: drop-shadow(0 0 12px rgba(255, 0, 0, 0.4));
 }
 
 .story-meta {

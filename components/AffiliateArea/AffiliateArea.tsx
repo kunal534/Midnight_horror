@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import './AffiliateArea.css';
 
 interface AffiliateLink {
@@ -59,7 +60,7 @@ export default function AffiliateArea({ links = defaultAffiliateLinks }: Affilia
           >
             {link.image && (
               <div className="affiliate-image">
-                <img src={link.image} alt={link.title} />
+                <Image src={link.image} alt={link.title} width={300} height={200} />
               </div>
             )}
             <div className="affiliate-content">
