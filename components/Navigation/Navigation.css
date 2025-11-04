@@ -1,0 +1,551 @@
+.navigation-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1500;
+  transition: right 0.3s ease;
+}
+
+/* Adjust navigation when music player is expanded */
+.navigation-container.music-player-open {
+  right: 420px !important;
+}
+
+@media (max-width: 1024px) {
+  .navigation-container.music-player-open {
+    right: 20px !important;
+    top: 100px !important;
+  }
+}
+
+.nav-toggle {
+  width: 60px;
+  height: 60px;
+  background: rgba(139, 0, 0, 0.2);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(139, 0, 0, 0.3);
+  animation: pulseButton 2s ease-in-out infinite;
+}
+
+@keyframes pulseButton {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(139, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 30px rgba(139, 0, 0, 0.5), 0 0 20px rgba(255, 0, 0, 0.3);
+  }
+}
+
+.nav-toggle:hover {
+  background: rgba(139, 0, 0, 0.3);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 30px rgba(139, 0, 0, 0.5);
+}
+
+.nav-toggle.open {
+  background: rgba(139, 0, 0, 0.4);
+  border-color: #ff0000;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+  animation: pulseOpen 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseOpen {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+    transform: scale(1.05);
+  }
+}
+
+.nav-icon-line {
+  width: 24px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 0 8px rgba(139, 0, 0, 0.5);
+}
+
+.nav-toggle.open .nav-icon-line:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+  background: #ff0000;
+}
+
+.nav-toggle.open .nav-icon-line:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.nav-toggle.open .nav-icon-line:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+  background: #ff0000;
+}
+
+.nav-icon-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.4) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nav-toggle.open .nav-icon-glow {
+  opacity: 1;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 320px;
+  max-height: 0;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.9) rotateX(-10deg);
+  transform-origin: top right;
+  transition: none;
+  pointer-events: none;
+  perspective: 1000px;
+}
+
+.nav-dropdown.open {
+  max-height: 600px;
+  opacity: 1;
+  transform: translateY(0) scale(1) rotateX(0deg);
+  pointer-events: all;
+  animation: dropdownOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.nav-dropdown:not(.open) {
+  animation: dropdownClose 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes dropdownOpen {
+  0% {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px) scale(0.9) rotateX(-10deg);
+  }
+  60% {
+    transform: translateY(5px) scale(1.02) rotateX(2deg);
+  }
+  100% {
+    opacity: 1;
+    max-height: 600px;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+}
+
+@keyframes dropdownClose {
+  0% {
+    opacity: 1;
+    max-height: 600px;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+  40% {
+    opacity: 0.5;
+    transform: translateY(-10px) scale(0.95) rotateX(-5deg);
+  }
+  100% {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-30px) scale(0.85) rotateX(-15deg);
+  }
+}
+
+.nav-dropdown-content {
+  background: 
+    /* Paper texture */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.02) 4px
+    ),
+    /* Old paper base */
+    linear-gradient(
+      135deg,
+      rgba(200, 180, 150, 0.12) 0%,
+      rgba(180, 160, 140, 0.1) 50%,
+      rgba(200, 180, 150, 0.12) 100%
+    );
+  border: none;
+  border-radius: 0;
+  padding: 20px 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 8px 40px rgba(0, 0, 0, 0.8), 
+    inset 0 0 100px rgba(139, 0, 0, 0.1),
+    0 0 0 1px rgba(139, 0, 0, 0.2);
+  position: relative;
+  overflow: visible;
+  animation: dropdownSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  clip-path: polygon(
+    2% 0%,
+    98% 0%,
+    100% 3%,
+    100% 97%,
+    98% 100%,
+    2% 100%,
+    0% 97%,
+    0% 3%
+  );
+  opacity: 0.95;
+}
+
+@keyframes dropdownSlide {
+  0% {
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(5px) scale(1.01);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.nav-dropdown-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(139, 0, 0, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.nav-header {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 0 20px 15px 20px;
+  border-bottom: none;
+  position: relative;
+}
+
+.nav-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: 
+    /* Skeleton bone pattern */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(139, 0, 0, 0.4) 8px,
+      rgba(139, 0, 0, 0.4) 10px,
+      transparent 10px,
+      transparent 18px
+    );
+  opacity: 0.6;
+}
+
+.nav-header h3 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+  animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(139, 0, 0, 0.6);
+  }
+}
+
+.nav-header-glow {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+/* Skeleton bone connectors between items */
+.nav-list::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 50px;
+  bottom: 50px;
+  width: 4px;
+  background: 
+    repeating-linear-gradient(
+      180deg,
+      rgba(139, 0, 0, 0.4) 0px,
+      rgba(139, 0, 0, 0.4) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  opacity: 0.6;
+  z-index: 0;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+}
+
+.nav-item {
+  width: 100%;
+  padding: 18px 20px 18px 60px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  font-family: inherit;
+  transform: translateX(0);
+  opacity: 0;
+  animation: slideInItem 0.4s ease forwards;
+  z-index: 1;
+}
+
+.nav-item:nth-child(1) { animation-delay: 0.1s; }
+.nav-item:nth-child(2) { animation-delay: 0.15s; }
+.nav-item:nth-child(3) { animation-delay: 0.2s; }
+.nav-item:nth-child(4) { animation-delay: 0.25s; }
+.nav-item:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes slideInItem {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Skeleton bone joint before each item */
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(139, 0, 0, 0.6) 0%, rgba(139, 0, 0, 0.3) 50%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 8px rgba(139, 0, 0, 0.5),
+    inset 0 0 4px rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* Skeleton bone connector from previous item */
+.nav-item:not(:first-child)::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: -20px;
+  width: 4px;
+  height: 20px;
+  background: 
+    repeating-linear-gradient(
+      180deg,
+      rgba(139, 0, 0, 0.4) 0px,
+      rgba(139, 0, 0, 0.4) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  opacity: 0.6;
+  z-index: 0;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+}
+
+.nav-item:hover {
+  background: rgba(139, 0, 0, 0.15);
+  transform: translateX(8px);
+  box-shadow: none;
+}
+
+.nav-item:hover::before {
+  transform: translateY(-50%) scale(1.3);
+  background: radial-gradient(circle, rgba(139, 0, 0, 0.8) 0%, rgba(139, 0, 0, 0.5) 50%, transparent 100%);
+  box-shadow: 
+    0 0 15px rgba(139, 0, 0, 0.7),
+    inset 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.nav-item.active {
+  background: rgba(139, 0, 0, 0.2);
+  box-shadow: none;
+}
+
+.nav-item.active::before {
+  transform: translateY(-50%) scale(1.2);
+  background: radial-gradient(circle, rgba(139, 0, 0, 0.8) 0%, rgba(139, 0, 0, 0.5) 50%, transparent 100%);
+  box-shadow: 
+    0 0 12px rgba(139, 0, 0, 0.6),
+    inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.nav-item.active .nav-label {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  width: 30px;
+  text-align: center;
+  filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.5));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: iconFloat 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.3) rotate(10deg);
+  filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.8));
+}
+
+.nav-label {
+  flex: 1;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-hover-effect {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(139, 0, 0, 0.2) 0%, transparent 100%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nav-item:hover .nav-hover-effect {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .music-player.expanded ~ * .navigation-container {
+    right: 20px;
+    top: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navigation-container {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .nav-toggle {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .nav-dropdown {
+    width: calc(100vw - 30px);
+    right: 0;
+  }
+  
+  .music-player.expanded ~ * .navigation-container {
+    right: 15px;
+    top: 15px;
+  }
+}

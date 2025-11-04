@@ -1,0 +1,376 @@
+.horror-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.horror-animation.fade-out {
+  animation: fadeOutAnimation 0.5s ease-out forwards;
+}
+
+@keyframes fadeOutAnimation {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.animation-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.animation-content {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.animation-content.show {
+  opacity: 1;
+}
+
+.flicker-text {
+  font-size: 4rem;
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.8),
+    0 0 20px rgba(255, 0, 0, 0.6),
+    0 0 30px rgba(255, 0, 0, 0.4);
+  animation: flicker 0.15s infinite;
+  letter-spacing: 0.2em;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.glitch-text {
+  font-size: 6rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 1),
+    0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6);
+  letter-spacing: 0.3em;
+  position: relative;
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 0.3s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: -3px;
+  color: #ff0000;
+  clip: rect(0, 9999px, 0, 0);
+  animation: glitch-1 0.3s infinite;
+}
+
+.glitch::after {
+  left: 3px;
+  color: #00ff00;
+  clip: rect(0, 9999px, 0, 0);
+  animation: glitch-2 0.3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-1 {
+  0%, 100% {
+    clip: rect(0, 9999px, 0, 0);
+  }
+  25% {
+    clip: rect(20px, 9999px, 40px, 0);
+  }
+  50% {
+    clip: rect(60px, 9999px, 80px, 0);
+  }
+  75% {
+    clip: rect(100px, 9999px, 120px, 0);
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 100% {
+    clip: rect(0, 9999px, 0, 0);
+  }
+  25% {
+    clip: rect(80px, 9999px, 100px, 0);
+  }
+  50% {
+    clip: rect(40px, 9999px, 60px, 0);
+  }
+  75% {
+    clip: rect(120px, 9999px, 140px, 0);
+  }
+}
+
+.blood-drips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.blood-drips.show {
+  opacity: 1;
+}
+
+.drip {
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(to bottom, #8b0000 0%, #ff0000 50%, #8b0000 100%);
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+  animation: drip 2s ease-in forwards;
+}
+
+.drip-1 {
+  left: 10%;
+  top: -100px;
+  height: 200px;
+  animation-delay: 0s;
+}
+
+.drip-2 {
+  left: 25%;
+  top: -100px;
+  height: 250px;
+  animation-delay: 0.3s;
+}
+
+.drip-3 {
+  left: 50%;
+  top: -100px;
+  height: 300px;
+  animation-delay: 0.6s;
+}
+
+.drip-4 {
+  left: 75%;
+  top: -100px;
+  height: 220px;
+  animation-delay: 0.9s;
+}
+
+.drip-5 {
+  left: 90%;
+  top: -100px;
+  height: 180px;
+  animation-delay: 1.2s;
+}
+
+@keyframes drip {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0.8;
+  }
+}
+
+.eyes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 100px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 1;
+}
+
+.eyes.show {
+  opacity: 1;
+}
+
+.eye {
+  width: 80px;
+  height: 80px;
+  background: #000000;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 
+    0 0 20px rgba(255, 0, 0, 0.8),
+    inset 0 0 30px rgba(139, 0, 0, 0.5);
+  animation: blink 3s infinite;
+}
+
+.eye::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #ff0000;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+  animation: eyeMove 4s infinite;
+}
+
+@keyframes blink {
+  0%, 90%, 100% {
+    height: 80px;
+  }
+  95% {
+    height: 5px;
+  }
+}
+
+@keyframes eyeMove {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  25% {
+    transform: translate(-30%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -30%);
+  }
+  75% {
+    transform: translate(-70%, -50%);
+  }
+}
+
+.static-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  opacity: 0.3;
+  animation: static 0.1s infinite;
+  pointer-events: none;
+}
+
+@keyframes static {
+  0% {
+    transform: translate(0);
+  }
+  10% {
+    transform: translate(-2%, -2%);
+  }
+  20% {
+    transform: translate(2%, 2%);
+  }
+  30% {
+    transform: translate(-1%, 1%);
+  }
+  40% {
+    transform: translate(1%, -1%);
+  }
+  50% {
+    transform: translate(-2%, 2%);
+  }
+  60% {
+    transform: translate(2%, -2%);
+  }
+  70% {
+    transform: translate(-1%, -1%);
+  }
+  80% {
+    transform: translate(1%, 1%);
+  }
+  90% {
+    transform: translate(-2%, -2%);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .flicker-text {
+    font-size: 2.5rem;
+  }
+  
+  .glitch-text {
+    font-size: 3.5rem;
+  }
+  
+  .eyes {
+    gap: 60px;
+  }
+  
+  .eye {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .eye::before {
+    width: 30px;
+    height: 30px;
+  }
+}
+

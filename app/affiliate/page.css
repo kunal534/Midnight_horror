@@ -1,0 +1,79 @@
+.page-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+  font-weight: 800;
+  text-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+}
+
+.page-subtitle {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.affiliate-info {
+  margin-top: 80px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.affiliate-info h2 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.affiliate-info p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.disclosure-box {
+  background: rgba(139, 0, 0, 0.1);
+  border: 2px solid rgba(139, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+.disclosure-box h3 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.disclosure-box p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .affiliate-info {
+    padding: 25px;
+  }
+}
+
