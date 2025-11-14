@@ -1,0 +1,214 @@
+@import '../../app/themes.scss';
+
+.boneNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $horror-gradient;  // Red gradient
+  border-bottom: 2px solid $blood-red;
+  z-index: 999;
+  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.6);
+
+  .navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    width: 100%;
+
+    @media (max-width: 640px) {
+      padding: 16px;
+    }
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    .title {
+      font-family: $font-accent;
+      font-size: 24px;
+      color: $bone-white;
+      margin: 0;
+      text-shadow: 0 0 10px rgba($crimson, 0.5);
+      
+      @media (max-width: 640px) {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .desktopNav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    margin: 0 24px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    .navItemWrapper {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .navLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $bone-white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 300ms ease-in-out;
+    white-space: nowrap;
+    font-weight: 600;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .label {
+      font-family: $font-heading;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    &:hover {
+      background: rgba($blood-red, 0.2);
+      transform: translateY(-2px);
+      text-shadow: 0 0 8px rgba($crimson, 0.8);
+    }
+
+    &.active {
+      background: rgba($blood-red, 0.3);
+      border-bottom: 3px solid $crimson;
+      text-shadow: 0 0 10px rgba($crimson, 1);
+    }
+  }
+
+  // BONE CONNECTOR STYLING
+  .boneConnector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $bone-white;
+    width: 80px;
+    height: 30px;
+    padding: 0 12px;
+    
+    .boneSvg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 4px rgba($bone-white, 0.3));
+      animation: bonePulse 3s ease-in-out infinite;
+    }
+
+    &:hover .boneSvg {
+      animation: boneShake 0.5s ease-in-out;
+      filter: drop-shadow(0 0 8px rgba($crimson, 0.6));
+    }
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
+    span {
+      width: 25px;
+      height: 3px;
+      background: $bone-white;
+      border-radius: 2px;
+      transition: all 300ms ease-in-out;
+    }
+
+    &:hover span {
+      background: $crimson;
+      box-shadow: 0 0 8px rgba($crimson, 0.6);
+    }
+  }
+
+  .mobileNav {
+    display: flex;
+    flex-direction: column;
+    background: rgba($charcoal, 0.95);  // Changed from $deep-purple
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    gap: 8px;
+    border-top: 1px solid $blood-red;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
+  }
+
+  .mobileNavLink {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: $bone-white;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 8px;
+    transition: all 300ms ease-in-out;
+    border-left: 3px solid transparent;
+    text-transform: uppercase;
+    font-family: $font-heading;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: rgba($blood-red, 0.2);
+      border-left-color: $crimson;
+      box-shadow: 0 0 10px rgba($crimson, 0.3);
+    }
+
+    &.active {
+      background: rgba($blood-red, 0.3);
+      border-left-color: $crimson;
+      text-shadow: 0 0 8px rgba($crimson, 0.8);
+    }
+  }
+}
+
+// BONE ANIMATIONS
+@keyframes bonePulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes boneShake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}

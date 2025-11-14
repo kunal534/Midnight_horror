@@ -1,83 +1,155 @@
 'use client';
 
-import MusicPlayer from '@/components/MusicPlayer/MusicPlayer';
-import AffiliateArea from '@/components/AffiliateArea/AffiliateArea';
-import './page.css';
-
-const affiliateLinks = [
-  {
-    id: '1',
-    title: 'Horror Book Collection',
-    description: 'Discover chilling horror tales and dark fiction from master storytellers',
-    url: '#',
-    category: 'Books',
-    image: '',
-  },
-  {
-    id: '2',
-    title: 'Atmospheric Sound Equipment',
-    description: 'Create the perfect horror ambiance with premium audio equipment',
-    url: '#',
-    category: 'Electronics',
-    image: '',
-  },
-  {
-    id: '3',
-    title: 'Dark Aesthetic Decor',
-    description: 'Transform your space with gothic and horror-themed items',
-    url: '#',
-    category: 'Home & Living',
-    image: '',
-  },
-  {
-    id: '4',
-    title: 'Horror Movie Collection',
-    description: 'Curated selection of classic and modern horror films',
-    url: '#',
-    category: 'Entertainment',
-    image: '',
-  },
-  {
-    id: '5',
-    title: 'Writing Tools for Horror',
-    description: 'Everything you need to craft your own dark tales',
-    url: '#',
-    category: 'Tools',
-    image: '',
-  },
-];
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { affiliateProducts } from '@/data/affiliates';  // ← Import affiliates
 
 export default function AffiliatePage() {
   return (
-    <main className="main-container">
-      <MusicPlayer />
-      
-      <div className="content-wrapper">
-        <header className="page-header">
-          <h1>Affiliate Recommendations</h1>
-          <p className="page-subtitle">Curated products to enhance your midnight horror experience</p>
-        </header>
+    <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '48px 24px' }}>
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ marginBottom: '48px', textAlign: 'center' }}
+      >
+        <h1 style={{
+          fontSize: '48px',
+          color: '#E8E4D9',
+          marginBottom: '16px',
+          textShadow: '0 0 15px rgba(220, 20, 60, 0.5)',
+          fontFamily: 'Cinzel, serif',
+        }}>
+          🪙 Horror Recommendations
+        </h1>
+        <p style={{
+          fontSize: '18px',
+          color: '#DC143C',
+          fontFamily: 'Lora, serif',
+        }}>
+          Curated products to enhance your horror experience
+        </p>
+      </motion.header>
 
-        <AffiliateArea links={affiliateLinks} />
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+        gap: '32px',
+      }}>
+        {affiliateProducts.map((product, index) => (
+          <motion.a
+            key={product.id}
+            href={product.affiliateLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              background: 'rgba(28, 28, 28, 0.6)',
+              border: '1px solid #8B0000',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 0, 0, 0.6)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <div style={{ position: 'relative', width: '100%', height: '250px' }}>
+              <Image
+                src={product.imageUrl}
+                alt={product.title}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'rgba(220, 20, 60, 0.9)',
+                color: '#E8E4D9',
+                padding: '4px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: 'bold',
+              }}>
+                {product.category}
+              </div>
+            </div>
 
-        <section className="affiliate-info">
-          <h2>Why These Recommendations?</h2>
-          <p>
-            Each product has been carefully selected to complement the horror and dark aesthetic 
-            experience. These are items I personally use or have thoroughly researched, ensuring 
-            quality and relevance to the themes explored in Midnight Horror Tales.
-          </p>
-          <div className="disclosure-box">
-            <h3>Affiliate Disclosure</h3>
-            <p>
-              Some links on this page are affiliate links. This means that if you make a purchase 
-              through these links, I may earn a commission at no additional cost to you. This helps 
-              support the creation of more content and stories. Thank you for your support!
-            </p>
-          </div>
-        </section>
+            <div style={{ padding: '24px' }}>
+              <h3 style={{
+                fontSize: '20px',
+                color: '#E8E4D9',
+                marginBottom: '12px',
+                fontFamily: 'Cinzel, serif',
+              }}>
+                {product.title}
+              </h3>
+              
+              <p style={{
+                fontSize: '14px',
+                color: '#B8B8B8',
+                marginBottom: '16px',
+                lineHeight: '1.6',
+              }}>
+                {product.description}
+              </p>
+
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingTop: '16px',
+                borderTop: '1px solid #8B0000',
+              }}>
+                <span style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  color: '#DC143C',
+                }}>
+                  {product.price}
+                </span>
+                <button style={{
+                  background: 'linear-gradient(135deg, #5C0000 0%, #8B0000 50%, #DC143C 100%)',
+                  color: '#E8E4D9',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                }}>
+                  View Deal →
+                </button>
+              </div>
+            </div>
+          </motion.a>
+        ))}
       </div>
-    </main>
+
+      <div style={{
+        marginTop: '64px',
+        padding: '24px',
+        background: 'rgba(28, 28, 28, 0.4)',
+        border: '1px solid #8B0000',
+        borderRadius: '12px',
+        textAlign: 'center',
+      }}>
+        <p style={{ fontSize: '14px', color: '#B8B8B8', lineHeight: '1.6' }}>
+          <strong>Affiliate Disclosure:</strong> As an Amazon Associate and through other affiliate programs, 
+          I earn from qualifying purchases. These are products I personally recommend to enhance your horror experience.
+        </p>
+      </div>
+    </div>
   );
 }
-

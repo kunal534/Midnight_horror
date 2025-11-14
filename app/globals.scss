@@ -1,0 +1,197 @@
+@import './themes.scss';
+
+// ========================================
+// RESET & DEFAULTS
+// ========================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-body;
+  background: $midnight-black;  // Changed to black
+  color: $text-primary;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Red horror gradient background
+  background: linear-gradient(135deg, $midnight-black 0%, $dark-red 100%);
+  min-height: 100vh;
+}
+
+// ========================================
+// TYPOGRAPHY
+// ========================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-heading;
+  color: $bone-white;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  text-shadow: 0 0 10px rgba($crimson, 0.3);  // Red glow
+}
+
+h1 {
+  font-size: 48px;
+  @media (max-width: 640px) {
+    font-size: 32px;
+  }
+}
+
+h2 {
+  font-size: 32px;
+  @media (max-width: 640px) {
+    font-size: 24px;
+  }
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  &:last-child { margin-bottom: 0; }
+}
+
+a {
+  color: $bone-white;
+  text-decoration: none;
+  transition: color $transition-base;
+  &:hover { 
+    color: $crimson;  // Red on hover
+    text-decoration: underline;
+  }
+}
+
+// ========================================
+// BUTTONS - Red Theme
+// ========================================
+
+button, [role="button"] {
+  font-family: $font-body;
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid $blood-red;  // Red border
+  background: transparent;
+  color: $bone-white;
+  cursor: pointer;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+  font-size: $font-size-base;
+  
+  &:hover {
+    background: rgba($blood-red, 0.2);  // Red hover
+    border-color: $crimson;
+    box-shadow: 0 0 15px rgba($crimson, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ========================================
+// FORMS - Red Theme
+// ========================================
+
+input, select, textarea {
+  font-family: $font-body;
+  background: rgba($charcoal, 0.8);  // Dark background
+  color: $text-primary;
+  border: 1px solid $blood-red;  // Red border
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  transition: all $transition-base;
+  
+  &:focus {
+    outline: none;
+    border-color: $crimson;
+    box-shadow: 0 0 0 3px rgba($crimson, 0.2);
+  }
+  
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+// ========================================
+// UTILITIES
+// ========================================
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @media (max-width: 1024px) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+.main-content {
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: $spacing-2xl;
+}
+
+// Scrollbar styling - Red theme
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $charcoal;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $blood-red;  // Red scrollbar
+  border-radius: 5px;
+  
+  &:hover {
+    background: $crimson;
+  }
+}
+
+// ========================================
+// ANIMATIONS
+// ========================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow-red {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba($crimson, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba($crimson, 0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow-red 2s infinite;
+}

@@ -8,12 +8,23 @@ export default function HorrorAnimation() {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
+    // Check if animation has been shown in this session
+    const hasSeenAnimation = sessionStorage.getItem('hasSeenAnimation');
+    
+    if (hasSeenAnimation) {
+      setShowAnimation(false);
+      return;
+    }
+
     const timer1 = setTimeout(() => setPhase(1), 300);
     const timer2 = setTimeout(() => setPhase(2), 800);
     const timer3 = setTimeout(() => setPhase(3), 1300);
     const timer4 = setTimeout(() => {
       setPhase(4);
-      setTimeout(() => setShowAnimation(false), 300);
+      setTimeout(() => {
+        setShowAnimation(false);
+        sessionStorage.setItem('hasSeenAnimation', 'true');
+      }, 500);
     }, 2000);
 
     return () => {
@@ -65,4 +76,3 @@ export default function HorrorAnimation() {
     </div>
   );
 }
-

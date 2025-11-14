@@ -1,31 +1,24 @@
 import type { Metadata } from 'next';
-import Navigation from '@/components/Navigation/Navigation';
-import HorrorCursor from '@/components/HorrorCursor/HorrorCursor';
-import HorrorAnimation from '@/components/HorrorAnimation/HorrorAnimation';
-import './globals.css';
+import { ReactNode } from 'react';
+import BoneNavigation from '@/components/Navigation/BoneNavigation';
+import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
+import './globals.scss';
 
 export const metadata: Metadata = {
   title: 'Midnight Horror Tales',
-  description: 'Lost in the woods. Haunted by memories. Craving love. Becoming legend.',
+  description: 'Experience spine-chilling horror stories curated for the midnight hour.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Felipa&family=Eater&family=Creepster&display=swap" rel="stylesheet" />
+        <meta name="theme-color" content="#0a0000" />
       </head>
       <body>
-        <HorrorAnimation />
-        <HorrorCursor />
-        <Navigation />
-        {children}
+        <BoneNavigation />
+        <main className="main-content">{children}</main>
+        <EnhancedMusicPlayer />
       </body>
     </html>
   );

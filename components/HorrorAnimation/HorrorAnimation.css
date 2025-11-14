@@ -53,6 +53,7 @@
     0 0 30px rgba(255, 0, 0, 0.4);
   animation: flicker 0.15s infinite;
   letter-spacing: 0.2em;
+  font-family: 'Creepster', cursive;
 }
 
 @keyframes flicker {
@@ -74,6 +75,7 @@
     0 0 30px rgba(255, 0, 0, 0.6);
   letter-spacing: 0.3em;
   position: relative;
+  font-family: 'Creepster', cursive;
 }
 
 .glitch {
@@ -373,4 +375,3 @@
     height: 30px;
   }
 }
-
