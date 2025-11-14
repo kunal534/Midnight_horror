@@ -121,7 +121,10 @@ midnight_page/
 └── next.config.js
 ```
 
-## License
+## errors
+```
+   1. It working for the laptop not for tablets and phones
+```
 
-MIT
+
 
