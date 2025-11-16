@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import BoneNavigation from '@/components/Navigation/BoneNavigation';
 import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
 import Footer from '@/components/Footer/Footer';
+import { Analytics } from "@vercel/analytics/next"
 import './globals.scss';
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="main-content">{children}</main>
         <EnhancedMusicPlayer />
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
