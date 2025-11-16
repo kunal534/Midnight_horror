@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
 import { musicPlaylist } from '@/data/music';
-
+import { useState, useEffect, useRef, useCallback } from 'react';
 export default function EnhancedMusicPlayer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(true);
@@ -70,27 +69,29 @@ export default function EnhancedMusicPlayer() {
     setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return;
-    
-    let newX = e.clientX - dragStart.x;
-    let newY = e.clientY - dragStart.y;
-    
-    const maxX = window.innerWidth - 400;
-    const maxY = window.innerHeight - 150;
-    
-    newX = Math.max(0, Math.min(newX, maxX));
-    newY = Math.max(0, Math.min(newY, maxY));
-    
-    setPosition({ x: newX, y: newY });
-  };
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+  if (!isDragging) return;
+  
+  let newX = e.clientX - dragStart.x;
+  let newY = e.clientY - dragStart.y;
+  
+  const maxX = window.innerWidth - 400;
+  const maxY = window.innerHeight - 150;
+  
+  newX = Math.max(0, Math.min(newX, maxX));
+  newY = Math.max(0, Math.min(newY, maxY));
+  
+  setPosition({ x: newX, y: newY });
+}, [isDragging, dragStart.x, dragStart.y]);
 
-  const handleMouseUp = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      localStorage.setItem('musicPlayerPos', JSON.stringify(position));
-    }
-  };
+
+  const handleMouseUp = useCallback(() => {
+  if (isDragging) {
+    setIsDragging(false);
+    localStorage.setItem('musicPlayerPos', JSON.stringify(position));
+  }
+}, [isDragging, position]);
+
 
   useEffect(() => {
   if (isDragging) {

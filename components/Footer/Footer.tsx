@@ -56,8 +56,9 @@ export default function Footer() {
             © {new Date().getFullYear()} Midnight Horror Tales. All rights reserved.
           </p>
           <p className={styles.quote}>
-            'In the darkness, stories come alive'
+              In the darkness, stories come alive
           </p>
+
         </div>
       </div>
     </footer>
