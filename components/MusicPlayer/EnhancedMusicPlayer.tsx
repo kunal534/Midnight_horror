@@ -93,15 +93,15 @@ export default function EnhancedMusicPlayer() {
   };
 
   useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging, dragStart, position]);
+  if (isDragging) {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }
+  }, [isDragging, dragStart, position, handleMouseMove, handleMouseUp]); // ← Added these
 
   const snapToCorner = () => {
     const corners = [
