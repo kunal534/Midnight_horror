@@ -20,7 +20,7 @@ export default function BoneNavigation() {
     <nav className={styles.boneNav}>
       <div className={styles.navContainer}>
         <div className={styles.logo}>
-          <h1 className={styles.title}>🦴 Midnight Horror</h1>
+          <h1 className={styles.title}>🩸 Midnight Horror</h1>
         </div>
 
         <div className={styles.desktopNav}>

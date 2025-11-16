@@ -9,6 +9,7 @@ interface StoryCardProps {
   slug: string;
   tags: string[];
   publishedDate: string;
+  
 }
 
 export default function StoryCard({

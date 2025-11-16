@@ -1,0 +1,165 @@
+.thoughtsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.title {
+  font-family: 'Creepster', cursive;
+  font-size: 3.5rem;
+  color: #E8E4D9;
+  margin-bottom: 16px;
+  text-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.emoji {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.8));
+}
+
+.subtitle {
+  font-family: 'Lora', serif;
+  font-size: 1.2rem;
+  color: #B8B8B8;
+  font-style: italic;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.thoughtsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.thoughtCard {
+  background: linear-gradient(135deg, rgba(28, 28, 28, 0.95) 0%, rgba(45, 0, 0, 0.95) 100%);
+  border: 2px solid #8B0000;
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #DC143C, #8B0000);
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(220, 20, 60, 0.4);
+    border-color: #DC143C;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.thoughtEmoji {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.6));
+}
+
+.thoughtTitle {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  color: #E8E4D9;
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.category {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #E8E4D9;
+  margin-bottom: 16px;
+}
+
+.thoughtContent {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #C4C4C4;
+  margin: 20px 0;
+  white-space: pre-wrap;
+}
+
+.thoughtFooter {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(220, 20, 60, 0.3);
+}
+
+.date {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: #8B8B8B;
+  font-style: italic;
+}
+.thoughtExcerpt {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #C4C4C4;
+  margin: 16px 0;
+}
+
+.thoughtFooter {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(220, 20, 60, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.readMore {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: #DC143C;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.thoughtCard:hover .readMore {
+  color: #E8E4D9;
+  transform: translateX(4px);
+}

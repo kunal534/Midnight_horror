@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import BoneNavigation from '@/components/Navigation/BoneNavigation';
 import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
+import Footer from '@/components/Footer/Footer';
 import './globals.scss';
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <BoneNavigation />
         <main className="main-content">{children}</main>
         <EnhancedMusicPlayer />
+        <Footer />
       </body>
     </html>
   );

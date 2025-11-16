@@ -13,5 +13,12 @@ export const musicPlaylist: Track[] = [
     artist: 'music',
     file: '/music/Ethereal_Rites_of_Shadows_Made.mp3',
     duration: '3:23',
-  }
+  },
+  {
+    id:'2',
+    title: 'Whispers of the Forgotten',
+    artist: 'Midnight',
+    file: '/music/Whispers_of_the_Forgotten.mp3',
+    duration: '2:00',
+  },
 ];

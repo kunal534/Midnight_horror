@@ -1,0 +1,126 @@
+.thoughtDetail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  min-height: 100vh;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #DC143C;
+  text-decoration: none;
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  margin-bottom: 32px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #E8E4D9;
+    transform: translateX(-4px);
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid rgba(220, 20, 60, 0.3);
+}
+
+.emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.8));
+}
+
+.title {
+  font-family: 'Creepster', cursive;
+  font-size: 3rem;
+  color: #E8E4D9;
+  margin-bottom: 24px;
+  text-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.date {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: #8B8B8B;
+  font-style: italic;
+}
+
+.category {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #E8E4D9;
+}
+
+.content {
+  background: linear-gradient(135deg, rgba(28, 28, 28, 0.95) 0%, rgba(45, 0, 0, 0.95) 100%);
+  border: 2px solid #8B0000;
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 48px;
+
+  @media (max-width: 768px) {
+    padding: 32px 24px;
+  }
+}
+
+.paragraph {
+  font-family: 'Lora', serif;
+  font-size: 1.125rem;
+  line-height: 2;
+  color: #E8E4D9;
+  margin-bottom: 32px;
+  text-align: justify;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+}
+
+.footer {
+  text-align: center;
+  padding-top: 32px;
+  border-top: 2px solid rgba(220, 20, 60, 0.3);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #DC143C;
+  text-decoration: none;
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #E8E4D9;
+    transform: translateX(-4px);
+  }
+}
