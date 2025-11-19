@@ -4,6 +4,7 @@ import BoneNavigation from '@/components/Navigation/BoneNavigation';
 import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import './globals.scss';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <EnhancedMusicPlayer />
         <Footer />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
