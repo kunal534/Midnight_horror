@@ -128,3 +128,8 @@ midnight_page/
 
 
 
+## Current things to do:
+```
+   1. Add support for the mobile and tablet
+   2. See for affliliates 
+```
