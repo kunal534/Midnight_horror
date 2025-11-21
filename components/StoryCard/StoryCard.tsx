@@ -24,14 +24,14 @@ export default function StoryCard({
     <Link href={`/stories/${slug}`}>
       <article className={styles.card}>
         <div className={styles.imageContainer}>
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={300}
-            height={400}
-            className={styles.image}
-            priority={false}
-          />
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              className={styles.image}
+              priority={false}
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
           <div className={styles.overlay}>
             <span className={styles.readMore}>Read Story →</span>
           </div>

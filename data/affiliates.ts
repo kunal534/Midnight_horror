@@ -27,18 +27,4 @@ export const affiliateProducts: AffiliateProduct[] = [
     price: '$9.99/month',
     category: 'Streaming',
   },
-  
-  // ✅ ADD YOUR NEW AFFILIATE PRODUCTS BELOW THIS LINE
-  // Just copy this template:
-  /*
-  {
-    id: '3',
-    title: 'Product Name',
-    description: 'Product description',
-    imageUrl: '/images/affiliates/product.jpg',
-    affiliateLink: 'https://your-link.com',
-    price: '$XX.XX',
-    category: 'Category',
-  },
-  */
 ];

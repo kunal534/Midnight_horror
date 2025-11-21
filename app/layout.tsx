@@ -5,6 +5,7 @@ import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
 import Footer from '@/components/Footer/Footer';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import HorrorCursor from '@/components/HorrorCursor/HorrorCursor';
 import './globals.scss';
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <BoneNavigation />
         <main className="main-content">{children}</main>
         <EnhancedMusicPlayer />
+        {/* <HorrorCursor /> */}
         <Footer />
         <Analytics />
         <SpeedInsights />

@@ -1,0 +1,30 @@
+* {
+  cursor: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.reptile-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999;
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  
+  .reptile-canvas {
+    display: none !important;
+  }
+}

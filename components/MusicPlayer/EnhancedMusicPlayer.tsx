@@ -2,6 +2,7 @@
 
 import { musicPlaylist } from '@/data/music';
 import { useState, useEffect, useRef, useCallback } from 'react';
+
 export default function EnhancedMusicPlayer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(true);
@@ -12,9 +13,79 @@ export default function EnhancedMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  
+  const hasUserInteractedRef = useRef(false);
+  const shouldContinuePlayingRef = useRef(false); // Track if we should continue playing
+
   const currentTrack = musicPlaylist[currentIndex];
 
+  // --- Mouse dragging ---
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('.no-drag')) return;
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+  };
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+    let newX = e.clientX - dragStart.x;
+    let newY = e.clientY - dragStart.y;
+    const maxX = window.innerWidth - 400;
+    const maxY = window.innerHeight - 150;
+    newX = Math.max(0, Math.min(newX, maxX));
+    newY = Math.max(0, Math.min(newY, maxY));
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragStart.x, dragStart.y]);
+
+  const handleMouseUp = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+      localStorage.setItem('musicPlayerPos', JSON.stringify(position));
+    }
+  }, [isDragging, position]);
+
+  // --- Touch dragging ---
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('.no-drag')) return;
+    setIsDragging(true);
+    const touch = e.touches[0];
+    setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
+  };
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    let newX = touch.clientX - dragStart.x;
+    let newY = touch.clientY - dragStart.y;
+    const maxX = window.innerWidth - 400;
+    const maxY = window.innerHeight - 150;
+    newX = Math.max(0, Math.min(newX, maxX));
+    newY = Math.max(0, Math.min(newY, maxY));
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragStart.x, dragStart.y]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+      localStorage.setItem('musicPlayerPos', JSON.stringify(position));
+    }
+  }, [isDragging, position]);
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleTouchEnd);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
+
+  // --- Position persistence and first-show ---
   useEffect(() => {
     const saved = localStorage.getItem('musicPlayerPos');
     if (saved) {
@@ -33,7 +104,6 @@ export default function EnhancedMusicPlayer() {
         y: window.innerHeight - 100,
       });
     }
-
     const hasSeenAnimation = sessionStorage.getItem('hasSeenAnimation');
     if (hasSeenAnimation) {
       setShowPlayer(true);
@@ -42,68 +112,86 @@ export default function EnhancedMusicPlayer() {
     }
   }, []);
 
+  // --- Setup all audio event listeners ---
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = currentTrack.file;
-      audioRef.current.load();
-      setCurrentTime(0);
-    }
-  }, [currentIndex, currentTrack.file]);
+    const audio = audioRef.current;
+    if (!audio) return;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (audioRef.current && !audioRef.current.paused) {
-        setCurrentTime(audioRef.current.currentTime);
-        setIsPlaying(true);
-      } else {
-        setIsPlaying(false);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('.no-drag')) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-  if (!isDragging) return;
-  
-  let newX = e.clientX - dragStart.x;
-  let newY = e.clientY - dragStart.y;
-  
-  const maxX = window.innerWidth - 400;
-  const maxY = window.innerHeight - 150;
-  
-  newX = Math.max(0, Math.min(newX, maxX));
-  newY = Math.max(0, Math.min(newY, maxY));
-  
-  setPosition({ x: newX, y: newY });
-}, [isDragging, dragStart.x, dragStart.y]);
-
-
-  const handleMouseUp = useCallback(() => {
-  if (isDragging) {
-    setIsDragging(false);
-    localStorage.setItem('musicPlayerPos', JSON.stringify(position));
-  }
-}, [isDragging, position]);
-
-
-  useEffect(() => {
-  if (isDragging) {
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+    const handleEnded = () => {
+      console.log('🎵 Track ended! Moving to next...');
+      shouldContinuePlayingRef.current = true; // Set flag for autoplay
+      const nextIndex = (currentIndex + 1) % musicPlaylist.length;
+      setCurrentIndex(nextIndex);
     };
-  }
-  }, [isDragging, dragStart, position, handleMouseMove, handleMouseUp]); // ← Added these
 
+    const handlePlay = () => {
+      setIsPlaying(true);
+      hasUserInteractedRef.current = true;
+      console.log('▶️ Playing');
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+      console.log('⏸️ Paused');
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const handleLoadedData = () => {
+      console.log('✅ Audio loaded:', currentTrack.title);
+    };
+
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadeddata', handleLoadedData);
+
+    return () => {
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadeddata', handleLoadedData);
+    };
+  }, [currentIndex, musicPlaylist.length, currentTrack.title]);
+
+  // --- Load track when index changes ---
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    console.log('📀 Loading track:', currentTrack.title);
+    
+    audio.src = currentTrack.file;
+    audio.load();
+    setCurrentTime(0);
+
+    // If shouldContinuePlaying flag is set, play when ready
+    if (shouldContinuePlayingRef.current && hasUserInteractedRef.current) {
+      const attemptPlay = () => {
+        audio.play()
+          .then(() => {
+            console.log('✅ Playing new track');
+            shouldContinuePlayingRef.current = false; // Reset flag
+          })
+          .catch(err => {
+            console.warn('❌ Autoplay failed:', err);
+            shouldContinuePlayingRef.current = false;
+          });
+      };
+      
+      audio.addEventListener('canplay', attemptPlay, { once: true });
+      
+      return () => {
+        audio.removeEventListener('canplay', attemptPlay);
+      };
+    }
+  }, [currentIndex, currentTrack.file, currentTrack.title]);
+
+  // --- Snap to nearest corner ---
   const snapToCorner = () => {
     const corners = [
       { x: 20, y: 100 },
@@ -111,10 +199,8 @@ export default function EnhancedMusicPlayer() {
       { x: 20, y: Math.max(100, window.innerHeight - 100) },
       { x: Math.max(20, window.innerWidth - 400), y: Math.max(100, window.innerHeight - 100) },
     ];
-    
     let nearest = corners[3];
     let minDist = Infinity;
-    
     corners.forEach(corner => {
       const dist = Math.hypot(corner.x - position.x, corner.y - position.y);
       if (dist < minDist) {
@@ -122,7 +208,6 @@ export default function EnhancedMusicPlayer() {
         nearest = corner;
       }
     });
-    
     setPosition(nearest);
     localStorage.setItem('musicPlayerPos', JSON.stringify(nearest));
   };
@@ -150,8 +235,10 @@ export default function EnhancedMusicPlayer() {
         zIndex: 11000,
         cursor: isDragging ? 'grabbing' : 'grab',
         animation: 'fadeInUp 0.5s ease-out',
+        touchAction: 'none',
       }}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       <style>{`
         @keyframes fadeInUp {
@@ -180,7 +267,6 @@ export default function EnhancedMusicPlayer() {
             MIDNIGHT SOUNDS
           </span>
         </div>
-        
         <div className="no-drag" style={{ display: 'flex', gap: '8px' }}>
           <button onClick={() => setIsExpanded(!isExpanded)} style={{
             background: 'transparent',
@@ -194,7 +280,6 @@ export default function EnhancedMusicPlayer() {
           }}>
             {isExpanded ? '−' : '+'}
           </button>
-          
           <button onClick={snapToCorner} style={{
             background: 'transparent',
             border: '2px solid #E8E4D9',
@@ -207,9 +292,8 @@ export default function EnhancedMusicPlayer() {
         </div>
       </div>
 
-      {/* Content Area - Always rendered */}
+      {/* Content */}
       <div className="no-drag" style={{ padding: '16px' }}>
-        {/* Now Playing - Always visible */}
         <div style={{
           marginBottom: '12px',
           padding: '12px',
@@ -239,23 +323,21 @@ export default function EnhancedMusicPlayer() {
             {currentTrack.artist} • {formatTime(currentTime)}
           </div>
         </div>
-
-        {/* Audio Element - Always rendered, visibility controlled by CSS */}
+        
         <audio
           ref={audioRef}
           controls
+          src={currentTrack.file}
           style={{
             width: '100%',
             height: '40px',
             marginBottom: '12px',
             borderRadius: '8px',
-            display: isExpanded ? 'block' : 'none', // Hide visually but keep in DOM
+            display: isExpanded ? 'block' : 'none',
           }}
-        >
-          <source src={currentTrack.file} type="audio/mpeg" />
-        </audio>
+          preload="auto"
+        />
 
-        {/* Track Controls */}
         <div style={{
           display: 'flex',
           justifyContent: 'center',
@@ -263,7 +345,14 @@ export default function EnhancedMusicPlayer() {
           marginBottom: isExpanded ? '12px' : '0',
         }}>
           <button
-            onClick={() => setCurrentIndex((currentIndex - 1 + musicPlaylist.length) % musicPlaylist.length)}
+            onClick={() => {
+              hasUserInteractedRef.current = true;
+              // Check if currently playing
+              if (audioRef.current && !audioRef.current.paused) {
+                shouldContinuePlayingRef.current = true;
+              }
+              setCurrentIndex((currentIndex - 1 + musicPlaylist.length) % musicPlaylist.length);
+            }}
             style={{
               background: 'rgba(0, 0, 0, 0.4)',
               border: '2px solid #8B0000',
@@ -277,12 +366,11 @@ export default function EnhancedMusicPlayer() {
           >
             ⏮ Prev
           </button>
-          
-          {/* Play/Pause button - always visible */}
           <button
             onClick={() => {
               if (audioRef.current) {
                 if (audioRef.current.paused) {
+                  hasUserInteractedRef.current = true;
                   audioRef.current.play();
                 } else {
                   audioRef.current.pause();
@@ -302,9 +390,15 @@ export default function EnhancedMusicPlayer() {
           >
             {isPlaying ? '⏸ Pause' : '▶ Play'}
           </button>
-          
           <button
-            onClick={() => setCurrentIndex((currentIndex + 1) % musicPlaylist.length)}
+            onClick={() => {
+              hasUserInteractedRef.current = true;
+              // Check if currently playing
+              if (audioRef.current && !audioRef.current.paused) {
+                shouldContinuePlayingRef.current = true;
+              }
+              setCurrentIndex((currentIndex + 1) % musicPlaylist.length);
+            }}
             style={{
               background: 'rgba(0, 0, 0, 0.4)',
               border: '2px solid #8B0000',
@@ -319,8 +413,7 @@ export default function EnhancedMusicPlayer() {
             Next ⏭
           </button>
         </div>
-
-        {/* Playlist - Only when expanded */}
+        
         {isExpanded && (
           <div>
             <div style={{
@@ -341,7 +434,14 @@ export default function EnhancedMusicPlayer() {
               {musicPlaylist.map((track, index) => (
                 <div
                   key={track.id}
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={() => {
+                    hasUserInteractedRef.current = true;
+                    // Check if currently playing
+                    if (audioRef.current && !audioRef.current.paused) {
+                      shouldContinuePlayingRef.current = true;
+                    }
+                    setCurrentIndex(index);
+                  }}
                   style={{
                     padding: '8px',
                     marginBottom: '4px',

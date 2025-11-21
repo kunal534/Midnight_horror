@@ -29,10 +29,17 @@ export const musicPlaylist: Track[] = [
     duration:'2:00',
   },
   {
-    id:'3',
+    id:'4',
     title:'Whispers in the Metal Abyss',
     artist:'Midnight',
     file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Whispers%20in%20the%20Metal%20Abyss.mp3',
     duration:'2:24', 
+  },
+  {
+    id:'5',
+    title:'Pulse Beneath the Floor',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Pulse%20Beneath%20the%20Floor.mp3',
+    duration:'2:13',
   }
 ];

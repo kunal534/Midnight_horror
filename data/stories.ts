@@ -66,6 +66,60 @@ Here, the nets do not save. They only catch what the powerful aren’t finished 
   publishedDate: 'Nov 2025',
   month: '2025-11',
   readTime: '7 min read'
-}
+},
+{
+  id: '4',
+  title: 'Eyes from Ashes',
+  excerpt: 'Among the burning dead, selective morality finally shows its true cost.',
+  fullContent: `
+    On the riverbank, the pyres expose what people spend their entire lives avoiding.  
+    An Aghori stands in the smoke, unbothered by the bodies, unmoved by the rituals, uninterested in the excuses the living build their identity on.
 
+    This place makes one thing clear: humans do not fear death—they fear having to confront the parts of existence they’ve ignored.  
+    They celebrate birth, purity, and light because those are easy.  
+    But the moment darkness enters the conversation, they retreat, deny, and pretend it isn’t part of the same cycle they claim to respect.
+
+    Selective morality thrives here.  
+    People worship gods that demand balance, then refuse to acknowledge anything beyond the sanitized half of life.  
+    They want the rewards of completeness without engaging with the truth of it.  
+    They reject decay, suffering, shadows, and still expect to be judged as whole, righteous, deserving.
+
+    The Aghori watches this hypocrisy with full clarity.  
+    He understands what the living refuse to accept: that avoidance is not innocence, and denial isn’t purity.  
+    The dead lying in the fire are not symbols—they’re the final outcome of every human contradiction, stripped of all pretense.
+
+    Nothing here bends to belief.  
+    Nothing protects selective morality from being exposed.  
+    And in the ashes, everything the living tried to hide becomes impossible to escape.
+  `,
+  imageUrl: '/images/Aghoni.jpg',
+  slug: 'eyes-from-ashes',
+  tags: ['horror', 'selective morality', 'psychological horror', 'dark realism', 'mortality'],
+  publishedDate: 'Nov 2025',
+  month: '2025-11',
+  readTime: '6 min read'
+},
+{
+  id: '5',
+  title: 'Behind the Ashram’s Gaze',
+  excerpt: 'Within the Dera’s high walls, he used faith as a tool of domination, obedience a currency for unspeakable acts.',
+  fullContent: `
+  Inside the secluded Dera Sacha Sauda, faith was weaponized.  
+  A hooded guru commanded silence and submission, guiding followers through shadowed corridors,
+  ritual chambers, and hidden underground tunnels where obedience was tested and morality bent.  
+  He coerced unspeakable acts, from ritual mutilation to sexual abuse, cloaked in the language of spiritual purity.  
+  Others lurked in the shadows, complicit in fear, as the ashram’s walls concealed horrors invisible to the outside world.  
+  To outsiders, the Dera seemed benign—prayers, charity, ritual spectacle—but behind lattice windows and locked doors, 
+  devotion was a cage.  
+  Faith became a measure of endurance, and every act of obedience a silent toll exacted from the living.  
+  Within these walls, terror and control thrived, morality was manipulated, and the human cost remained unseen, yet inescapable.
+.
+  `,
+  imageUrl: '/images/Ashram.jpg',
+  slug: 'through-the-lattice-of-sin',
+  tags: ['horror', 'cult', 'psychological horror', 'ritual abuse', 'dark realism'],
+  publishedDate: 'Nov 2025',
+  month: '2025-11',
+  readTime: '7 min read'
+}
 ];

@@ -1,125 +1,81 @@
-* {
+html, body, *, *::before, *::after {
   cursor: none !important;
 }
 
 .horror-cursor {
   position: fixed;
-  width: 20px;
+  width: 14px;
   height: 20px;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 999999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease;
-  mix-blend-mode: difference;
+  transition: none;
 }
 
-.cursor-outer {
-  width: 20px;
+/* Blood droplet - clean teardrop pointing down without rotation issues */
+.blood-droplet {
+  width: 14px;
   height: 20px;
-  border: 2px solid var(--accent);
-  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FF0000 0%, #B30000 60%, #8B0000 100%);
+  border-radius: 50% 50% 50% 0;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px rgba(139, 0, 0, 0.8), inset 0 0 10px rgba(139, 0, 0, 0.5);
-  animation: cursorPulse 2s ease-in-out infinite;
+  transform: translate(-50%, -50%) rotate(135deg);
+  box-shadow: 
+    inset -1px -2px 3px rgba(0, 0, 0, 0.4),
+    inset 1px 2px 3px rgba(255, 80, 80, 0.3),
+    0 1px 6px rgba(139, 0, 0, 0.5);
 }
 
-.cursor-inner {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
+/* Glossy highlight effect */
+.blood-droplet::before {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 15px rgba(255, 0, 0, 1);
+  left: 4px;
+  top: 3px;
+  width: 4px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7) 0%, transparent 70%);
 }
 
-.cursor-glow {
+/* Secondary smaller highlight */
+.blood-droplet::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+  left: 7px;
+  top: 5px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(139, 0, 0, 0.3) 0%, transparent 70%);
-  animation: cursorGlow 2s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.4);
 }
 
-.horror-cursor.hovering .cursor-outer {
-  width: 40px;
-  height: 40px;
-  border-width: 3px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+/* Hover effect */
+.horror-cursor.hovering .blood-droplet {
+  width: 18px;
+  height: 24px;
+  box-shadow: 
+    inset -1px -2px 3px rgba(0, 0, 0, 0.4),
+    inset 1px 2px 3px rgba(255, 80, 80, 0.3),
+    0 2px 12px rgba(255, 0, 0, 0.7),
+    0 0 20px rgba(255, 0, 0, 0.4);
 }
 
-.horror-cursor.hovering .cursor-inner {
-  width: 12px;
-  height: 12px;
-}
-
-.horror-cursor.hovering .cursor-glow {
-  width: 60px;
-  height: 60px;
-}
-
-.cursor-trail {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: rgba(139, 0, 0, 0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  animation: fadeOut 0.5s ease-out forwards;
-  box-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
-}
-
-@keyframes cursorPulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-@keyframes cursorGlow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-}
-
-/* Hide default cursor for interactive elements */
-a,
-button,
-input,
-textarea,
-select,
-.cursor-hover {
+a, button, input, textarea, select, 
+[role="button"], [type="button"], 
+[type="submit"], [type="reset"],
+.cursor-hover, img, svg, video {
   cursor: none !important;
 }
 
+@media (pointer: coarse) {
+  html, body, *, *::before, *::after {
+    cursor: auto !important;
+  }
+  
+  .horror-cursor {
+    display: none !important;
+  }
+}

@@ -93,7 +93,7 @@ for img in "$IMAGE_DIR"/*.png; do
     
     echo -e "Processing: ${GREEN}$filename${NC} ($original_size)"
     
-    convert "$img" -resize 1200x1200\> -quality 80 -strip "$img"
+    magick "$img" -resize 1200x1200\> -quality 80 -strip "$img"
     
     if [ $? -eq 0 ]; then
         new_size=$(du -h "$img" | cut -f1)
