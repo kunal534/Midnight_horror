@@ -35,9 +35,6 @@ export default function ThoughtsPage() {
             className={styles.thoughtCard}
           >
             <div className={styles.cardHeader}>
-              {thought.emoji && (
-                <span className={styles.thoughtEmoji}>{thought.emoji}</span>
-              )}
               <h2 className={styles.thoughtTitle}>{thought.title}</h2>
             </div>
 

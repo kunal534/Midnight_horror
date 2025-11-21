@@ -29,9 +29,6 @@ export default function ThoughtDetailPage({ params }: { params: { slug: string }
       </Link>
 
       <header className={styles.header}>
-        {thought.emoji && (
-          <span className={styles.emoji}>{thought.emoji}</span>
-        )}
         <h1 className={styles.title}>{thought.title}</h1>
         
         <div className={styles.meta}>
