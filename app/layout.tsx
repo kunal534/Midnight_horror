@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <BoneNavigation />
         <main className="main-content">{children}</main>
         <EnhancedMusicPlayer />
-        {/* <HorrorCursor /> */}
+        <HorrorCursor />
         <Footer />
         <Analytics />
         <SpeedInsights />

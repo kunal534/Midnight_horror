@@ -1,178 +1,498 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import './HorrorCursor.scss';
+import styles from './HorrorCursor.module.scss';
 
 export default function HorrorCursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const critterRef = useRef<any>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Input handling system
+    const Input = {
+      keys: [] as boolean[],
+      mouse: {
+        left: false,
+        right: false,
+        middle: false,
+        x: 0,
+        y: 0
+      }
+    };
+
+    // Initialize key states
+    for (let i = 0; i < 230; i++) {
+      Input.keys.push(false);
+    }
+
+    // Event listeners
+    const handleKeyDown = (event: KeyboardEvent) => {
+      Input.keys[event.keyCode] = true;
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      Input.keys[event.keyCode] = false;
+    };
+
+    const handleMouseDown = (event: MouseEvent) => {
+      if (event.button === 0) Input.mouse.left = true;
+      if (event.button === 1) Input.mouse.middle = true;
+      if (event.button === 2) Input.mouse.right = true;
+    };
+
+    const handleMouseUp = (event: MouseEvent) => {
+      if (event.button === 0) Input.mouse.left = false;
+      if (event.button === 1) Input.mouse.middle = false;
+      if (event.button === 2) Input.mouse.right = false;
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      Input.mouse.x = event.clientX;
+      Input.mouse.y = event.clientY;
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove);
+
+    // Canvas setup
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Segment class
+    let segmentCount = 0;
 
-    let mouseX = canvas.width / 2;
-    let mouseY = canvas.height / 2;
+    class Segment {
+      isSegment = true;
+      parent: any;
+      children: Segment[] = [];
+      size: number;
+      relAngle: number;
+      defAngle: number;
+      absAngle: number;
+      range: number;
+      stiffness: number;
+      x = 0;
+      y = 0;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      constructor(parent: any, size: number, angle: number, range: number, stiffness: number) {
+        segmentCount++;
+        this.parent = parent;
+        
+        if (typeof parent.children === 'object') {
+          parent.children.push(this);
+        }
+        
+        this.size = size;
+        this.relAngle = angle;
+        this.defAngle = angle;
+        this.absAngle = parent.absAngle + angle;
+        this.range = range;
+        this.stiffness = stiffness;
+        this.updateRelative(false, true);
+      }
+
+      updateRelative(iter: boolean, flex: boolean) {
+        this.relAngle = this.relAngle -
+          2 * Math.PI *
+          Math.floor((this.relAngle - this.defAngle) / 2 / Math.PI + 1 / 2);
+        
+        if (flex) {
+          this.relAngle = Math.min(
+            this.defAngle + this.range / 2,
+            Math.max(
+              this.defAngle - this.range / 2,
+              (this.relAngle - this.defAngle) / this.stiffness + this.defAngle
+            )
+          );
+        }
+        
+        this.absAngle = this.parent.absAngle + this.relAngle;
+        this.x = this.parent.x + Math.cos(this.absAngle) * this.size;
+        this.y = this.parent.y + Math.sin(this.absAngle) * this.size;
+        
+        if (iter) {
+          for (let i = 0; i < this.children.length; i++) {
+            this.children[i].updateRelative(iter, flex);
+          }
+        }
+      }
+
+      draw(iter: boolean) {
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.moveTo(this.parent.x, this.parent.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+        
+        if (iter) {
+          for (let i = 0; i < this.children.length; i++) {
+            this.children[i].draw(true);
+          }
+        }
+      }
+
+      follow(iter: boolean) {
+        const x = this.parent.x;
+        const y = this.parent.y;
+        const dist = ((this.x - x) ** 2 + (this.y - y) ** 2) ** 0.5;
+        this.x = x + this.size * (this.x - x) / dist;
+        this.y = y + this.size * (this.y - y) / dist;
+        this.absAngle = Math.atan2(this.y - y, this.x - x);
+        this.relAngle = this.absAngle - this.parent.absAngle;
+        this.updateRelative(false, true);
+        
+        if (iter) {
+          for (let i = 0; i < this.children.length; i++) {
+            this.children[i].follow(true);
+          }
+        }
+      }
+    }
+
+    // LimbSystem class
+    class LimbSystem {
+      end: any;
+      length: number;
+      creature: any;
+      speed: number;
+      nodes: any[] = [];
+      hip: any;
+
+      constructor(end: any, length: number, speed: number, creature: any) {
+        this.end = end;
+        this.length = Math.max(1, length);
+        this.creature = creature;
+        this.speed = speed;
+        creature.systems.push(this);
+        
+        let node = end;
+        for (let i = 0; i < length; i++) {
+          this.nodes.unshift(node);
+          node = node.parent;
+          if (!node.isSegment) {
+            this.length = i + 1;
+            break;
+          }
+        }
+        this.hip = this.nodes[0].parent;
+      }
+
+      moveTo(x: number, y: number) {
+        this.nodes[0].updateRelative(true, true);
+        const dist = ((x - this.end.x) ** 2 + (y - this.end.y) ** 2) ** 0.5;
+        let len = Math.max(0, dist - this.speed);
+        
+        for (let i = this.nodes.length - 1; i >= 0; i--) {
+          const node = this.nodes[i];
+          const ang = Math.atan2(node.y - y, node.x - x);
+          node.x = x + len * Math.cos(ang);
+          node.y = y + len * Math.sin(ang);
+          x = node.x;
+          y = node.y;
+          len = node.size;
+        }
+        
+        for (let i = 0; i < this.nodes.length; i++) {
+          const node = this.nodes[i];
+          node.absAngle = Math.atan2(
+            node.y - node.parent.y,
+            node.x - node.parent.x
+          );
+          node.relAngle = node.absAngle - node.parent.absAngle;
+          
+          for (let ii = 0; ii < node.children.length; ii++) {
+            const childNode = node.children[ii];
+            if (!this.nodes.includes(childNode)) {
+              childNode.updateRelative(true, false);
+            }
+          }
+        }
+      }
+
+      update() {
+        this.moveTo(Input.mouse.x, Input.mouse.y);
+      }
+    }
+
+    // LegSystem class
+    class LegSystem extends LimbSystem {
+      goalX: number;
+      goalY: number;
+      forwardness = 0;
+      step = 0;
+      reach: number;
+      swing: number;
+      swingOffset: number;
+
+      constructor(end: any, length: number, speed: number, creature: any) {
+        super(end, length, speed, creature);
+        this.goalX = end.x;
+        this.goalY = end.y;
+        
+        this.reach = 0.9 * ((this.end.x - this.hip.x) ** 2 + (this.end.y - this.hip.y) ** 2) ** 0.5;
+        
+        let relAngle = this.creature.absAngle - 
+          Math.atan2(this.end.y - this.hip.y, this.end.x - this.hip.x);
+        relAngle -= 2 * Math.PI * Math.floor(relAngle / 2 / Math.PI + 1 / 2);
+        this.swing = -relAngle + (2 * (relAngle < 0 ? 1 : 0) - 1) * Math.PI / 2;
+        this.swingOffset = this.creature.absAngle - this.hip.absAngle;
+      }
+
+      update(x?: number, y?: number) {
+        this.moveTo(this.goalX, this.goalY);
+        
+        if (this.step === 0) {
+          const dist = ((this.end.x - this.goalX) ** 2 + (this.end.y - this.goalY) ** 2) ** 0.5;
+          if (dist > 1) {
+            this.step = 1;
+            this.goalX = this.hip.x +
+              this.reach * Math.cos(this.swing + this.hip.absAngle + this.swingOffset) +
+              (2 * Math.random() - 1) * this.reach / 2;
+            this.goalY = this.hip.y +
+              this.reach * Math.sin(this.swing + this.hip.absAngle + this.swingOffset) +
+              (2 * Math.random() - 1) * this.reach / 2;
+          }
+        } else if (this.step === 1) {
+          const theta = Math.atan2(this.end.y - this.hip.y, this.end.x - this.hip.x) - this.hip.absAngle;
+          const dist = ((this.end.x - this.hip.x) ** 2 + (this.end.y - this.hip.y) ** 2) ** 0.5;
+          const forwardness2 = dist * Math.cos(theta);
+          const dF = this.forwardness - forwardness2;
+          this.forwardness = forwardness2;
+          
+          if (dF * dF < 1) {
+            this.step = 0;
+            this.goalX = this.hip.x + (this.end.x - this.hip.x);
+            this.goalY = this.hip.y + (this.end.y - this.hip.y);
+          }
+        }
+      }
+    }
+
+    // Creature class
+    class Creature {
+      x: number;
+      y: number;
+      absAngle: number;
+      fSpeed = 0;
+      fAccel: number;
+      fFric: number;
+      fRes: number;
+      fThresh: number;
+      rSpeed = 0;
+      rAccel: number;
+      rFric: number;
+      rRes: number;
+      rThresh: number;
+      children: any[] = [];
+      systems: any[] = [];
+
+      constructor(
+        x: number, y: number, angle: number,
+        fAccel: number, fFric: number, fRes: number, fThresh: number,
+        rAccel: number, rFric: number, rRes: number, rThresh: number
+      ) {
+        this.x = x;
+        this.y = y;
+        this.absAngle = angle;
+        this.fAccel = fAccel;
+        this.fFric = fFric;
+        this.fRes = fRes;
+        this.fThresh = fThresh;
+        this.rAccel = rAccel;
+        this.rFric = rFric;
+        this.rRes = rRes;
+        this.rThresh = rThresh;
+      }
+
+      follow(x: number, y: number) {
+        const dist = ((this.x - x) ** 2 + (this.y - y) ** 2) ** 0.5;
+        const angle = Math.atan2(y - this.y, x - this.x);
+        let accel = this.fAccel;
+        
+        if (this.systems.length > 0) {
+          let sum = 0;
+          for (let i = 0; i < this.systems.length; i++) {
+            sum += this.systems[i].step === 0 ? 1 : 0;
+          }
+          accel *= sum / this.systems.length;
+        }
+        
+        this.fSpeed += accel * (dist > this.fThresh ? 1 : 0);
+        this.fSpeed *= 1 - this.fRes;
+        this.fSpeed = Math.max(0, this.fSpeed - this.fFric);
+        
+        let dif = this.absAngle - angle;
+        dif -= 2 * Math.PI * Math.floor(dif / (2 * Math.PI) + 1 / 2);
+        
+        if (Math.abs(dif) > this.rThresh && dist > this.fThresh) {
+          this.rSpeed -= this.rAccel * (2 * (dif > 0 ? 1 : 0) - 1);
+        }
+        
+        this.rSpeed *= 1 - this.rRes;
+        if (Math.abs(this.rSpeed) > this.rFric) {
+          this.rSpeed -= this.rFric * (2 * (this.rSpeed > 0 ? 1 : 0) - 1);
+        } else {
+          this.rSpeed = 0;
+        }
+        
+        this.absAngle += this.rSpeed;
+        this.absAngle -= 2 * Math.PI * Math.floor(this.absAngle / (2 * Math.PI) + 1 / 2);
+        this.x += this.fSpeed * Math.cos(this.absAngle);
+        this.y += this.fSpeed * Math.sin(this.absAngle);
+        
+        this.absAngle += Math.PI;
+        for (let i = 0; i < this.children.length; i++) {
+          this.children[i].follow(true, true);
+        }
+        for (let i = 0; i < this.systems.length; i++) {
+          this.systems[i].update(x, y);
+        }
+        this.absAngle -= Math.PI;
+        this.draw(true);
+      }
+
+      draw(iter: boolean) {
+        if (!ctx) return;
+        const r = 4;
+        ctx.beginPath();
+        ctx.arc(
+          this.x, this.y, r,
+          Math.PI / 4 + this.absAngle,
+          7 * Math.PI / 4 + this.absAngle
+        );
+        ctx.moveTo(
+          this.x + r * Math.cos(7 * Math.PI / 4 + this.absAngle),
+          this.y + r * Math.sin(7 * Math.PI / 4 + this.absAngle)
+        );
+        ctx.lineTo(
+          this.x + r * Math.cos(this.absAngle) * 2 ** 0.5,
+          this.y + r * Math.sin(this.absAngle) * 2 ** 0.5
+        );
+        ctx.lineTo(
+          this.x + r * Math.cos(Math.PI / 4 + this.absAngle),
+          this.y + r * Math.sin(Math.PI / 4 + this.absAngle)
+        );
+        ctx.stroke();
+        
+        if (iter) {
+          for (let i = 0; i < this.children.length; i++) {
+            this.children[i].draw(true);
+          }
+        }
+      }
+    }
+
+    // Setup creature
+    const setupLizard = (size: number, legs: number, tail: number) => {
+      const s = size;
+      const critter = new Creature(
+        window.innerWidth / 2, window.innerHeight / 2,
+        0, s * 10, s * 2, 0.5, 16, 0.5, 0.085, 0.5, 0.3
+      );
+      
+      let spinal: any = critter;
+      
+      // Head and neck
+      for (let i = 0; i < 6; i++) {
+        spinal = new Segment(spinal, s * 4, 0, 3.1415 * 2 / 3, 1.1);
+        for (let ii = -1; ii <= 1; ii += 2) {
+          let node: any = new Segment(spinal, s * 3, ii, 0.1, 2);
+          for (let iii = 0; iii < 3; iii++) {
+            node = new Segment(node, s * 3, -ii * 0.1, 0.1, 2);
+          }
+        }
+      }
+      
+      // Torso and legs
+      for (let i = 0; i < legs; i++) {
+        if (i > 0) {
+          for (let ii = 0; ii < 6; ii++) {
+            spinal = new Segment(spinal, s * 4, 0, 1.571, 1.5);
+            for (let iii = -1; iii <= 1; iii += 2) {
+              let node: any = new Segment(spinal, s * 3, iii * 1.571, 0.1, 1.5);
+              for (let iv = 0; iv < 3; iv++) {
+                node = new Segment(node, s * 3, -iii * 0.3, 0.1, 2);
+              }
+            }
+          }
+        }
+        
+        for (let ii = -1; ii <= 1; ii += 2) {
+          let node: any = new Segment(spinal, s * 12, ii * 0.785, 0, 8);
+          node = new Segment(node, s * 16, -ii * 0.785, 6.28, 1);
+          node = new Segment(node, s * 16, ii * 1.571, 3.1415, 2);
+          for (let iii = 0; iii < 4; iii++) {
+            new Segment(node, s * 4, (iii / 3 - 0.5) * 1.571, 0.1, 4);
+          }
+          new LegSystem(node, 3, s * 12, critter);
+        }
+      }
+      
+      // Tail
+      for (let i = 0; i < tail; i++) {
+        spinal = new Segment(spinal, s * 4, 0, 3.1415 * 2 / 3, 1.1);
+        for (let ii = -1; ii <= 1; ii += 2) {
+          let node: any = new Segment(spinal, s * 3, ii, 0.1, 2);
+          for (let iii = 0; iii < 3; iii++) {
+            node = new Segment(node, s * 3 * (tail - i) / tail, -ii * 0.1, 0.1, 2);
+          }
+        }
+      }
+      
+      return critter;
     };
 
+    // Initialize with transparent background and red lines for horror theme
+    ctx.strokeStyle = '#8B0000'; // Dark red for horror effect
+    ctx.lineWidth = 2;
+    
+    const legNum = Math.floor(1 + Math.random() * 8);
+    const critter = setupLizard(
+      8 / Math.sqrt(legNum),
+      legNum,
+      Math.floor(4 + Math.random() * 12)
+    );
+    critterRef.current = critter;
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      critter.follow(Input.mouse.x, Input.mouse.y);
+    };
+
+    const intervalId = setInterval(animate, 33);
+
+    // Handle window resize
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-
-    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
 
-    interface Point {
-      x: number;
-      y: number;
-    }
-
-    const segments: Point[] = [];
-    const segmentCount = 25;
-    const segmentDistance = 10;
-
-    // Initialize segments
-    for (let i = 0; i < segmentCount; i++) {
-      segments.push({ x: canvas.width / 2, y: canvas.height / 2 });
-    }
-
-    function animate() {
-      if (!ctx || !canvas) return;
-
-      // Trail effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Head follows mouse
-      segments[0].x = mouseX;
-      segments[0].y = mouseY;
-
-      // Each segment follows the previous
-      for (let i = 1; i < segments.length; i++) {
-        const dx = segments[i].x - segments[i - 1].x;
-        const dy = segments[i].y - segments[i - 1].y;
-        const angle = Math.atan2(dy, dx);
-        
-        segments[i].x = segments[i - 1].x + Math.cos(angle) * segmentDistance;
-        segments[i].y = segments[i - 1].y + Math.sin(angle) * segmentDistance;
-      }
-
-      // Draw spine and ribs
-      for (let i = 0; i < segments.length - 1; i++) {
-        const thickness = 6 * (1 - i / segments.length);
-        
-        // Spine segment
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = thickness;
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(segments[i].x, segments[i].y);
-        ctx.lineTo(segments[i + 1].x, segments[i + 1].y);
-        ctx.stroke();
-
-        // Draw legs every 4 segments
-        if (i % 4 === 0 && i > 0 && i < segments.length - 5) {
-          const dx = segments[i + 1].x - segments[i].x;
-          const dy = segments[i + 1].y - segments[i].y;
-          const angle = Math.atan2(dy, dx);
-
-          const limbLength = 25;
-          const limbAngle1 = angle + Math.PI / 2;
-          const limbAngle2 = angle - Math.PI / 2;
-
-          // Left leg
-          const leg1x = segments[i].x + Math.cos(limbAngle1) * limbLength;
-          const leg1y = segments[i].y + Math.sin(limbAngle1) * limbLength;
-
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.moveTo(segments[i].x, segments[i].y);
-          ctx.lineTo(leg1x, leg1y);
-          ctx.stroke();
-
-          // Left claw
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(leg1x, leg1y);
-          ctx.lineTo(leg1x + Math.cos(limbAngle1 + 0.5) * 8, leg1y + Math.sin(limbAngle1 + 0.5) * 8);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(leg1x, leg1y);
-          ctx.lineTo(leg1x + Math.cos(limbAngle1 - 0.5) * 8, leg1y + Math.sin(limbAngle1 - 0.5) * 8);
-          ctx.stroke();
-
-          // Right leg
-          const leg2x = segments[i].x + Math.cos(limbAngle2) * limbLength;
-          const leg2y = segments[i].y + Math.sin(limbAngle2) * limbLength;
-
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.moveTo(segments[i].x, segments[i].y);
-          ctx.lineTo(leg2x, leg2y);
-          ctx.stroke();
-
-          // Right claw
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(leg2x, leg2y);
-          ctx.lineTo(leg2x + Math.cos(limbAngle2 + 0.5) * 8, leg2y + Math.sin(limbAngle2 + 0.5) * 8);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(leg2x, leg2y);
-          ctx.lineTo(leg2x + Math.cos(limbAngle2 - 0.5) * 8, leg2y + Math.sin(limbAngle2 - 0.5) * 8);
-          ctx.stroke();
-        }
-      }
-
-      // Draw head with glowing red eyes
-      const headDx = segments[1].x - segments[0].x;
-      const headDy = segments[1].y - segments[0].y;
-      const headAngle = Math.atan2(headDy, headDx);
-
-      const eye1X = segments[0].x - Math.cos(headAngle) * 8 + Math.cos(headAngle + Math.PI / 2) * 4;
-      const eye1Y = segments[0].y - Math.sin(headAngle) * 8 + Math.sin(headAngle + Math.PI / 2) * 4;
-
-      const eye2X = segments[0].x - Math.cos(headAngle) * 8 + Math.cos(headAngle - Math.PI / 2) * 4;
-      const eye2Y = segments[0].y - Math.sin(headAngle) * 8 + Math.sin(headAngle - Math.PI / 2) * 4;
-
-      ctx.fillStyle = '#ff0000';
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = '#ff0000';
-
-      ctx.beginPath();
-      ctx.arc(eye1X, eye1Y, 3, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(eye2X, eye2Y, 3, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.shadowBlur = 0;
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
+    // Cleanup
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(intervalId);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="reptile-canvas" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={styles.horrorCursor}
+    />
+  );
 }

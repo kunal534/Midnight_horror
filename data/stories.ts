@@ -16,14 +16,12 @@ export const stories: Story[] = [
     id: '1',
     title: 'Hollow Hunger',
     excerpt: 'A mysterious voice calls from the darkness, and those who answer are never the same...',
-    fullContent: `A storm pinned Elias inside the abandoned ranger station, but the footprints outside didn’t belong to any human—too narrow, too deep, too deliberate. They circled the cabin all night, never overlapping, as if the thing outside was studying him.
-By dawn, the generator died. The radio followed. Every window showed the same treeline—silent, rigid, watching. When Elias finally stepped out, the air carried a smell like frozen meat turning warm.
-He heard his own voice call his name from the forest. Perfect pitch. Perfect breath. Impossible.
-He ran.
-The voice followed, getting closer, softer, almost sympathetic, until it whispered against his ear: “You already know why I sound like you.”
-Elias looked down.
-His footprints weren’t behind him—they were ahead of him.
-The wendigo had been wearing him long before he started running.`,
+    fullContent: `
+Hollow Hunger explores the legend of the Wendigo, a creature from Algonquian speaking Indigenous peoples of North America.  
+The Wendigo is associated with insatiable greed, cannibalism, and the consequences of moral transgression, particularly in harsh winter environments where survival is scarce.  
+It embodies both physical horror and psychological terror, representing the human fear of isolation, starvation, and the loss of moral control.  
+Historically, stories of the Wendigo were used as cautionary tales to discourage selfishness and antisocial behavior in communities, emphasizing cultural ethics and survival rules.  
+The legend is most prevalent in regions of Canada and the northern United States, influencing oral storytelling, literature, and modern horror interpretations.`,
     imageUrl: '/images/Wendigo.jpg',
     slug: 'whispers-in-dark',
     tags: ['supernatural', 'mystery', 'psychological'],
@@ -31,95 +29,104 @@ The wendigo had been wearing him long before he started running.`,
     month: '2025-11',
     readTime: '5 min read',
   },
- {
-  id: '2',
-  excerpt: 'In the misty hills of Ireland, her mournful cries foretell death… are you listening?',
-  title: 'The Wailing of the Banshee',
-  fullContent: `
-In the ancient hills of Ireland, certain families are bound by fate to a ghostly herald: the Banshee.  
-She is a female spirit, sometimes young and ethereal, sometimes old and terrifying, her long hair flowing like silver threads in the wind. Pale, almost translucent skin clings to her form, her eyes wide with sorrow or horror. She appears near windows, doorways, or graveyards at night, her mournful wail piercing the silence.  
-The Banshee does not seek to harm; she warns. Her presence signals that a death approaches within a family tied to her curse. Those who hear her wail feel a cold dread, a premonition of loss, as if the air itself mourns in her absence.  
-Some see her reflected in water, or as a ghostly silhouette against the moonlight. Her hands may reach toward the living, trembling with sorrow, her voice a lament carried by the wind. In Ireland, to see the Banshee is to confront fate itself. Will you hear her cry before it is too late?  
-  `,
-  imageUrl: '/images/Banshree.jpg',
-  slug: 'the-wailing-of-the-banshee',
-  tags: ['horror', 'supernatural', 'Irish folklore', 'ghost stories', 'wailing spirit'],
-  publishedDate: 'Nov 2025',
-  month: '2025-11',
-  readTime: '6 min read'
-}
-,
-{
-  id: '3',
-  title: 'The Nets Above the City',
-  excerpt: 'In the neon-lit towers of Japan, bodies fall… and the powerful laugh from above.',
-  fullContent: `
-In the corporate depths of a Japanese megacity, the line between factory and office has finally collapsed.  
-Glass towers shimmer in the dark, masks for the ruthless machinery within. Skybridges hum with cold light, and beneath them hang metal nets—installed not for compassion, but to protect productivity.  
-Workers inside glow behind reflective windows, shadows hunched over screens, their faces hollow. Below, bodies sometimes slip past the netting—crashing onto the concrete with a final, helpless bloom of red. Those watching from rooftop lounges seldom flinch. Some even point. Some laugh. They are the architects of this system—the ones who forged the rules that keep everyone else obedient, silent, and replaceable.  
-Every fall is a reminder of the hierarchy they built: steel above flesh, greed above life. In this city, the night carries more than smog—it carries the quiet certainty that no one mourns the fallen.  
-Here, the nets do not save. They only catch what the powerful aren’t finished using. And for those who slip through… the street below becomes their last lesson in how the world truly works.  
-  `,
-  imageUrl: '/images/Japan_netting.jpg',
-  slug: 'the-nets-above-the-city',
-  tags: ['horror', 'corporate dystopia', 'psychological horror', 'urban terror', 'dark modern myth'],
-  publishedDate: 'Nov 2025',
-  month: '2025-11',
-  readTime: '7 min read'
-},
-{
-  id: '4',
-  title: 'Eyes from Ashes',
-  excerpt: 'Among the burning dead, selective morality finally shows its true cost.',
-  fullContent: `
-    On the riverbank, the pyres expose what people spend their entire lives avoiding.  
-    An Aghori stands in the smoke, unbothered by the bodies, unmoved by the rituals, uninterested in the excuses the living build their identity on.
-
-    This place makes one thing clear: humans do not fear death—they fear having to confront the parts of existence they’ve ignored.  
-    They celebrate birth, purity, and light because those are easy.  
-    But the moment darkness enters the conversation, they retreat, deny, and pretend it isn’t part of the same cycle they claim to respect.
-
-    Selective morality thrives here.  
-    People worship gods that demand balance, then refuse to acknowledge anything beyond the sanitized half of life.  
-    They want the rewards of completeness without engaging with the truth of it.  
-    They reject decay, suffering, shadows, and still expect to be judged as whole, righteous, deserving.
-
-    The Aghori watches this hypocrisy with full clarity.  
-    He understands what the living refuse to accept: that avoidance is not innocence, and denial isn’t purity.  
-    The dead lying in the fire are not symbols—they’re the final outcome of every human contradiction, stripped of all pretense.
-
-    Nothing here bends to belief.  
-    Nothing protects selective morality from being exposed.  
-    And in the ashes, everything the living tried to hide becomes impossible to escape.
-  `,
-  imageUrl: '/images/Aghoni.jpg',
-  slug: 'eyes-from-ashes',
-  tags: ['horror', 'selective morality', 'psychological horror', 'dark realism', 'mortality'],
-  publishedDate: 'Nov 2025',
-  month: '2025-11',
-  readTime: '6 min read'
-},
-{
-  id: '5',
-  title: 'Behind the Ashram’s Gaze',
-  excerpt: 'Within the Dera’s high walls, he used faith as a tool of domination, obedience a currency for unspeakable acts.',
-  fullContent: `
-  Inside the secluded Dera Sacha Sauda, faith was weaponized.  
-  A hooded guru commanded silence and submission, guiding followers through shadowed corridors,
-  ritual chambers, and hidden underground tunnels where obedience was tested and morality bent.  
-  He coerced unspeakable acts, from ritual mutilation to sexual abuse, cloaked in the language of spiritual purity.  
-  Others lurked in the shadows, complicit in fear, as the ashram’s walls concealed horrors invisible to the outside world.  
-  To outsiders, the Dera seemed benign—prayers, charity, ritual spectacle—but behind lattice windows and locked doors, 
-  devotion was a cage.  
-  Faith became a measure of endurance, and every act of obedience a silent toll exacted from the living.  
-  Within these walls, terror and control thrived, morality was manipulated, and the human cost remained unseen, yet inescapable.
-.
-  `,
-  imageUrl: '/images/Ashram.jpg',
-  slug: 'through-the-lattice-of-sin',
-  tags: ['horror', 'cult', 'psychological horror', 'ritual abuse', 'dark realism'],
-  publishedDate: 'Nov 2025',
-  month: '2025-11',
-  readTime: '7 min read'
-}
+  {
+    id: '2',
+    title: 'The Wailing of the Banshee',
+    excerpt: 'In the misty hills of Ireland, her mournful cries foretell death… are you listening?',
+    fullContent: `
+The Wailing of the Banshee examines one of Ireland’s most iconic ghostly figures, a female spirit whose mournful cry foretells death in specific families.  
+In Irish folklore, Banshees are described as ethereal or terrifying women, often appearing near windows, doorways, or graveyards at night.  
+The legend dates back centuries and is tied to clan-based lineages families believed to have a Banshee are warned of imminent death through her wail rather than physical attack.  
+Her presence reflects deep cultural beliefs about mortality, fate, and the connection between the living and the spirit world.  
+Primarily famous in rural Ireland, the Banshee influenced storytelling, oral tradition, and literature, reinforcing the psychological weight of death and the inevitability of fate.`,
+    imageUrl: '/images/Banshree.jpg',
+    slug: 'the-wailing-of-the-banshee',
+    tags: ['horror', 'supernatural', 'Irish folklore', 'ghost stories', 'wailing spirit'],
+    publishedDate: 'November 2025',
+    month: '2025-11',
+    readTime: '6 min read'
+  },
+  {
+    id: '3',
+    title: 'The Nets Above the City',
+    excerpt: 'In the neon-lit towers of Japan, bodies fall… and the powerful laugh from above.',
+    fullContent: `
+The Nets Above the City explores modern urban horror rooted in social commentary, set against the backdrop of Japan’s highly industrialized megacities.  
+It imagines corporate environments where safety measures, such as nets, are deployed not for protection but to maintain productivity, highlighting the dehumanization of workers.  
+The story reflects real-world issues like workplace exploitation, class disparity, and urban anonymity, where the powerless are vulnerable and the elite remain indifferent.  
+While fictional, the narrative draws inspiration from societal pressures in Japan’s urban centers, including overwork culture, hierarchical control, and the psychological toll of industrialization.  
+It portrays a chilling environment where human life is secondary to efficiency, and horror arises from systemic neglect rather than supernatural forces.  
+`,
+    imageUrl: '/images/Japan_netting.jpg',
+    slug: 'the-nets-above-the-city',
+    tags: ['horror', 'corporate dystopia', 'psychological horror', 'urban terror', 'dark modern myth'],
+    publishedDate: 'November 2025',
+    month: '2025-11',
+    readTime: '7 min read'
+  },
+  {
+    id: '4',
+    title: 'Eyes from Ashes',
+    excerpt: 'Among the burning dead, selective morality finally shows its true cost.',
+    fullContent: `
+Eyes from Ashes highlights the Aghori, an extreme sect in Hinduism known for confronting death, decay, and taboo rituals.  
+Members engage with ashes, corpses, and cremation grounds to symbolize the impermanence of life and detach from fear, attachment, and societal norms.  
+These rituals are intended to confront mortality directly, cultivate spiritual transcendence, and embrace what others find abhorrent.  
+Found primarily in Varanasi and Northern India, the Aghori have fascinated locals and outsiders alike, representing a philosophical approach to death and human vulnerability.  
+This image captures their intense practices, the eerie atmosphere of cremation grounds, and the unsettling psychological horror of facing mortality head-on, emphasizing dark realism over sensationalism.`,
+    imageUrl: '/images/Aghoni.jpg',
+    slug: 'eyes-from-ashes',
+    tags: ['horror', 'selective morality', 'psychological horror', 'dark realism', 'mortality'],
+    publishedDate: 'November 2025',
+    month: '2025-11',
+    readTime: '6 min read'
+  },
+  {
+    id: '5',
+    title: 'Behind the Ashram’s Gaze',
+    excerpt: 'Within the Dera’s high walls, he used faith as a tool of domination, obedience a currency for unspeakable acts.',
+    fullContent: `
+Behind the Ashram’s Gaze examines the Dera Sacha Sauda, a real-world sect in India with a history of strict hierarchy and reported abuse.  
+The story highlights how spiritual authority can be weaponized to control followers, using obedience, ritual, and secrecy as tools of domination.  
+It situates the ashram within its cultural, social, and ethical context, showing the psychological impact of coercion and fear on devotees.  
+While the Dera is known for charity and spiritual practices to outsiders, the narrative explores the hidden layers of power, exploitation, and manipulation that often remain invisible.  
+This story provides readers with insight into the mechanisms of control within secluded religious communities, emphasizing dark realism and psychological horror over sensationalism.  
+It reflects on broader human behaviors, morality, and the consequences of blind faith in hierarchical structures.`,
+    imageUrl: '/images/Ashram.jpg',
+    slug: 'through-the-lattice-of-sin',
+    tags: ['horror', 'cult', 'psychological horror', 'ritual abuse', 'dark realism'],
+    publishedDate: 'November 2025',
+    month: '2025-11',
+    readTime: '7 min read'
+  },
+  {
+    id: '6',
+    title: 'Wobble Down Within Me',
+    excerpt: 'I drift above the village, a severed head hung with flesh, eyes hollow and hungry, waiting for those who stray.',
+    fullContent: `
+Wobble Down Within Me explores the folklore of the Krasue, a nocturnal spirit from Southeast Asia, particularly Thailand, Laos, and Cambodia. Traditionally depicted as a woman’s floating head with dangling internal organs, the Krasue embodies fear, superstition, and moral caution in rural communities. Mentioned in historical texts and local scriptures, the Krasue is often said to prey on children and innocents. Folklore describes the ghost separating its upper body from the lower at night to search for food. Legends also warn that if the Krasue does not return to its body before sunrise, the body will burn, killing the spirit.`,
+    imageUrl: '/images/japenese.jpg',
+    slug: 'wobble-down-within-me',
+    tags: ['horror', 'folklore', 'psychological horror', 'supernatural', 'dark realism'],
+    publishedDate: 'November 2025',
+    month: '2025-11',
+    readTime: '3 min read'
+  },
+  {
+    id: '7',
+    title: 'Order of the Solar Temple: The Ember Concord',
+    excerpt: 'In remote chalets across Europe and Canada, devotion turned fatal, leaving charred halls and silent witnesses…',
+    fullContent: `
+The Order of the Solar Temple was a doomsday cult founded by Joseph Di Mambro and Luc Jouret.  
+Between 1994 and 1997, the cult orchestrated mass ritual deaths in Switzerland, France, and Canada.  
+Members participated in ceremonies inside remote chalets, often wearing crimson-and-gold robes and following Templar-inspired symbolism.  
+The group believed in “transit” to a higher plane, which led followers to participate in fatal rituals involving fire and ceremonial objects.  
+This image reflects the cult’s obsessive devotion, ritualistic practices, and the tragic events that resulted from blind faith.`,    
+  imageUrl: '/images/cult2.jpg',
+    slug: 'order-of-the-solar-temple',
+    tags: ['cult', 'true crime', 'ritual', 'psychological horror', 'mass deaths', 'occult'],
+    publishedDate: 'October 2025',
+    month: '2025-10',
+    readTime: '6 min read'
+  }
 ];

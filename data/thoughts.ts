@@ -5,8 +5,7 @@ export interface Thought {
   fullContent: string; // Full 2-3 paragraphs
   date: string;
   slug: string; // URL friendly
-  category?: 'horror' | 'writing' | 'personal' | 'thoughts';
-  // emoji?: string;
+  category?: 'horror' | 'writing' | 'personal' | 'thoughts' | 'Self Realization';
 }
 
 export const thoughtsList: Thought[] = [
@@ -37,7 +36,6 @@ They don’t need comfort. They need consequences. They need distance.
 Not everyone drowning wants a hand. Some just want someone to watch them sink long enough to realise that some battles are fought alone.`,
   date: 'November 17, 2025',
   category: 'thoughts',
-  // emoji: '🕯️',
 }
 ,
 {
@@ -69,7 +67,6 @@ Not every child raised on dreams grows up spoiled. But many grow up unprepared. 
 Fantasy isn’t the enemy. Staying in it for too long is.`,
   date: 'November 20, 2025',
   category: 'thoughts',
-  // emoji: '👁️',
 }
 ,
 {
@@ -109,7 +106,23 @@ where biology operates as designed, without chronic hyperarousal, hypoarousal, o
 `,
 date: 'November 22, 2025',
   category: 'personal',
-  // emoji: '',
+}
+,
+{
+  id: `4`,
+  title: `Too Awake for Bad Connections`,
+  slug: `too-awake-for-bad-connections`,
+  excerpt: `When your mind outgrows your environment, connection stops feeling like comfort and starts feeling like compromise.`,
+  fullContent: `
+I’ve reached a point where I see the game behind human behavior, especially in relationships. I understand the trades, the denial, the emotional manipulation, and the desperate need most people have to avoid reality. And once you see it, you can’t pretend it’s love anymore.
+The struggle is simple: if I keep my logic alive, it separates me from people who rely on illusions to function. If I turn that logic off, I betray myself and feel stupid later. It’s like choosing between being alone and self-aware, or being surrounded and fake.
+Most people around me chase temporary highs—impulse purchases, meaningless trips, shallow validation. They complain about their life while actively choosing the behavior that ruins it. When I question them, they defend their own stupidity because that’s the only way they can keep living comfortably.
+I’m not against emotion. I’m against blindness. I’m against calling dependency “love.” I can live alone without losing my sanity. I don’t need someone to fill emotional gaps I’ve already learned to handle myself. And honestly, one heartbreak taught me more than any relationship could.
+People say relationships give meaning. Maybe. But if the people available lack accountability, depth, and awareness, then what exactly am I gaining besides problems? I’d rather have no partner than a bad one. I’d rather have one strong bond than ten weak ones.
+I’m not rejecting human connection. I’m rejecting nonsense disguised as connection. I know what I bring, and I refuse to shrink my mind just to fit into someone else’s comfort zone.
+The issue isn’t that I’m unfit for relationships. The issue is that I outgrew the environment where bad relationships are considered normal. `,
+  date: "November 23, 2025",
+  category: "Self Realization"
 }
 
 ];

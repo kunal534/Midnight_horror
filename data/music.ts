@@ -41,5 +41,26 @@ export const musicPlaylist: Track[] = [
     artist:'Midnight',
     file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Pulse%20Beneath%20the%20Floor.mp3',
     duration:'2:13',
+  },
+  {
+    id:'6',
+    title:'Frozen Floor',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Frozen%20Floor.mp3',
+    duration:'1:35',
+  },
+  {
+    id:'7',
+    title:'Twisted Roots',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Twisted%20Roots.mp3',
+    duration:'1:32',
+  },
+  {
+    id:'8',
+    title:'Ghosts of Your Touch',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Ghosts%20of%20Your%20Touch.mp3',
+    duration:'2:11'
   }
 ];
