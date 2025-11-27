@@ -167,5 +167,25 @@ This story is a meditation on human susceptibility to manipulation, the moral vo
   publishedDate: 'October 2025',
   month: '2025-10',
   readTime: '5 min read'
+},
+{
+  id: '10',
+  title: 'Fire in the Church',
+  excerpt: 'A prophecy twisted into doom, a congregation sealed within its sanctuary, and a fire that turned devotion into mass death…',
+  fullContent: `Fire in the Church traces the final hours of the Movement for the Restoration of the Ten Commandments of God a group led by Joseph Kibweteere and Credonia Mwerinde, whose apocalyptic prophecies distorted faith into fatal obedience.
+
+On March 17, 2000, the congregation gathered inside their Kanungu church for what they believed was a sacred sendoff. Windows were barred, doors nailed shut, and the sanctuary packed wall to wall. Moments later, an explosion ignited the building, swallowing the followers in a flash of heat and smoke. The fire consumed the structure within minutes, leaving behind a mass of charred bodies collapsed across pews, aisles, and the altar they trusted.
+
+Investigators soon discovered that this was no accident, nor a spontaneous act of mass suicide. It was a meticulously engineered kill event. Other compound sites revealed shallow graves, poisoned victims, and evidence of systematic elimination of members who questioned the leaders’ predictions of the world’s end. The sect’s prophecies had failed, and the leadership chose annihilation over exposure.
+
+The aftermath exposed the machinery of manipulation false revelations, financial exploitation, psychological isolation, and a doctrine weaponized to maintain control. The church fire was merely the final act of a long descent into fanaticism, where spiritual yearning became a tool for mass murder.
+
+It forces us to ask, when a community surrenders its judgement to a chosen few, who decides how and when faith ends?`,
+  imageUrl: '/images/fire_in_the_church.jpg',
+  slug: 'fire-in-the-church',
+  tags: ['horror', 'historical horror', 'psychological horror', 'true crime', 'cult', 'Uganda'],
+  publishedDate: 'November 2025',
+  month: '2025-11',
+  readTime: '5 min read'
 }
 ];

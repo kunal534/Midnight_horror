@@ -3,13 +3,6 @@
 import { musicPlaylist } from '@/data/music';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-// Ensure your Thought interface includes emoji as optional
-interface Thought {
-  title: string;
-  emoji?: string;
-  // ...other fields
-}
-
 export default function EnhancedMusicPlayer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(true);
@@ -19,29 +12,53 @@ export default function EnhancedMusicPlayer() {
   const [showPlayer, setShowPlayer] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const hasUserInteractedRef = useRef(false);
   const shouldContinuePlayingRef = useRef(false);
+  const touchStartPosRef = useRef({ x: 0, y: 0 });
+  const hasDraggedRef = useRef(false);
+  const isTouchingPlayerRef = useRef(false);
 
   const currentTrack = musicPlaylist[currentIndex];
 
+  // Get current player width based on state
+  const getPlayerWidth = useCallback(() => {
+    return isExpanded ? 380 : (isMobile ? 56 : 240);
+  }, [isExpanded, isMobile]);
+
+  // Detect mobile/desktop
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Mouse dragging
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('.no-drag')) return;
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'BUTTON' || target.tagName === 'AUDIO' || target.closest('button') || target.closest('audio')) {
+      return;
+    }
+    
+    e.preventDefault();
     setIsDragging(true);
     setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
   };
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging) return;
+    e.preventDefault();
     let newX = e.clientX - dragStart.x;
     let newY = e.clientY - dragStart.y;
-    const maxX = window.innerWidth - 400;
+    const playerWidth = getPlayerWidth();
+    const maxX = window.innerWidth - playerWidth;
     const maxY = window.innerHeight - 150;
     newX = Math.max(0, Math.min(newX, maxX));
     newY = Math.max(0, Math.min(newY, maxY));
     setPosition({ x: newX, y: newY });
-  }, [isDragging, dragStart.x, dragStart.y]);
+  }, [isDragging, dragStart.x, dragStart.y, getPlayerWidth]);
 
   const handleMouseUp = useCallback(() => {
     if (isDragging) {
@@ -50,48 +67,108 @@ export default function EnhancedMusicPlayer() {
     }
   }, [isDragging, position]);
 
-  // Touch dragging
+  // Touch dragging - only when touching the player
   const handleTouchStart = (e: React.TouchEvent) => {
-    if ((e.target as HTMLElement).closest('.no-drag')) return;
-    setIsDragging(true);
+    const target = e.target as HTMLElement;
+    
+    // Don't allow dragging if touching buttons or audio controls
+    if (target.tagName === 'BUTTON' || 
+        target.tagName === 'AUDIO' || 
+        target.closest('button') || 
+        target.closest('audio') ||
+        target.getAttribute('type') === 'range') {
+      isTouchingPlayerRef.current = false;
+      return;
+    }
+
+    isTouchingPlayerRef.current = true;
     const touch = e.touches[0];
+    touchStartPosRef.current = { x: touch.clientX, y: touch.clientY };
+    hasDraggedRef.current = false;
     setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
   };
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
-    if (!isDragging) return;
+    // Only process if touch started on the player
+    if (!isTouchingPlayerRef.current) return;
+    
     const touch = e.touches[0];
-    let newX = touch.clientX - dragStart.x;
-    let newY = touch.clientY - dragStart.y;
-    const maxX = window.innerWidth - 400;
-    const maxY = window.innerHeight - 150;
-    newX = Math.max(0, Math.min(newX, maxX));
-    newY = Math.max(0, Math.min(newY, maxY));
-    setPosition({ x: newX, y: newY });
-  }, [isDragging, dragStart.x, dragStart.y]);
+    const deltaX = Math.abs(touch.clientX - touchStartPosRef.current.x);
+    const deltaY = Math.abs(touch.clientY - touchStartPosRef.current.y);
+    
+    // If moved more than 10px, it's a drag
+    if (deltaX > 10 || deltaY > 10) {
+      hasDraggedRef.current = true;
+      setIsDragging(true);
+      e.preventDefault();
+      
+      let newX = touch.clientX - dragStart.x;
+      let newY = touch.clientY - dragStart.y;
+      const playerWidth = getPlayerWidth();
+      const maxX = window.innerWidth - playerWidth;
+      const maxY = window.innerHeight - 150;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      setPosition({ x: newX, y: newY });
+    }
+  }, [dragStart.x, dragStart.y, getPlayerWidth]);
 
   const handleTouchEnd = useCallback(() => {
+    // Only process if touch started on the player
+    if (!isTouchingPlayerRef.current) return;
+    
     if (isDragging) {
       setIsDragging(false);
       localStorage.setItem('musicPlayerPos', JSON.stringify(position));
     }
-  }, [isDragging, position]);
+    
+    // If it was a tap (not a drag) and player is minimized, expand it
+    if (!hasDraggedRef.current && !isExpanded) {
+      setIsExpanded(true);
+    }
+    
+    hasDraggedRef.current = false;
+    isTouchingPlayerRef.current = false;
+  }, [isDragging, position, isExpanded]);
 
   // Manage event listeners for drag
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('touchmove', handleTouchMove);
-      window.addEventListener('touchend', handleTouchEnd);
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchend', handleTouchEnd);
-      };
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
     }
-  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  // Touch event listeners - attached to window but only process when touching player
+  useEffect(() => {
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+    
+    return () => {
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [handleTouchMove, handleTouchEnd]);
+
+  // Adjust position when player size changes
+  useEffect(() => {
+    const playerWidth = getPlayerWidth();
+    const maxX = window.innerWidth - playerWidth;
+    const maxY = window.innerHeight - 150;
+    
+    setPosition(prev => ({
+      x: Math.max(0, Math.min(prev.x, maxX)),
+      y: Math.max(0, Math.min(prev.y, maxY)),
+    }));
+  }, [isExpanded, isMobile, getPlayerWidth]);
 
   // Initial position, animation handling
   useEffect(() => {
@@ -120,7 +197,7 @@ export default function EnhancedMusicPlayer() {
     }
   }, []);
 
-  // Audio event listeners (fixed: removed musicPlaylist.length from deps)
+  // Audio event listeners
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -140,20 +217,17 @@ export default function EnhancedMusicPlayer() {
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
     };
-    const handleLoadedData = () => {/* Optional: log loaded */};
 
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadeddata', handleLoadedData);
 
     return () => {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('loadeddata', handleLoadedData);
     };
   }, [currentIndex, currentTrack.title]);
 
@@ -166,7 +240,6 @@ export default function EnhancedMusicPlayer() {
     audio.load();
     setCurrentTime(0);
 
-    // Autoplay next track if appropriate
     if (shouldContinuePlayingRef.current && hasUserInteractedRef.current) {
       const attemptPlay = () => {
         audio.play()
@@ -182,11 +255,12 @@ export default function EnhancedMusicPlayer() {
 
   // Snap to nearest corner
   const snapToCorner = () => {
+    const playerWidth = getPlayerWidth();
     const corners = [
       { x: 20, y: 100 },
-      { x: Math.max(20, window.innerWidth - 400), y: 100 },
-      { x: 20, y: Math.max(100, window.innerHeight - 100) },
-      { x: Math.max(20, window.innerWidth - 400), y: Math.max(100, window.innerHeight - 100) },
+      { x: Math.max(20, window.innerWidth - playerWidth - 20), y: 100 },
+      { x: 20, y: Math.max(100, window.innerHeight - 150) },
+      { x: Math.max(20, window.innerWidth - playerWidth - 20), y: Math.max(100, window.innerHeight - 150) },
     ];
     let nearest = corners[3];
     let minDist = Infinity;
@@ -216,7 +290,7 @@ export default function EnhancedMusicPlayer() {
         position: 'fixed',
         left: `${position.x}px`,
         top: `${position.y}px`,
-        width: '380px',
+        width: isExpanded ? '380px' : (isMobile ? '56px' : '240px'),
         background: 'linear-gradient(135deg, #4d0000 0%, #6b0000 100%)',
         border: '3px solid #2d0000',
         borderRadius: '16px',
@@ -225,6 +299,9 @@ export default function EnhancedMusicPlayer() {
         cursor: isDragging ? 'grabbing' : 'grab',
         animation: 'fadeInUp 0.5s ease-out',
         touchAction: 'none',
+        transition: 'width 0.3s ease',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
       }}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
@@ -234,6 +311,21 @@ export default function EnhancedMusicPlayer() {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes marquee {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-150%); }
+        }
+        .marquee-container {
+          overflow: hidden;
+          position: relative;
+          width: 100%;
+        }
+        .marquee-text {
+          display: inline-block;
+          white-space: nowrap;
+          padding-right: 50px;
+          animation: marquee 15s linear infinite;
+        }
       `}</style>
 
       {/* Header */}
@@ -241,216 +333,307 @@ export default function EnhancedMusicPlayer() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '12px 16px',
+        padding: isExpanded ? '12px 16px' : (isMobile ? '12px' : '10px 12px'),
         borderBottom: isExpanded ? '2px solid #2d0000' : 'none',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '20px' }}>🎵</span>
-          <span style={{
-            fontFamily: 'Creepster, cursive',
-            color: '#E8E4D9',
-            fontSize: '16px',
-            fontWeight: 700,
-            textShadow: '0 0 10px rgba(220, 20, 60, 0.8)',
+        {isExpanded ? (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '20px' }}>🎵</span>
+              <span style={{
+                fontFamily: 'Creepster, cursive',
+                color: '#E8E4D9',
+                fontSize: '16px',
+                fontWeight: 700,
+                textShadow: '0 0 10px rgba(220, 20, 60, 0.8)',
+              }}>
+                MIDNIGHT SOUNDS
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }} style={{
+                background: 'transparent',
+                border: '2px solid #E8E4D9',
+                color: '#E8E4D9',
+                padding: '4px 10px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}>
+                −
+              </button>
+              <button onClick={(e) => {
+                e.stopPropagation();
+                snapToCorner();
+              }} style={{
+                background: 'transparent',
+                border: '2px solid #E8E4D9',
+                color: '#E8E4D9',
+                padding: '4px 10px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '16px',
+              }}>⚓</button>
+            </div>
+          </>
+        ) : (
+          // Minimized view
+          <div style={{ 
+            width: '100%', 
+            display: 'flex', 
+            alignItems: 'center',
+            justifyContent: isMobile ? 'center' : 'space-between',
+            gap: '6px',
+            cursor: 'grab',
           }}>
-            MIDNIGHT SOUNDS
-          </span>
-        </div>
-        <div className="no-drag" style={{ display: 'flex', gap: '8px' }}>
-          <button onClick={() => setIsExpanded(!isExpanded)} style={{
-            background: 'transparent',
-            border: '2px solid #E8E4D9',
-            color: '#E8E4D9',
-            padding: '4px 10px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold',
-          }}>
-            {isExpanded ? '−' : '+'}
-          </button>
-          <button onClick={snapToCorner} style={{
-            background: 'transparent',
-            border: '2px solid #E8E4D9',
-            color: '#E8E4D9',
-            padding: '4px 10px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '16px',
-          }}>⚓</button>
-        </div>
+            {isMobile ? (
+              <div
+                style={{
+                  fontSize: '28px',
+                  padding: '4px',
+                  cursor: 'pointer',
+                }}
+              >
+                🎵
+              </div>
+            ) : (
+              <>
+                <div className="marquee-container" style={{ 
+                  flex: 1,
+                  minWidth: 0,
+                }}>
+                  <div className="marquee-text" style={{
+                    color: '#E8E4D9',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}>
+                    {isPlaying && '▶ '}{currentTrack.title} - {currentTrack.artist}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(true);
+                  }} style={{
+                    background: 'transparent',
+                    border: '2px solid #E8E4D9',
+                    color: '#E8E4D9',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}>
+                    +
+                  </button>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    snapToCorner();
+                  }} style={{
+                    background: 'transparent',
+                    border: '2px solid #E8E4D9',
+                    color: '#E8E4D9',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                  }}>⚓</button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Content */}
-      <div className="no-drag" style={{ padding: '16px' }}>
-        <div style={{
-          marginBottom: '12px',
-          padding: '12px',
-          background: 'rgba(0, 0, 0, 0.4)',
-          borderRadius: '8px',
-          border: '2px solid #8B0000',
-        }}>
+      {/* Single audio element - ALWAYS in DOM, positioned based on expanded state */}
+      <div style={{ 
+        padding: isExpanded ? '16px' : '0',
+        paddingTop: isExpanded ? '16px' : '0'
+      }}>
+        {/* NOW PLAYING info - only when expanded */}
+        {isExpanded && (
           <div style={{
-            fontSize: '10px',
-            color: '#DC143C',
-            marginBottom: '4px',
-            textTransform: 'uppercase',
-            letterSpacing: '1px',
-            fontWeight: 'bold',
+            marginBottom: '12px',
+            padding: '12px',
+            background: 'rgba(0, 0, 0, 0.4)',
+            borderRadius: '8px',
+            border: '2px solid #8B0000',
           }}>
-            NOW PLAYING {isPlaying && '• ▶'}
+            <div style={{
+              fontSize: '10px',
+              color: '#DC143C',
+              marginBottom: '4px',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              fontWeight: 'bold',
+            }}>
+              NOW PLAYING {isPlaying && '• ▶'}
+            </div>
+            <div style={{
+              fontSize: '14px',
+              color: '#E8E4D9',
+              fontWeight: 'bold',
+              marginBottom: '2px',
+            }}>
+              {currentTrack.title}
+            </div>
+            <div style={{ fontSize: '11px', color: '#B8B8B8' }}>
+              {currentTrack.artist} • {formatTime(currentTime)}
+            </div>
           </div>
-          <div style={{
-            fontSize: '14px',
-            color: '#E8E4D9',
-            fontWeight: 'bold',
-            marginBottom: '2px',
-          }}>
-            {currentTrack.title}
-          </div>
-          <div style={{ fontSize: '11px', color: '#B8B8B8' }}>
-            {currentTrack.artist} • {formatTime(currentTime)}
-          </div>
-        </div>
+        )}
 
+        {/* Audio element - ALWAYS rendered, just hidden when minimized */}
         <audio
           ref={audioRef}
           controls
           src={currentTrack.file}
           style={{
-            width: '100%',
-            height: '40px',
-            marginBottom: '12px',
+            width: isExpanded ? '100%' : '0',
+            height: isExpanded ? '40px' : '0',
+            marginBottom: isExpanded ? '12px' : '0',
             borderRadius: '8px',
             display: isExpanded ? 'block' : 'none',
+            touchAction: 'auto',
           }}
           preload="auto"
         />
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '12px',
-          marginBottom: isExpanded ? '12px' : '0',
-        }}>
-          <button
-            onClick={() => {
-              hasUserInteractedRef.current = true;
-              if (audioRef.current && !audioRef.current.paused) {
-                shouldContinuePlayingRef.current = true;
-              }
-              setCurrentIndex((currentIndex - 1 + musicPlaylist.length) % musicPlaylist.length);
-            }}
-            style={{
-              background: 'rgba(0, 0, 0, 0.4)',
-              border: '2px solid #8B0000',
-              color: '#E8E4D9',
-              padding: '8px 20px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: 'bold',
-            }}
-          >
-            ⏮ Prev
-          </button>
-          <button
-            onClick={() => {
-              if (audioRef.current) {
-                if (audioRef.current.paused) {
-                  hasUserInteractedRef.current = true;
-                  audioRef.current.play();
-                } else {
-                  audioRef.current.pause();
-                }
-              }
-            }}
-            style={{
-              background: isPlaying ? 'rgba(220, 20, 60, 0.6)' : 'rgba(0, 0, 0, 0.4)',
-              border: '2px solid #DC143C',
-              color: '#E8E4D9',
-              padding: '8px 20px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: 'bold',
-            }}
-          >
-            {isPlaying ? '⏸ Pause' : '▶ Play'}
-          </button>
-          <button
-            onClick={() => {
-              hasUserInteractedRef.current = true;
-              if (audioRef.current && !audioRef.current.paused) {
-                shouldContinuePlayingRef.current = true;
-              }
-              setCurrentIndex((currentIndex + 1) % musicPlaylist.length);
-            }}
-            style={{
-              background: 'rgba(0, 0, 0, 0.4)',
-              border: '2px solid #8B0000',
-              color: '#E8E4D9',
-              padding: '8px 20px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: 'bold',
-            }}
-          >
-            Next ⏭
-          </button>
-        </div>
-
+        {/* Rest of controls - only when expanded */}
         {isExpanded && (
-          <div>
+          <>
             <div style={{
-              fontSize: '10px',
-              color: '#DC143C',
-              marginBottom: '8px',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              fontWeight: 'bold',
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '12px',
+              marginBottom: '12px',
             }}>
-              PLAYLIST ({musicPlaylist.length} TRACKS)
-            </div>
-            <div style={{
-              maxHeight: '120px',
-              overflowY: 'auto',
-              fontSize: '12px',
-            }}>
-              {musicPlaylist.map((track, index) => (
-                <div
-                  key={track.id}
-                  onClick={() => {
-                    hasUserInteractedRef.current = true;
-                    if (audioRef.current && !audioRef.current.paused) {
-                      shouldContinuePlayingRef.current = true;
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  hasUserInteractedRef.current = true;
+                  if (audioRef.current && !audioRef.current.paused) {
+                    shouldContinuePlayingRef.current = true;
+                  }
+                  setCurrentIndex((currentIndex - 1 + musicPlaylist.length) % musicPlaylist.length);
+                }}
+                style={{
+                  background: 'rgba(0, 0, 0, 0.4)',
+                  border: '2px solid #8B0000',
+                  color: '#E8E4D9',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                }}
+              >
+                ⏮ Prev
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (audioRef.current) {
+                    if (audioRef.current.paused) {
+                      hasUserInteractedRef.current = true;
+                      audioRef.current.play();
+                    } else {
+                      audioRef.current.pause();
                     }
-                    setCurrentIndex(index);
-                  }}
-                  style={{
-                    padding: '8px',
-                    marginBottom: '4px',
-                    background: index === currentIndex
-                      ? 'rgba(220, 20, 60, 0.3)'
-                      : 'rgba(0, 0, 0, 0.3)',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    border: index === currentIndex
-                      ? '2px solid #DC143C'
-                      : '2px solid transparent',
-                  }}
-                >
-                  <div style={{ color: '#E8E4D9', marginBottom: '2px', fontSize: '12px', fontWeight: 'bold' }}>
-                    {index === currentIndex && '▶ '}{track.title}
-                  </div>
-                  <div style={{ color: '#B8B8B8', fontSize: '10px' }}>
-                    {track.artist} • {track.duration}
-                  </div>
-                </div>
-              ))}
+                  }
+                }}
+                style={{
+                  background: isPlaying ? 'rgba(220, 20, 60, 0.6)' : 'rgba(0, 0, 0, 0.4)',
+                  border: '2px solid #DC143C',
+                  color: '#E8E4D9',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                }}
+              >
+                {isPlaying ? '⏸ Pause' : '▶ Play'}
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  hasUserInteractedRef.current = true;
+                  if (audioRef.current && !audioRef.current.paused) {
+                    shouldContinuePlayingRef.current = true;
+                  }
+                  setCurrentIndex((currentIndex + 1) % musicPlaylist.length);
+                }}
+                style={{
+                  background: 'rgba(0, 0, 0, 0.4)',
+                  border: '2px solid #8B0000',
+                  color: '#E8E4D9',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Next ⏭
+              </button>
             </div>
-          </div>
+
+            <div>
+              <div style={{
+                fontSize: '10px',
+                color: '#DC143C',
+                marginBottom: '8px',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontWeight: 'bold',
+              }}>
+                PLAYLIST ({musicPlaylist.length} TRACKS)
+              </div>
+              <div style={{
+                maxHeight: '120px',
+                overflowY: 'auto',
+                fontSize: '12px',
+              }}>
+                {musicPlaylist.map((track, index) => (
+                  <div
+                    key={track.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      hasUserInteractedRef.current = true;
+                      if (audioRef.current && !audioRef.current.paused) {
+                        shouldContinuePlayingRef.current = true;
+                      }
+                      setCurrentIndex(index);
+                    }}
+                    style={{
+                      padding: '8px',
+                      marginBottom: '4px',
+                      background: index === currentIndex
+                        ? 'rgba(220, 20, 60, 0.3)'
+                        : 'rgba(0, 0, 0, 0.3)',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      border: index === currentIndex
+                        ? '2px solid #DC143C'
+                        : '2px solid transparent',
+                    }}
+                  >
+                    <div style={{ color: '#E8E4D9', marginBottom: '2px', fontSize: '12px', fontWeight: 'bold' }}>
+                      {index === currentIndex && '▶ '}{track.title}
+                    </div>
+                    <div style={{ color: '#B8B8B8', fontSize: '10px' }}>
+                      {track.artist} • {track.duration}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>

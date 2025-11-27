@@ -62,5 +62,12 @@ export const musicPlaylist: Track[] = [
     artist:'Midnight',
     file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Ghosts%20of%20Your%20Touch.mp3',
     duration:'2:11'
-  }
+  },
+  {
+    id:'9',
+    title:'Ashes Cradle Secrets',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Ashes%20Cradle%20Secrets.mp3',
+    duration:'2:43'
+  },
 ];

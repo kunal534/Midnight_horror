@@ -6,8 +6,8 @@ import { useState } from 'react';
 import styles from './BoneNavigation.module.scss';
 
 const NAV_ITEMS = [
-  { label: 'Home', route: '/', icon: '💀' },
-  { label: 'Stories', route: '/stories', icon: '📖' },
+  { label: 'Stories', route: '/', icon: '💀' },
+  { label: 'Archive', route: '/stories', icon: '📖' },
   { label: 'Thoughts', route: '/thoughts', icon: '🧠' },
   { label: 'Affiliate', route: '/affiliate', icon: '🪙' },
 ];
