@@ -181,7 +181,7 @@ Investigators soon discovered that this was no accident, nor a spontaneous act o
 The aftermath exposed the machinery of manipulation false revelations, financial exploitation, psychological isolation, and a doctrine weaponized to maintain control. The church fire was merely the final act of a long descent into fanaticism, where spiritual yearning became a tool for mass murder.
 
 It forces us to ask, when a community surrenders its judgement to a chosen few, who decides how and when faith ends?`,
-  imageUrl: '/images/fire_in_the_church.jpg',
+  imageUrl: '/images/Fire_in_the_church.jpg',
   slug: 'fire-in-the-church',
   tags: ['horror', 'historical horror', 'psychological horror', 'true crime', 'cult', 'Uganda'],
   publishedDate: 'November 2025',
