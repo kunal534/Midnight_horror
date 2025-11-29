@@ -187,5 +187,23 @@ It forces us to ask, when a community surrenders its judgement to a chosen few, 
   publishedDate: 'November 2025',
   month: '2025-11',
   readTime: '5 min read'
+},
+{
+  id: '11',
+  title: 'Preta — The Hungry Ghost',
+  excerpt: 'A spirit trapped by neglect, insatiable desire, and unperformed rites, wandering between worlds until appeased…',
+  fullContent: `
+Preta, often called the hungry ghost, is a spirit condemned to endless hunger and longing, a fate described across Hindu and Buddhist texts. In the Garuda Purāṇa’s Preta Khanda and Buddhist Ullambana stories, pretas are depicted with distended bellies and narrow throats, forever craving what they cannot consume. They are born of neglect of funeral rites left incomplete, of offerings (piṇḍa) forgotten, or prayers unsaid—and remain caught between the living and the dead, unable to depart.
+
+Tradition warns that such spirits wander the world at night, invisible yet restless, their cries faintly heard near shrines, cremation grounds, or ancestral homes. In South Asia, families perform Pitru Paksha and tarpana rituals to nourish and release them, while in East and Southeast Asia, the concept appears as gaki or egui, observed in local festivals and temple ceremonies where food offerings are laid to appease the hungry dead.  
+
+Preta are more than folklore they are moral mirrors, showing the consequences of desire, greed, and neglect. Emaciated and insatiable, they remind the living that duties to the dead are not merely custom, but the bridge between worlds. Ignoring those duties risks the dead lingering, hungry and unsettled, haunting both dreams and waking hours.`,
+  imageUrl: '/images/Preta_Hungry_Ghost.jpeg',
+  slug: 'preta-hungry-ghost',
+  tags: ['horror', 'folklore', 'psychological horror', 'spirit', 'Preta', 'ghost', 'dark story', 'ritual', 'Asia', 'PitruPaksha', 'PretaKhanda'],
+  publishedDate: 'November 2025',
+  month: '2025-11',
+  readTime: '6 min read'
 }
+
 ];

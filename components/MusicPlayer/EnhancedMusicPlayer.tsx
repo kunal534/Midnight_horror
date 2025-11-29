@@ -19,6 +19,8 @@ export default function EnhancedMusicPlayer() {
   const touchStartPosRef = useRef({ x: 0, y: 0 });
   const hasDraggedRef = useRef(false);
   const isTouchingPlayerRef = useRef(false);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const dragHeaderRef = useRef<HTMLDivElement>(null);
 
   const currentTrack = musicPlaylist[currentIndex];
 
@@ -67,7 +69,7 @@ export default function EnhancedMusicPlayer() {
     }
   }, [isDragging, position]);
 
-  // Touch dragging - only when touching the player
+  // Touch dragging - ONLY from header/drag handle
   const handleTouchStart = (e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
     
@@ -81,25 +83,32 @@ export default function EnhancedMusicPlayer() {
       return;
     }
 
-    isTouchingPlayerRef.current = true;
-    const touch = e.touches[0];
-    touchStartPosRef.current = { x: touch.clientX, y: touch.clientY };
-    hasDraggedRef.current = false;
-    setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
+    // ONLY allow dragging from the header area
+    if (dragHeaderRef.current && dragHeaderRef.current.contains(target)) {
+      isTouchingPlayerRef.current = true;
+      const touch = e.touches[0];
+      touchStartPosRef.current = { x: touch.clientX, y: touch.clientY };
+      hasDraggedRef.current = false;
+      setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
+    } else {
+      isTouchingPlayerRef.current = false;
+    }
   };
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
-    // Only process if touch started on the player
+    // Only process if touch started on the drag handle
     if (!isTouchingPlayerRef.current) return;
     
     const touch = e.touches[0];
     const deltaX = Math.abs(touch.clientX - touchStartPosRef.current.x);
     const deltaY = Math.abs(touch.clientY - touchStartPosRef.current.y);
     
-    // If moved more than 10px, it's a drag
-    if (deltaX > 10 || deltaY > 10) {
+    // Increased threshold to 20px for better scroll vs drag detection
+    if (deltaX > 20 || deltaY > 20) {
       hasDraggedRef.current = true;
       setIsDragging(true);
+      
+      // Only prevent default if we're actually dragging
       e.preventDefault();
       
       let newX = touch.clientX - dragStart.x;
@@ -114,7 +123,7 @@ export default function EnhancedMusicPlayer() {
   }, [dragStart.x, dragStart.y, getPlayerWidth]);
 
   const handleTouchEnd = useCallback(() => {
-    // Only process if touch started on the player
+    // Only process if touch started on the drag handle
     if (!isTouchingPlayerRef.current) return;
     
     if (isDragging) {
@@ -147,7 +156,7 @@ export default function EnhancedMusicPlayer() {
     };
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
-  // Touch event listeners - attached to window but only process when touching player
+  // Touch event listeners
   useEffect(() => {
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
@@ -286,6 +295,7 @@ export default function EnhancedMusicPlayer() {
 
   return (
     <div
+      ref={playerRef}
       style={{
         position: 'fixed',
         left: `${position.x}px`,
@@ -296,15 +306,13 @@ export default function EnhancedMusicPlayer() {
         borderRadius: '16px',
         boxShadow: '0 12px 48px rgba(0, 0, 0, 0.9), inset 0 0 60px rgba(139, 0, 0, 0.3)',
         zIndex: 11000,
-        cursor: isDragging ? 'grabbing' : 'grab',
+        cursor: 'default',
         animation: 'fadeInUp 0.5s ease-out',
-        touchAction: 'none',
         transition: 'width 0.3s ease',
         userSelect: 'none',
         WebkitUserSelect: 'none',
+        overflow: 'hidden', // ADDED: Prevent content overflow
       }}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
     >
       <style>{`
         @keyframes fadeInUp {
@@ -326,19 +334,41 @@ export default function EnhancedMusicPlayer() {
           padding-right: 50px;
           animation: marquee 15s linear infinite;
         }
+        /* ADDED: Webkit scrollbar styling for playlist */
+        .playlist-scroll::-webkit-scrollbar {
+          width: 6px;
+        }
+        .playlist-scroll::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 3px;
+        }
+        .playlist-scroll::-webkit-scrollbar-thumb {
+          background: #8B0000;
+          border-radius: 3px;
+        }
+        .playlist-scroll::-webkit-scrollbar-thumb:hover {
+          background: #DC143C;
+        }
       `}</style>
 
-      {/* Header */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: isExpanded ? '12px 16px' : (isMobile ? '12px' : '10px 12px'),
-        borderBottom: isExpanded ? '2px solid #2d0000' : 'none',
-      }}>
+      {/* Header - DRAG HANDLE ONLY */}
+      <div 
+        ref={dragHeaderRef}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: isExpanded ? '12px 16px' : (isMobile ? '12px' : '10px 12px'),
+          borderBottom: isExpanded ? '2px solid #2d0000' : 'none',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          touchAction: 'none', // Prevent scroll only on header
+        }}
+      >
         {isExpanded ? (
           <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'none' }}>
               <span style={{ fontSize: '20px' }}>🎵</span>
               <span style={{
                 fontFamily: 'Creepster, cursive',
@@ -350,7 +380,7 @@ export default function EnhancedMusicPlayer() {
                 MIDNIGHT SOUNDS
               </span>
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', pointerEvents: 'auto' }}>
               <button onClick={(e) => {
                 e.stopPropagation();
                 setIsExpanded(!isExpanded);
@@ -388,7 +418,6 @@ export default function EnhancedMusicPlayer() {
             alignItems: 'center',
             justifyContent: isMobile ? 'center' : 'space-between',
             gap: '6px',
-            cursor: 'grab',
           }}>
             {isMobile ? (
               <div
@@ -396,6 +425,7 @@ export default function EnhancedMusicPlayer() {
                   fontSize: '28px',
                   padding: '4px',
                   cursor: 'pointer',
+                  pointerEvents: 'none',
                 }}
               >
                 🎵
@@ -405,6 +435,7 @@ export default function EnhancedMusicPlayer() {
                 <div className="marquee-container" style={{ 
                   flex: 1,
                   minWidth: 0,
+                  pointerEvents: 'none',
                 }}>
                   <div className="marquee-text" style={{
                     color: '#E8E4D9',
@@ -414,7 +445,7 @@ export default function EnhancedMusicPlayer() {
                     {isPlaying && '▶ '}{currentTrack.title} - {currentTrack.artist}
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: '4px', flexShrink: 0, pointerEvents: 'auto' }}>
                   <button onClick={(e) => {
                     e.stopPropagation();
                     setIsExpanded(true);
@@ -449,12 +480,14 @@ export default function EnhancedMusicPlayer() {
         )}
       </div>
 
-      {/* Single audio element - ALWAYS in DOM, positioned based on expanded state */}
+      {/* Content area - FULLY SCROLLABLE, NO DRAGGING */}
       <div style={{ 
         padding: isExpanded ? '16px' : '0',
-        paddingTop: isExpanded ? '16px' : '0'
+        paddingTop: isExpanded ? '16px' : '0',
+        overflowY: 'auto', // ADDED: Allow scrolling in content area
+        maxHeight: isExpanded ? 'calc(100vh - 200px)' : '0', // ADDED: Limit height
       }}>
-        {/* NOW PLAYING info - only when expanded */}
+        {/* NOW PLAYING info */}
         {isExpanded && (
           <div style={{
             marginBottom: '12px',
@@ -487,7 +520,7 @@ export default function EnhancedMusicPlayer() {
           </div>
         )}
 
-        {/* Audio element - ALWAYS rendered, just hidden when minimized */}
+        {/* Audio element */}
         <audio
           ref={audioRef}
           controls
@@ -498,12 +531,11 @@ export default function EnhancedMusicPlayer() {
             marginBottom: isExpanded ? '12px' : '0',
             borderRadius: '8px',
             display: isExpanded ? 'block' : 'none',
-            touchAction: 'auto',
           }}
           preload="auto"
         />
 
-        {/* Rest of controls - only when expanded */}
+        {/* Controls and Playlist */}
         {isExpanded && (
           <>
             <div style={{
@@ -594,11 +626,16 @@ export default function EnhancedMusicPlayer() {
               }}>
                 PLAYLIST ({musicPlaylist.length} TRACKS)
               </div>
-              <div style={{
-                maxHeight: '120px',
-                overflowY: 'auto',
-                fontSize: '12px',
-              }}>
+              {/* CHANGED: Added className for scrollbar styling */}
+              <div 
+                className="playlist-scroll"
+                style={{
+                  maxHeight: '120px',
+                  overflowY: 'auto',
+                  overflowX: 'hidden', // ADDED: Prevent horizontal scroll
+                  fontSize: '12px',
+                }}
+              >
                 {musicPlaylist.map((track, index) => (
                   <div
                     key={track.id}
