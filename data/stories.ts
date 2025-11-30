@@ -24,8 +24,8 @@ In the end, the legend raises a broader question: when survival fractures the bo
     imageUrl: '/images/Wendigo.jpg',
     slug: 'whispers-in-dark',
     tags: ['supernatural', 'mystery', 'psychological'],
-    publishedDate: 'November 2025',
-    month: '2025-11',
+    publishedDate: '06 November 2025',
+    month: '01-2025-11',
     readTime: '7 min read',
   },
   {
@@ -42,7 +42,7 @@ If you ever hear her cry at night would you have the courage to listen, or would
     imageUrl: '/images/Banshree.jpg',
     slug: 'the-wailing-of-the-banshee',
     tags: ['horror', 'supernatural', 'Irish folklore', 'ghost stories', 'wailing spirit'],
-    publishedDate: 'November 2025',
+    publishedDate: ' 16 November 2025',
     month: '2025-11',
     readTime: '6 min read'
   },
@@ -58,7 +58,7 @@ The horror is systemic the cold, calculating machinery of greed, ambition, and p
     imageUrl: '/images/Japan_netting.jpg',
     slug: 'the-nets-above-the-city',
     tags: ['horror', 'corporate dystopia', 'psychological horror', 'urban terror', 'dark modern myth'],
-    publishedDate: 'November 2025',
+    publishedDate: '18 November 2025',
     month: '2025-11',
     readTime: '7 min read'
   },
@@ -76,7 +76,7 @@ This image captures the core of the raw exposure of mortality, vulnerability, an
     imageUrl: '/images/Aghoni.jpg',
     slug: 'eyes-from-ashes',
     tags: ['horror', 'selective morality', 'psychological horror', 'dark realism', 'mortality'],
-    publishedDate: 'November 2025',
+    publishedDate: '20 November 2025',
     month: '2025-11',
     readTime: '6 min read'
   },
@@ -95,7 +95,7 @@ He used faith as currency, profiting from sacrifice. The purpose of this post is
     imageUrl: '/images/Ashram.jpg',
     slug: 'through-the-lattice-of-sin',
     tags: ['horror', 'cult', 'psychological horror', 'ritual abuse', 'dark realism'],
-    publishedDate: 'November 2025',
+    publishedDate: '14 November 2025',
     month: '2025-11',
     readTime: '7 min read'
   },
@@ -113,7 +113,7 @@ Folklore describes the ghost separating its upper body from the lower at night t
     imageUrl: '/images/japenese.jpg',
     slug: 'wobble-down-within-me',
     tags: ['horror', 'folklore', 'psychological horror', 'supernatural', 'dark realism'],
-    publishedDate: 'November 2025',
+    publishedDate: '09 November 2025',
     month: '2025-11',
     readTime: '3 min read'
   },
@@ -131,7 +131,7 @@ This image reflects the cult’s deadly devotion, the eerie atmosphere of their 
   imageUrl: '/images/cult2.jpg',
     slug: 'order-of-the-solar-temple',
     tags: ['cult', 'true crime', 'ritual', 'psychological horror', 'mass deaths', 'occult'],
-    publishedDate: 'October 2025',
+    publishedDate: '28 October 2025',
     month: '2025-10',
     readTime: '6 min read'
   },
@@ -149,8 +149,8 @@ In the end, I believe many of us can’t even come close to such sin in our dark
   imageUrl: '/images/flower_house.jpg',
   slug: 'the-bride-of-shadows',
   tags: ['horror', 'historical horror', 'psychological horror', 'Qing dynasty', 'exploitation', 'dark realism'],
-  publishedDate: 'October 2025',
-  month: '2025-10',
+  publishedDate: ' 24 November 2025',
+  month: '2025-11',
   readTime: '6 min read'
 },{
   id: '9',
@@ -164,7 +164,7 @@ This story is a meditation on human susceptibility to manipulation, the moral vo
   imageUrl: '/images/The_Board_of_Aum.jpg',
   slug: 'the-board-of-aum',
   tags: ['horror', 'historical horror', 'psychological horror', 'true crime', 'cult', 'Aum Shinrikyo'],
-  publishedDate: 'October 2025',
+  publishedDate: '23 October 2025',
   month: '2025-10',
   readTime: '5 min read'
 },
@@ -184,13 +184,13 @@ It forces us to ask, when a community surrenders its judgement to a chosen few, 
   imageUrl: '/images/Fire_in_the_church.jpg',
   slug: 'fire-in-the-church',
   tags: ['horror', 'historical horror', 'psychological horror', 'true crime', 'cult', 'Uganda'],
-  publishedDate: 'November 2025',
+  publishedDate: ' 26 November 2025',
   month: '2025-11',
   readTime: '5 min read'
 },
 {
   id: '11',
-  title: 'Preta — The Hungry Ghost',
+  title: 'Preta: The Hungry Ghost',
   excerpt: 'A spirit trapped by neglect, insatiable desire, and unperformed rites, wandering between worlds until appeased…',
   fullContent: `
 Preta, often called the hungry ghost, is a spirit condemned to endless hunger and longing, a fate described across Hindu and Buddhist texts. In the Garuda Purāṇa’s Preta Khanda and Buddhist Ullambana stories, pretas are depicted with distended bellies and narrow throats, forever craving what they cannot consume. They are born of neglect of funeral rites left incomplete, of offerings (piṇḍa) forgotten, or prayers unsaid—and remain caught between the living and the dead, unable to depart.
@@ -201,7 +201,7 @@ Preta are more than folklore they are moral mirrors, showing the consequences of
   imageUrl: '/images/Preta_Hungry_Ghost.jpeg',
   slug: 'preta-hungry-ghost',
   tags: ['horror', 'folklore', 'psychological horror', 'spirit', 'Preta', 'ghost', 'dark story', 'ritual', 'Asia', 'PitruPaksha', 'PretaKhanda'],
-  publishedDate: 'November 2025',
+  publishedDate: ' 28 November 2025',
   month: '2025-11',
   readTime: '6 min read'
 }

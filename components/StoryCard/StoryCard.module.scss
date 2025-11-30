@@ -110,8 +110,6 @@
     display: flex;
     flex-direction: column;
 
-    // REMOVED: Title from content area since it's now floating
-
     .excerpt {
       flex: 1;
       color: $text-secondary;

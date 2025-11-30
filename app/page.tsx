@@ -7,21 +7,37 @@ import StoryCard from '@/components/StoryCard/StoryCard';
 import HorrorAnimation from '@/components/HorrorAnimation/HorrorAnimation';
 import styles from './page.module.scss';
 import { format } from 'date-fns';
-import { stories } from '@/data/stories';  // ← Import stories
+import { stories } from '@/data/stories';
+
+function getStoryDate(publishedDate: string): Date {
+  return new Date(publishedDate.trim());
+}
 
 export default function HomePage() {
-  const [selectedMonth, setSelectedMonth] = useState(format(new Date(), 'yyyy-MM'));
+  const [selectedMonth, setSelectedMonth] = useState(
+    format(new Date(), 'yyyy-MM')
+  );
   const [filteredStories, setFilteredStories] = useState(stories);
 
   useEffect(() => {
-    const filtered = stories.filter((story) => story.month === selectedMonth);
+    const filtered = stories
+      .filter((story) => story.month === selectedMonth)
+      .sort((a, b) => {
+        const timeA = getStoryDate(a.publishedDate).getTime();
+        const timeB = getStoryDate(b.publishedDate).getTime();
+
+        if (timeA < timeB) return 1;   // newest first
+        if (timeA > timeB) return -1;
+        return 0;
+      });
+
     setFilteredStories(filtered);
   }, [selectedMonth]);
 
   return (
     <>
       <HorrorAnimation />
-      
+
       <motion.div
         className={styles.homePage}
         initial={{ opacity: 0 }}
@@ -36,7 +52,9 @@ export default function HomePage() {
         >
           <div className={styles.titleSection}>
             <h1 className={styles.title}>Midnight Horror Tales</h1>
-            <p className={styles.subtitle}>Curated stories for the witching hour</p>
+            <p className={styles.subtitle}>
+              Curated stories for the witching hour
+            </p>
           </div>
           <MonthSelector onMonthChange={setSelectedMonth} />
         </motion.header>
