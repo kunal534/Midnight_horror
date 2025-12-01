@@ -6,14 +6,17 @@ import styles from './thoughts.module.scss';
 
 export default function ThoughtsPage() {
   const getCategoryColor = (category?: string) => {
-    switch (category) {
-      case 'horror': return '#DC143C';
-      case 'writing': return '#8B4789';
-      case 'personal': return '#4B7F89';
-      case 'updates': return '#8B8B00';
-      default: return '#DC143C';
-    }
-  };
+  switch (category) {
+    case 'horror': return '#8B0000';           // Dark blood red
+    case 'writing': return '#6A5ACD';          // Slate blue
+    case 'personal': return '#2C5F6F';         // Deep ocean blue
+    case 'thoughts': return '#C41E3A';         // Ruby red
+    case 'Self Realization': return '#DAA520'; // Goldenrod
+    case 'social critique': return '#e1ad21';  // Steel blue
+    case 'updates': return '#D35400';          // Burnt orange
+    default: return '#8B0000';
+  }
+};
 
   return (
     <div className={styles.thoughtsContainer}>

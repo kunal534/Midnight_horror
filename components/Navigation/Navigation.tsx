@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
   { id: '2', label: 'Affiliate Page', path: '/affiliate', icon: '💰' },
   { id: '3', label: 'Longer Stories', path: '/longer-stories', icon: '📖' },
   { id: '4', label: 'My Thoughts', path: '/thoughts', icon: '💭' },
-  { id: '5', label: 'Feedback Form', path: '/feedback', icon: '📝' },
+  { id: '5', label: 'Contact', path: '/thoughts#contact', icon: '📨' },
 ];
 
 export default function Navigation() {

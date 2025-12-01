@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: 'Archive', route: '/stories', icon: '📖' },
   { label: 'Thoughts', route: '/thoughts', icon: '🧠' },
   { label: 'Affiliate', route: '/affiliate', icon: '🪙' },
+  { label: 'Feedback', route: '/feedback', icon: '📝' }, 
 ];
 
 export default function BoneNavigation() {
