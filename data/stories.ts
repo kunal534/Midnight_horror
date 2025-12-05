@@ -231,7 +231,7 @@ This story forces a question few dare to face: when the soul walks alone through
   title: 'In the Flames of Society',
   excerpt: 'I stood among the crowd along the flames, faces lit not by horror or shame. Men and women, sinner or not, all the same, following their acts without any shame…',
   fullContent: 'In the Flames of Society it seen from a scholar’s eye in regards to the horrifying ritual of sati, where a widow is burned alive on her husband’s pyre. The narrative does not center on gore but on the chilling human psychology behind collective complicity. The scholar observes the crowd men, women, elders, and children alike drawn together by tradition yet stripped of empathy. Faces glow with the firelight, but not with horror or grief. Instead, there is a strange detachment, a societal normalization of ritualized death.\n\nThe post examines the tension between individual morality and collective obedience, questioning how social structures and cultural narratives can obscure human cruelty. Flames crackle and rise, yet the true horror is not in the fire itself, but in the minds that watch it, justify it, and return to normalcy once the ritual ends.\n\nThis story forces the reader to confront difficult questions: Who bears responsibility—the victim, the tradition, or the society that silently condones it? How easily do humans rationalize cruelty in the name of culture? Through the lens of the scholar, the fire becomes a mirror reflecting the darkest corners of human conscience.',
-  imageUrl:'/images/sati.jpg',
+  imageUrl:'/images/Sati.jpg',
   slug:'in-the-flames-of-society',
   tags: ["horror", "ritual", "psychological horror", "sati", "society", "historical horror", "dark poetry"],
   publishedDate: "05 December 2025",
