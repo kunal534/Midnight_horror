@@ -150,28 +150,29 @@ export default function StoriesArchivePage() {
           </button>
 
           {visibleTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setSelectedTag(tag)}
-              style={{
-                background:
-                  selectedTag === tag
-                    ? 'rgba(220, 20, 60, 0.3)'
-                    : 'rgba(28, 28, 28, 0.4)',
-                color: '#E8E4D9',
-                border:
-                  selectedTag === tag
-                    ? '1px solid #DC143C'
-                    : '1px solid #8B0000',
-                padding: '8px 16px',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}
-            >
-              #{tag}
-            </button>
-          ))}
+  <button
+    key={tag}
+    onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+    style={{
+      background:
+        selectedTag === tag
+          ? 'rgba(220, 20, 60, 0.3)'
+          : 'rgba(28, 28, 28, 0.4)',
+      color: '#E8E4D9',
+      border:
+        selectedTag === tag
+          ? '1px solid #DC143C'
+          : '1px solid #8B0000',
+      padding: '8px 16px',
+      borderRadius: '20px',
+      cursor: 'pointer',
+      fontSize: '14px',
+    }}
+  >
+    #{tag}
+  </button>
+))}
+
         </div>
       </div>
 

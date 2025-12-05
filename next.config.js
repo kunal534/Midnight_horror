@@ -20,6 +20,10 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+      },
     ],
   },
   webpack: (config) => {

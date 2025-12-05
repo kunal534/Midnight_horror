@@ -200,10 +200,43 @@ Tradition warns that such spirits wander the world at night, invisible yet restl
 Preta are more than folklore they are moral mirrors, showing the consequences of desire, greed, and neglect. Emaciated and insatiable, they remind the living that duties to the dead are not merely custom, but the bridge between worlds. Ignoring those duties risks the dead lingering, hungry and unsettled, haunting both dreams and waking hours.`,
   imageUrl: '/images/Preta_Hungry_Ghost.jpeg',
   slug: 'preta-hungry-ghost',
-  tags: ['horror', 'folklore', 'psychological horror', 'spirit', 'Preta', 'ghost', 'dark story', 'ritual', 'Asia', 'PitruPaksha', 'PretaKhanda'],
+  tags: ['horror', 'folklore', 'psychological horror', 'spirit', 'Preta', 'ghost', 'dark story', 'ritual','PitruPaksha', 'PretaKhanda'],
   publishedDate: ' 28 November 2025',
   month: '2025-11',
   readTime: '6 min read'
+}
+,{
+  id: '12',
+  title: 'Vessel for the Sky',
+  excerpt: 'In windswept mountains where the body returns to earth and the mind walks the Bardo alone, devotion becomes a dissection of self…',
+  fullContent: `
+Vessel for the Sky explores the stark ritual logic behind Tibetan sky burial and the Chöd practice of body offering traditions that strip human identity down to its most fragile boundaries.  
+
+For centuries across the Tibetan plateau, communities carried the deceased to high rock ledges where vultures waited. This was jhator, the sky burial a final release in which the body was cut, opened, and offered to the birds. To outsiders it appears brutal, but within Tibetan Buddhist cosmology it is pragmatic compassion, the recognition that the flesh is only a temporary vessel, and its return to nature eases the soul's passage through the Bardo.
+
+Parallel to this lay Chöd, a meditative ritual born from the teachings of Machig Labdrön. Practitioners visualized offering their own bodies not in self-destruction, but in a symbolic severing of ego. In the ritual imagination, the flesh became food, the bones instruments, and the mind a witness to its own unmaking. The purpose was singular to cut attachment, fear, and self-clinging at their roots.  
+
+Together, these practices form a powerful confrontation with impermanence. Death is not an end but a transition, the body is not sacred but borrowed. Sky burial gives the vessel back to the sky, and Chöd gives the self back to emptiness.  
+
+This story forces a question few dare to face: when the soul walks alone through the intermediate state, and the body lies open on the stone, what truly remains of who we were?`,
+  imageUrl: '/images/tibet.jpeg',
+  slug: 'vessel-for-the-sky',
+  tags: ['horror', 'ritual', 'Buddhism', 'Tibetan', 'psychological horror', 'mortality', 'Chod', 'sky burial'],
+  publishedDate: '02 December 2025',
+  month: '2025-12',
+  readTime: '6 min read'
+},
+{
+  id: '13',
+  title: 'In the Flames of Society',
+  excerpt: 'I stood among the crowd along the flames, faces lit not by horror or shame. Men and women, sinner or not, all the same, following their acts without any shame…',
+  fullContent: 'In the Flames of Society it seen from a scholar’s eye in regards to the horrifying ritual of sati, where a widow is burned alive on her husband’s pyre. The narrative does not center on gore but on the chilling human psychology behind collective complicity. The scholar observes the crowd men, women, elders, and children alike drawn together by tradition yet stripped of empathy. Faces glow with the firelight, but not with horror or grief. Instead, there is a strange detachment, a societal normalization of ritualized death.\n\nThe post examines the tension between individual morality and collective obedience, questioning how social structures and cultural narratives can obscure human cruelty. Flames crackle and rise, yet the true horror is not in the fire itself, but in the minds that watch it, justify it, and return to normalcy once the ritual ends.\n\nThis story forces the reader to confront difficult questions: Who bears responsibility—the victim, the tradition, or the society that silently condones it? How easily do humans rationalize cruelty in the name of culture? Through the lens of the scholar, the fire becomes a mirror reflecting the darkest corners of human conscience.',
+  imageUrl:'/images/sati.jpg',
+  slug:'in-the-flames-of-society',
+  tags: ["horror", "ritual", "psychological horror", "sati", "society", "historical horror", "dark poetry"],
+  publishedDate: "05 December 2025",
+  month: "2025-12",
+  readTime: "7 min read"
 }
 
 ];

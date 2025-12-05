@@ -11,11 +11,11 @@ export interface Thought {
 export const thoughtsList: Thought[] = [
 
   {
-    id: '6',
-    title: 'When Emotion Becomes an Excuse',
-    slug: 'when-emotion-becomes-an-excuse',
-    excerpt: 'Modern culture treats emotional impulse as justification, even when the action that follows is harmful.',
-    fullContent: `
+  id: '6',
+  title: 'When Emotion Becomes an Excuse',
+  slug: 'when-emotion-becomes-an-excuse',
+  excerpt: 'Modern culture treats emotional impulse as justification, even when the action that follows is harmful.',
+  fullContent: `
 Humans have started using emotions as permission slips. If someone feels overwhelmed, angry, abandoned, jealous, or hurt, the behavior that follows is often defended automatically. “I was emotional” has quietly turned into a universal shield, strong enough to excuse anything — from verbal abuse to shutting down communication to harming the very person they claim to care about.
 
 This pattern isn’t tied to gender. Men and women both do it. The underlying mechanism is biological: when the limbic system spikes, the rational circuitry takes a temporary back seat. But instead of seeing this as a glitch in regulation, people treat the emotional impulse as a legitimate inner truth. They assume that because the feeling was strong, the reaction must have been valid.
@@ -26,12 +26,19 @@ People rarely ask whether the behavior matches the reality of the situation. The
 
 The deeper issue is that society rewards this pattern. When someone reacts impulsively, others rush to understand the emotion instead of examining the effect. Accountability gets replaced by empathy without structure, and harmful behavior becomes part of emotional expression. This creates a feedback loop where people learn that their emotional states hold more weight than their choices.
 
-Humans weren’t built to function like this. The nervous system depends on regulation, not indulgence. When impulse leads the decision and logic arrives later to justify it, the person stops growing. And relationships built in this environment collapse — not because people are bad, but because they are using their biology incorrectly.
+What makes this even more complicated is that biology itself plays a role in how people choose partners. Opposites do attract in measurable ways. Genetic complementarity — the kind encoded in scent preference and immune-system differences — can pull two people together with a force that feels cosmic. One person’s traits can seem to balance the other’s, like two halves of a functional system. Nature is efficient; it often pairs strengths with gaps to increase the resilience of the pair.
+
+But even the best biological match collapses if one partner refuses accountability. Complementary traits can only stabilize a relationship if both people act with intention. If one person consistently crosses boundaries, avoids responsibility, or uses their emotional discomfort as justification for bad behavior, then no level of genetic harmony matters. Biology may set the stage, but behavior determines whether the actors can perform at all.
+
+This is the part people avoid looking at. They romanticize chemistry while ignoring conduct. They treat attraction as destiny while refusing to examine whether the person they’re drawn to can actually sustain a relationship. Emotional chemistry can pull two people together; emotional irresponsibility can tear them apart with equal power.
+
+Humans weren’t built to function like this. The nervous system depends on regulation, not indulgence. When impulse leads the decision and logic arrives later to justify it, the person stops growing. And relationships built in this environment collapse — not because people are incompatible biologically, but because they are using their biology incorrectly.
 
 Feeling pain is natural. Acting from it without responsibility is not. Emotional intensity is not authenticity. And acting on impulse does not make the action meaningful — it just makes it unfiltered. When people start treating impulse as truth, they lose the ability to be trustworthy; they can’t be relied on to act — or remain stable — when it matters the most.`,
-    date: '02 December 2025',
-    category: 'social critique'
-  },
+  date: '02 December 2025',
+  category: 'social critique'
+}
+,
   {
     id: '1',
     title: 'The Weight of Other People’s Chaos',
