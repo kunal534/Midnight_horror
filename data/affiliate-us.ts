@@ -1,4 +1,4 @@
-import type { AffiliateProduct } from './affiliates-common';
+import type { AffiliateProduct } from './affiliate-common';
 
 export const affiliateProductsUS: AffiliateProduct[] = [
 {

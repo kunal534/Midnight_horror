@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { AffiliateProduct } from '@/data/affiliates-common';
+import type { AffiliateProduct } from '@/data/affiliate-common';
 import '../../app/affiliate/page.css';
 
 interface AffiliatePageProps {
@@ -14,50 +14,10 @@ interface AffiliatePageProps {
 export function AffiliatePage({ products, region }: AffiliatePageProps) {
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '48px 24px' }}>
-      {/* Region Switcher */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginBottom: '24px',
-          gap: '12px',
-        }}
-      >
-        <Link
-          href="/affiliate"
-          style={{
-            padding: '8px 16px',
-            background: region === 'US' ? 'rgba(220, 20, 60, 0.3)' : 'rgba(28, 28, 28, 0.6)',
-            border: '1px solid #8B0000',
-            borderRadius: '8px',
-            color: '#E8E4D9',
-            textDecoration: 'none',
-            fontSize: '14px',
-            transition: 'all 0.3s ease',
-          }}
-        >
-          🌎 Global (.com)
-        </Link>
-        <Link
-          href="/in/affiliate"
-          style={{
-            padding: '8px 16px',
-            background: region === 'IN' ? 'rgba(220, 20, 60, 0.3)' : 'rgba(28, 28, 28, 0.6)',
-            border: '1px solid #8B0000',
-            borderRadius: '8px',
-            color: '#E8E4D9',
-            textDecoration: 'none',
-            fontSize: '14px',
-            transition: 'all 0.3s ease',
-          }}
-        >
-          🇮🇳 India (.in)
-        </Link>
-      </div>
 
       {/* Header */}
       <div className="page-header">
-        <h1>🪙 Horror Recommendations</h1>
+        <h1>Horror Recommendations</h1>
         <p className="page-subtitle">
           Curated products to enhance your horror experience {region === 'IN' ? '(India)' : '(Global)'}
         </p>
