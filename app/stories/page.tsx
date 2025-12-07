@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { stories } from '@/data/stories';
+import { useAge } from '@/components/AgeGate/AgeContext';
 
 function getStoryDate(publishedDate: string): Date {
   return new Date(publishedDate.trim());
@@ -13,6 +14,9 @@ function getStoryDate(publishedDate: string): Date {
 export default function StoriesArchivePage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // age hook – still a hook, must stay before any early return
+  const { isMinor, isReady } = useAge();
 
   // Stories filtered by tag + search, then sorted newest → oldest
   const filteredStories = useMemo(() => {
@@ -28,7 +32,7 @@ export default function StoriesArchivePage() {
       .sort((a, b) => {
         const timeA = getStoryDate(a.publishedDate).getTime();
         const timeB = getStoryDate(b.publishedDate).getTime();
-        if (timeA < timeB) return 1; // newest first
+        if (timeA < timeB) return 1;
         if (timeA > timeB) return -1;
         return 0;
       });
@@ -47,10 +51,12 @@ export default function StoriesArchivePage() {
 
   // Visible tags sorted by frequency (most used first)
   const visibleTags = useMemo(
-    () =>
-      Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]),
+    () => Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]),
     [tagCounts]
   );
+
+  // Now it's safe to early-return
+  if (!isReady) return null;
 
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '48px 24px' }}>
@@ -80,135 +86,162 @@ export default function StoriesArchivePage() {
         >
           All {stories.length} Horror Tales
         </p>
+
+        {isMinor && (
+          <p
+            style={{
+              marginTop: '12px',
+              fontSize: '14px',
+              color: '#fca5a5',
+            }}
+          >
+            Story archive is blurred for under‑18 visitors. You can still enjoy
+            music, affiliate products, and feedback.
+          </p>
+        )}
       </motion.header>
 
-      {/* Search & Tags */}
-      <div style={{ marginBottom: '32px' }}>
-        {/* Search + Clear */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '8px',
-            marginBottom: '16px',
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Search stories..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      {/* Everything below is blurred / disabled for minors */}
+      <div
+        style={
+          isMinor
+            ? {
+                filter: 'blur(14px)',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }
+            : {}
+        }
+      >
+        {/* Search & Tags */}
+        <div style={{ marginBottom: '32px' }}>
+          {/* Search + Clear */}
+          <div
             style={{
-              flex: 1,
-              padding: '16px',
-              background: 'rgba(28, 28, 28, 0.6)',
-              border: '1px solid #8B0000',
-              borderRadius: '12px',
-              color: '#E8E4D9',
-              fontSize: '16px',
+              display: 'flex',
+              gap: '8px',
+              marginBottom: '16px',
             }}
-          />
-
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
+          >
+            <input
+              type="text"
+              placeholder="Search stories..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               style={{
-                padding: '0 16px',
-                borderRadius: '12px',
+                flex: 1,
+                padding: '16px',
+                background: 'rgba(28, 28, 28, 0.6)',
                 border: '1px solid #8B0000',
-                background: 'rgba(220, 20, 60, 0.2)',
+                borderRadius: '12px',
                 color: '#E8E4D9',
-                fontSize: '14px',
+                fontSize: '16px',
+              }}
+            />
+
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                style={{
+                  padding: '0 16px',
+                  borderRadius: '12px',
+                  border: '1px solid #8B0000',
+                  background: 'rgba(220, 20, 60, 0.2)',
+                  color: '#E8E4D9',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {/* Tags (only tags from filtered stories) */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setSelectedTag(null)}
+              style={{
+                background: !selectedTag
+                  ? 'rgba(220, 20, 60, 0.3)'
+                  : 'rgba(28, 28, 28, 0.4)',
+                color: '#E8E4D9',
+                border: !selectedTag
+                  ? '1px solid #DC143C'
+                  : '1px solid #8B0000',
+                padding: '8px 16px',
+                borderRadius: '20px',
                 cursor: 'pointer',
-                whiteSpace: 'nowrap',
+                fontSize: '14px',
               }}
             >
-              Clear
+              All Stories
             </button>
-          )}
+
+            {visibleTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() =>
+                  setSelectedTag(selectedTag === tag ? null : tag)
+                }
+                style={{
+                  background:
+                    selectedTag === tag
+                      ? 'rgba(220, 20, 60, 0.3)'
+                      : 'rgba(28, 28, 28, 0.4)',
+                  color: '#E8E4D9',
+                  border:
+                    selectedTag === tag
+                      ? '1px solid #DC143C'
+                      : '1px solid #8B0000',
+                  padding: '8px 16px',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                }}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Tags (only tags from filtered stories) */}
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => setSelectedTag(null)}
-            style={{
-              background: !selectedTag
-                ? 'rgba(220, 20, 60, 0.3)'
-                : 'rgba(28, 28, 28, 0.4)',
-              color: '#E8E4D9',
-              border: !selectedTag
-                ? '1px solid #DC143C'
-                : '1px solid #8B0000',
-              padding: '8px 16px',
-              borderRadius: '20px',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
-            All Stories
-          </button>
-
-          {visibleTags.map((tag) => (
-  <button
-    key={tag}
-    onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-    style={{
-      background:
-        selectedTag === tag
-          ? 'rgba(220, 20, 60, 0.3)'
-          : 'rgba(28, 28, 28, 0.4)',
-      color: '#E8E4D9',
-      border:
-        selectedTag === tag
-          ? '1px solid #DC143C'
-          : '1px solid #8B0000',
-      padding: '8px 16px',
-      borderRadius: '20px',
-      cursor: 'pointer',
-      fontSize: '14px',
-    }}
-  >
-    #{tag}
-  </button>
-))}
-
-        </div>
-      </div>
-
-      {/* Stories Grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '32px',
-        }}
-      >
-        {filteredStories.map((story, index) => (
-          <motion.div
-            key={story.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }}
-          >
-            <StoryCard {...story} />
-          </motion.div>
-        ))}
-      </div>
-
-      {filteredStories.length === 0 && (
+        {/* Stories Grid */}
         <div
           style={{
-            textAlign: 'center',
-            padding: '64px 24px',
-            color: '#B8B8B8',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: '32px',
           }}
         >
-          <p style={{ fontSize: '18px' }}>
-            No stories found matching your search.
-          </p>
+          {filteredStories.map((story, index) => (
+            <motion.div
+              key={story.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <StoryCard {...story} />
+            </motion.div>
+          ))}
         </div>
-      )}
+
+        {filteredStories.length === 0 && (
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '64px 24px',
+              color: '#B8B8B8',
+            }}
+          >
+            <p style={{ fontSize: '18px' }}>
+              No stories found matching your search.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

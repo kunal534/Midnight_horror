@@ -1,22 +1,22 @@
 .page-header {
   text-align: center;
-  margin-bottom: 60px;
-  padding: 40px 20px;
+  margin-bottom: clamp(40px, 8vw, 60px); /* Fluid margin */
+  padding: clamp(24px, 5vw, 40px) clamp(16px, 3vw, 20px); /* Fluid padding */
   background: linear-gradient(
     135deg,
     rgba(139, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 100%
   );
-  border-radius: 20px;
+  border-radius: clamp(12px, 2.5vw, 20px); /* Fluid border radius */
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
 }
 
 .page-header h1 {
   font-family: 'Creepster', 'Nosifer', cursive;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2rem, 6vw, 4rem); /* Already fluid - perfect! */
   color: #ff0000;
-  margin-bottom: 15px;
+  margin-bottom: clamp(10px, 2vw, 15px); /* Fluid margin */
   font-weight: 400;
   text-shadow:
     0 0 10px rgba(255, 0, 0, 0.8),
@@ -25,14 +25,13 @@
     0 4px 20px rgba(0, 0, 0, 0.9),
     2px 2px 0px rgba(139, 0, 0, 0.5);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: clamp(0.05em, 0.15vw, 0.15em); /* Fluid letter spacing */
   filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
   animation: titleGlow 3s ease-in-out infinite;
 }
 
 @keyframes titleGlow {
-  0%,
-  100% {
+  0%, 100% {
     text-shadow:
       0 0 10px rgba(255, 0, 0, 0.8),
       0 0 20px rgba(139, 0, 0, 0.6),
@@ -51,39 +50,29 @@
 }
 
 .page-subtitle {
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 2.5vw, 1.3rem); /* Fluid font size */
   color: var(--text-secondary);
   font-style: italic;
 }
 
 /* Affiliate disclosure container */
 .affiliate-info {
-  margin-top: 40px;
+  margin-top: clamp(24px, 5vw, 40px); /* Fluid margin */
 }
 
 /* Thin single-line bar */
 .disclosure-box {
   background: rgba(23, 1, 1, 0.15);
   border: 1px solid rgba(139, 0, 0, 0.5);
-  border-radius: 8px;
-  padding: 12px 24px;
+  border-radius: clamp(6px, 1vw, 8px); /* Fluid border radius */
+  padding: clamp(10px, 1.5vw, 12px) clamp(16px, 3vw, 24px); /* Fluid padding */
 }
 
 .disclosure-box p {
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(12px, 1.8vw, 14px); /* Fluid font size */
   color: #e8e4d9;
   line-height: 1.4;
-  /* allow normal wrapping */
 }
 
-
-@media (max-width: 768px) {
-  .page-header h1 {
-    font-size: 2rem;
-  }
-
-  .disclosure-box {
-    padding: 10px 16px;
-  }
-}
+/* Remove media query - no longer needed! */

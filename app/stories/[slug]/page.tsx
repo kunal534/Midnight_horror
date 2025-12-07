@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { stories } from '@/data/stories';
 import { useState, useEffect, useRef } from 'react';
+import { useAge } from '@/components/AgeGate/AgeContext'; // NEW
 
 function getStoryDate(publishedDate: string): Date {
   return new Date(publishedDate.trim());
@@ -16,6 +17,8 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
   const [isTitleOverflowing, setIsTitleOverflowing] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+
+  const { isMinor, isReady } = useAge(); // NEW
 
   const story = stories.find((s) => s.slug === params.slug);
 
@@ -31,7 +34,6 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Check if title overflows - wait for sticky to be visible
   useEffect(() => {
     if (isStickyVisible && titleRef.current) {
       setTimeout(() => {
@@ -48,7 +50,55 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  // Related stories: same tags, sorted newest first
+  if (!isReady) return null; // wait for age state
+
+  // If minor: show simple lock message, no story text
+  if (isMinor) {
+    return (
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
+        <Link
+          href="/stories"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#DC143C',
+            marginBottom: '24px',
+            fontSize: '16px',
+            textDecoration: 'none',
+          }}
+        >
+          ← Back to Stories
+        </Link>
+
+        <h1
+          style={{
+            fontSize: '32px',
+            color: '#E8E4D9',
+            marginBottom: '16px',
+            fontFamily: 'Cinzel, serif',
+          }}
+        >
+          Story Locked for Under‑18 Visitors
+        </h1>
+        <p
+          style={{
+            fontSize: '18px',
+            lineHeight: 1.7,
+            color: '#E5E7EB',
+            maxWidth: '640px',
+          }}
+        >
+          Individual horror tales are available only to readers who are 18 or
+          older. You can still enjoy our music player, affiliate products, and
+          feedback page while story content remains protected.
+        </p>
+      </div>
+    );
+  }
+
+  // ADULT VIEW: your original story layout unchanged below
+  // -----------------------------------------------------
   const relatedStories = stories
     .filter(
       (s) =>
@@ -58,10 +108,9 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     .sort((a, b) => {
       const dateA = getStoryDate(a.publishedDate);
       const dateB = getStoryDate(b.publishedDate);
-      return dateB.getTime() - dateA.getTime(); // newest first
+      return dateB.getTime() - dateA.getTime();
     })
     .slice(0, 3);
-
   return (
     <>
       {/* Inline CSS for marquee animation */}

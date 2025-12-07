@@ -1,0 +1,106 @@
+/* Card base styling */
+.affiliate-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #1b0505 0%, #120202 100%);
+  border: 1px solid #8b0000;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.affiliate-card::after {
+  content: '';
+  display: block;
+  margin: 24px 24px 0;
+  border-bottom: 1px solid #8b0000;
+}
+/* Simple fade / slide-in on first paint (optional) */
+.affiliate-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: affiliateFadeIn 0.4s ease-out forwards;
+}
+
+/* small stagger based on data-index */
+.affiliate-card[data-index='0'] { animation-delay: 0s; }
+.affiliate-card[data-index='1'] { animation-delay: 0.05s; }
+.affiliate-card[data-index='2'] { animation-delay: 0.1s; }
+/* add more if needed */
+
+@keyframes affiliateFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effect that replaced whileHover */
+.affiliate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.6);
+  border-color: #dc143c;
+}
+
+/* Badge on image */
+.affiliate-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(220, 20, 60, 0.9);
+  color: #e8e4d9;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Text styles */
+.affiliate-title {
+  font-size: 20px;
+  color: #e8e4d9;
+  margin-bottom: 12px;
+  font-family: 'Cinzel', serif;
+}
+
+.affiliate-description {
+  font-size: 14px;
+  color: #b8b8b8;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* Footer row */
+.affiliate-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid #8b0000;
+}
+
+.affiliate-price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #dc143c;
+}
+
+.affiliate-button {
+  background: linear-gradient(135deg, #5c0000 0%, #8b0000 50%, #dc143c 100%);
+  color: #e8e4d9;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}

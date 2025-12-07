@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
+}
+
+.card {
+  max-width: 520px;
+  width: 90%;
+  padding: 2.6rem 2.3rem;
+  border-radius: 18px;
+  background: radial-gradient(circle at top, #111827 0%, #020617 70%);
+  box-shadow: 0 0 45px rgba(220, 38, 38, 0.65);
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  color: #f9fafb;
+  text-align: center;
+
+  h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1.1rem;
+    color: #f87171;
+    letter-spacing: 0.06em;
+  }
+
+  p {
+    margin-bottom: 0.7rem;
+    line-height: 1.7;
+    color: #e5e7eb;
+  }
+}
+
+.subtext {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.buttons {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  @media (min-width: 520px) {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.btnPrimary {
+  background: #dc2626;
+  color: #f9fafb;
+  box-shadow: 0 10px 26px rgba(220, 38, 38, 0.55);
+
+  &:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(220, 38, 38, 0.7);
+  }
+}
+
+.btnSecondary {
+  background: #4b5563;
+  color: #e5e7eb;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.6);
+
+  &:hover {
+    background: #1f2937;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.8);
+  }
+}
