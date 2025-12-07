@@ -40,7 +40,7 @@ export function AffiliatePage({ products, region }: AffiliatePageProps) {
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index === 0 ? 0 : index * 0.1 }} 
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -62,7 +62,10 @@ export function AffiliatePage({ products, region }: AffiliatePageProps) {
                 src={product.imageUrl}
                 alt={product.title}
                 fill
+                priority={index === 0} 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
                 style={{ objectFit: 'cover' }}
+                
               />
               <div
                 style={{
