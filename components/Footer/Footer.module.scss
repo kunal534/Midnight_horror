@@ -29,11 +29,50 @@
 
 .siteTitle {
   font-family: 'Creepster', cursive;
-  font-size: 1.5rem;
-  color: #DC143C;
+  font-size: 1.5rem;              /* bigger by default for readability */
+  letter-spacing: 0.08em;
+  color: #ffe6ea;               /* light text for contrast */
   margin-bottom: 12px;
-  text-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+  text-shadow:
+    0 0 2px #ff1744,
+    0 0 4px #ff1744,
+    0 0 8px #ff1744,
+    0 0 12px #b00020;           /* tighter, clearer glow */
+  animation: buzzFlicker 0.18s infinite alternate;
 }
+
+/* Slightly stronger, but still clear, buzzing effect */
+@keyframes buzzFlicker {
+  0%, 100% {
+    text-shadow:
+      0 0 2px #ff1744,
+      0 0 4px #ff1744,
+      0 0 8px #ff1744,
+      0 0 12px #b00020;
+    opacity: 1;
+  }
+  50% {
+    text-shadow:
+      0 0 1px #ff1744,
+      0 0 3px #ff1744,
+      0 0 6px #ff1744,
+      0 0 10px #b00020;
+    opacity: 0.9;
+  }
+}
+
+/* Extra boost for phones */
+@media (max-width: 600px) {
+  .siteTitle {
+    font-size: 2.4rem;          /* larger on phones */
+    text-shadow:
+      0 0 1px #ff1744,
+      0 0 3px #ff1744,
+      0 0 6px #ff1744,
+      0 0 10px #b00020;         /* even sharper on small screens */
+  }
+}
+
 
 .tagline {
   font-family: 'Lora', serif;
