@@ -11,11 +11,11 @@ export interface Thought {
 export const thoughtsList: Thought[] = [
 {
     id:'5',
-    title:'Why Unregulated Freedom Breaks Human Biology',
+    title:'Why Not have Unregulated Freedom',
     slug:'why-unregulated-freedom-breaks-human-biology',
-    excerpt:'why religion was engineered as social control, why identity becomes territorial, why societies without constraints collapse like the rat-utopia experiment, and why human nervous systems are too biologically fragile for unlimited freedom.',
+    excerpt:'why religion was engineered as social control, and why human nervous systems are too biologically fragile for unlimited freedom.',
     fullContent:`People assume humans are guided by ideals, morals, or culture.  
-This thought is about just the opposite of that, I share my ideology to you the same way I worked through this.
+This thought is about just the opposite of that, I have shared my ideology to you the same way I worked through this.
 
 First thing humans never created religion for spiritual truth. They created it because we needed a system to tame people. 
 Not everyone can handle raw freedom. Most can't even handle internal impulses, forget existential chaos. 
@@ -25,9 +25,7 @@ It's basically monarchy with extra steps. The god was our king branded as divine
 And notice something every kingdom had its own god, and magically those gods agreed with whatever the ruler needed. 
 If they liked a neighboring kingdom, both gods could ‘coexist.’  
 If they hated them, suddenly the other god was evil.  
-It’s just identity politics with a divine mask.
-
-And people still do this. 
+It’s just identity politics with a divine mask. And people still do this. 
 We would hate a person whose worldview is opposite to ours because the brain protects identity like territory. 
 It’s not philosophy. It’s neural threat response.
 
@@ -35,13 +33,11 @@ Now here's bigger question asked
 what happens if we remove all this religion, rules, identity anchors?
 
 People collapse.
-
 Not morally.  
 Biologically.
 
 Look at the rat utopia experiment. They had food, safety, space everything humans claim they want.  
 And still the entire system imploded:
-
 
 - parenting failed  
 - violence increased  
@@ -303,9 +299,9 @@ The issue isn’t that I’m unfit for relationships. The issue is that I outgre
     fullContent: `
 Human societies keep following rules that were never meant to be permanent. Most of the customs people defend today were created centuries ago under pressures that no longer exist. They weren’t moral truths or divine instructions. They were emergency solutions to specific conditions.
 
-Large families existed because survival depended on manpower. Marriage became a binding contract because property, land, and bloodlines needed protection. Family roles were rigid because survival demanded predictable labor. Group living was necessary because isolation meant danger. These rules weren’t designed for happiness or psychological health — they were designed for efficiency and continuation of the tribe.
+Large families existed because survival depended on manpower. Marriage became a binding contract because property, land, and bloodlines needed protection. Family roles were rigid because survival demanded predictable labor. Group living was necessary because isolation meant danger. These rules weren’t designed for happiness or psychological health they were designed for efficiency and continuation of the tribe.
 
-But the world changed. Many practices people still defend — dowry, polygamy, large sibling groups, rigid family hierarchies — came from survival logic, not moral truth. Dowry began as a safety net when wars left women without partners; their wealth was transferred to the groom to ensure stability during societal collapse. Polygamy grew in eras where male populations dropped and society needed numbers to recover. Even the idea of having many siblings came from the need for labor and protection.
+But the world changed. Many practices people still defend dowry, polygamy, large sibling groups, rigid family hierarchies came from survival logic, not moral truth. Dowry began as a safety net when wars left women without partners; their wealth was transferred to the groom to ensure stability during societal collapse. Polygamy grew in eras where male populations dropped and society needed numbers to recover. Even the idea of having many siblings came from the need for labor and protection.
 
 These rules were functional once, but people now follow the shell long after the original purpose died.
 

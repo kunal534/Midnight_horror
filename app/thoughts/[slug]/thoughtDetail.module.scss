@@ -1,126 +1,135 @@
+// uses=> Styles for the Detail page
+
+@import '../../themes.scss';
+
 .thoughtDetail {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 120px 24px 80px;
-  min-height: 100vh;
+  padding: $spacing-2xl;
+  
+  @media (max-width: 768px) {
+    padding: $spacing-lg;
+  }
 }
 
 .backButton {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: #DC143C;
+  color: $text-secondary;
   text-decoration: none;
-  font-family: 'Lora', serif;
-  font-size: 1rem;
-  margin-bottom: 32px;
-  transition: all 0.3s ease;
-
+  margin-bottom: $spacing-xl;
+  transition: $transition-base;
+  font-size: $font-size-base;
+  
   &:hover {
-    color: #E8E4D9;
+    color: $crimson;
     transform: translateX(-4px);
   }
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 48px;
-  padding-bottom: 32px;
-  border-bottom: 2px solid rgba(220, 20, 60, 0.3);
-}
-
-.emoji {
-  font-size: 4rem;
-  display: block;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.8));
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.3);
 }
 
 .title {
-  font-family: 'Creepster', cursive;
-  font-size: 3rem;
-  color: #E8E4D9;
-  margin-bottom: 24px;
-  text-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
-
+  font-family: 'Nosifer', cursive;
+  font-size: $font-size-3xl;
+  color: $text-primary;
+  margin-bottom: $spacing-md;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.8),
+    0 0 20px rgba(139, 0, 0, 0.6),
+    0 4px 20px rgba(0, 0, 0, 0.9);
+  letter-spacing: 2px;
+  
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: $font-size-2xl;
   }
 }
 
 .meta {
   display: flex;
+  gap: $spacing-md;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
   flex-wrap: wrap;
 }
 
 .date {
-  font-family: 'Lora', serif;
-  font-size: 1rem;
-  color: #8B8B8B;
-  font-style: italic;
+  color: $text-secondary;
+  font-size: $font-size-sm;
 }
 
 .category {
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: bold;
-  color: #E8E4D9;
 }
 
+// MAIN CONTENT STYLING - Justified text format
 .content {
-  background: linear-gradient(135deg, rgba(28, 28, 28, 0.95) 0%, rgba(45, 0, 0, 0.95) 100%);
-  border: 2px solid #8B0000;
-  border-radius: 16px;
-  padding: 48px;
-  margin-bottom: 48px;
-
-  @media (max-width: 768px) {
-    padding: 32px 24px;
-  }
+  font-family: $font-body;
+  font-size: 18px;
+  line-height: 1.9;
+  color: $text-primary;
+  letter-spacing: 0.3px;
 }
 
 .paragraph {
-  font-family: 'Lora', serif;
-  font-size: 1.125rem;
-  line-height: 2;
-  color: #E8E4D9;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
   text-align: justify;
+  text-justify: inter-word;
+  word-spacing: 0.1em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+}
 
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
+.bulletList {
+  list-style: none;
+  padding-left: 2rem;
+  margin: 2rem 0;
+  color: $text-primary;
+  
+  li {
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
     line-height: 1.8;
+    position: relative;
+    text-align: left;
+    color: $text-primary; // Add this to ensure li inherits correct color
+    
+    &::before {
+      content: "☠";
+      position: absolute;
+      left: -1.5rem;
+      color: #E8E4D9 !important; // Force the white color
+      font-size: 1.6rem;  // Much bigger
+    }
   }
 }
 
+
+
+
 .footer {
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid rgba(139, 0, 0, 0.3);
   text-align: center;
-  padding-top: 32px;
-  border-top: 2px solid rgba(220, 20, 60, 0.3);
 }
 
 .backLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #DC143C;
+  color: $text-secondary;
   text-decoration: none;
-  font-family: 'Lora', serif;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
+  transition: $transition-base;
+  
   &:hover {
-    color: #E8E4D9;
-    transform: translateX(-4px);
+    color: $crimson;
   }
 }

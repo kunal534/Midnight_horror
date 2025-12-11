@@ -1,4 +1,3 @@
-// app/stories/[slug]/page.tsx
 'use client';
 
 import { notFound } from 'next/navigation';
@@ -6,7 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { stories } from '@/data/stories';
 import { useState, useEffect, useRef } from 'react';
-import { useAge } from '@/components/AgeGate/AgeContext'; // NEW
+import { useAge } from '@/components/AgeGate/AgeContext';
+import styles from './storyDetail.module.scss';
 
 function getStoryDate(publishedDate: string): Date {
   return new Date(publishedDate.trim());
@@ -15,11 +15,11 @@ function getStoryDate(publishedDate: string): Date {
 export default function StoryPage({ params }: { params: { slug: string } }) {
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isTitleOverflowing, setIsTitleOverflowing] = useState(false);
+  const [scrollDistance, setScrollDistance] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const { isMinor, isReady } = useAge(); // NEW
-
+  const { isMinor, isReady } = useAge();
   const story = stories.find((s) => s.slug === params.slug);
 
   useEffect(() => {
@@ -38,9 +38,17 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     if (isStickyVisible && titleRef.current) {
       setTimeout(() => {
         if (titleRef.current) {
-          const isOverflowing =
-            titleRef.current.scrollWidth > titleRef.current.clientWidth;
+          const titleWidth = titleRef.current.scrollWidth;
+          const containerWidth = titleRef.current.parentElement?.clientWidth || 0;
+          const isOverflowing = titleWidth > containerWidth;
+          
           setIsTitleOverflowing(isOverflowing);
+          
+          if (isOverflowing) {
+            // Calculate exact distance needed + 50px safety margin for last character
+            const distance = titleWidth - containerWidth + 50;
+            setScrollDistance(distance);
+          }
         }
       }, 100);
     }
@@ -50,45 +58,20 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  if (!isReady) return null; // wait for age state
+  if (!isReady) return null;
 
-  // If minor: show simple lock message, no story text
+  // Minor lock screen
   if (isMinor) {
     return (
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
-        <Link
-          href="/stories"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#DC143C',
-            marginBottom: '24px',
-            fontSize: '16px',
-            textDecoration: 'none',
-          }}
-        >
+      <div className={styles.lockScreen}>
+        <Link href="/stories" className={styles.backButton}>
           ← Back to Stories
         </Link>
 
-        <h1
-          style={{
-            fontSize: '32px',
-            color: '#E8E4D9',
-            marginBottom: '16px',
-            fontFamily: 'Cinzel, serif',
-          }}
-        >
+        <h1 className={styles.lockTitle}>
           Story Locked for Under‑18 Visitors
         </h1>
-        <p
-          style={{
-            fontSize: '18px',
-            lineHeight: 1.7,
-            color: '#E5E7EB',
-            maxWidth: '640px',
-          }}
-        >
+        <p className={styles.lockMessage}>
           Individual horror tales are available only to readers who are 18 or
           older. You can still enjoy our music player, affiliate products, and
           feedback page while story content remains protected.
@@ -97,8 +80,7 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
     );
   }
 
-  // ADULT VIEW: your original story layout unchanged below
-  // -----------------------------------------------------
+  // Adult view
   const relatedStories = stories
     .filter(
       (s) =>
@@ -111,121 +93,32 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
       return dateB.getTime() - dateA.getTime();
     })
     .slice(0, 3);
+
   return (
     <>
-      {/* Inline CSS for marquee animation */}
-      <style jsx>{`
-        @keyframes marquee {
-          0%,
-          100% {
-            transform: translateX(0%);
-          }
-          90% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .marquee-title {
-          display: inline-block;
-          animation: marquee 10s linear infinite;
-          animation-delay: 0s;
-        }
-
-        .marquee-container {
-          overflow: hidden;
-          position: relative;
-          width: 100%;
-        }
-
-        .marquee-container:hover .marquee-title {
-          animation-play-state: paused;
-        }
-      `}</style>
-
       {/* Sticky Title Bar */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          background:
-            'linear-gradient(135deg, rgba(26, 0, 0, 0.98) 0%, rgba(45, 0, 0, 0.98) 100%)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '2px solid #8B0000',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.9)',
-          opacity: isStickyVisible ? 1 : 0,
-          transform: isStickyVisible ? 'translateY(0)' : 'translateY(-100%)',
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          pointerEvents: isStickyVisible ? 'auto' : 'none',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '900px',
-            margin: '0 auto',
-            padding: '16px 24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-          }}
-        >
-          <Link
-            href="/stories"
-            style={{
-              fontFamily: 'Lora, serif',
-              color: '#E8E4D9',
-              fontSize: '14px',
-              textDecoration: 'none',
-              padding: '6px 12px',
-              border: '1px solid rgba(139, 0, 0, 0.5)',
-              borderRadius: '6px',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
-            }}
-          >
+      <div className={`${styles.stickyHeader} ${isStickyVisible ? styles.visible : styles.hidden}`}>
+        <div className={styles.stickyContent}>
+          <Link href="/stories" className={styles.stickyBackButton}>
             ← Back
           </Link>
 
-          {/* Title with marquee animation for long titles */}
-          <div
-            className={isTitleOverflowing ? 'marquee-container' : ''}
-            style={{
-              flex: 1,
-              minWidth: 0,
-              overflow: 'hidden',
-            }}
-          >
+          <div className={`${styles.stickyTitleContainer} ${isTitleOverflowing ? styles.marquee : ''}`}>
             <h2
               ref={titleRef}
-              style={{
-                fontFamily: 'Cinzel, serif',
-                color: '#E8E4D9',
-                fontSize: '20px',
-                margin: 0,
-                textShadow: '0 2px 8px rgba(220, 20, 60, 0.6)',
-                whiteSpace: 'nowrap',
-                display: isTitleOverflowing ? 'inline-block' : 'block',
-                animation: isTitleOverflowing ? 'marquee 10s linear infinite' : 'none',
-              }}
+              className={`${styles.stickyTitle} ${isTitleOverflowing ? styles.scrolling : ''}`}
+              style={
+                isTitleOverflowing
+                  ? ({ '--scroll-distance': `-${scrollDistance}px` } as React.CSSProperties)
+                  : undefined
+              }
             >
               {story.title}
             </h2>
           </div>
 
           {story.readTime && (
-            <div
-              style={{
-                color: '#B8B8B8',
-                fontSize: '14px',
-                whiteSpace: 'nowrap',
-                flexShrink: 0,
-              }}
-            >
+            <div className={styles.stickyReadTime}>
               ⏱️ {story.readTime}
             </div>
           )}
@@ -233,76 +126,23 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
       </div>
 
       {/* Main Content */}
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
-        {/* Back Button */}
-        <Link
-          href="/stories"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#DC143C',
-            marginBottom: '24px',
-            fontSize: '16px',
-            textDecoration: 'none',
-          }}
-        >
+      <div className={styles.container}>
+        <Link href="/stories" className={styles.backButton}>
           ← Back to Stories
         </Link>
 
         {/* Story Header */}
-        <div
-          ref={heroRef}
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '400px',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            marginBottom: '32px',
-          }}
-        >
+        <div ref={heroRef} className={styles.hero}>
           <Image
             src={story.imageUrl}
             alt={story.title}
             fill
             style={{ objectFit: 'cover' }}
           />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '32px',
-              left: '32px',
-              right: '32px',
-            }}
-          >
-            <h1
-              style={{
-                fontSize: '48px',
-                color: '#E8E4D9',
-                marginBottom: '16px',
-                fontFamily: 'Cinzel, serif',
-                textShadow: '0 0 20px rgba(0,0,0,0.8)',
-              }}
-            >
-              {story.title}
-            </h1>
-            <div
-              style={{
-                display: 'flex',
-                gap: '16px',
-                fontSize: '14px',
-                color: '#B8B8B8',
-              }}
-            >
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>{story.title}</h1>
+            <div className={styles.heroMeta}>
               <span>{story.publishedDate}</span>
               {story.readTime && <span>⏱️ {story.readTime}</span>}
             </div>
@@ -310,91 +150,35 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Tags */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '8px',
-            marginBottom: '32px',
-            flexWrap: 'wrap',
-          }}
-        >
+        <div className={styles.tags}>
           {story.tags.map((tag) => (
-            <span
-              key={tag}
-              style={{
-                background: 'rgba(220, 20, 60, 0.2)',
-                color: '#DC143C',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '14px',
-                border: '1px solid #8B0000',
-              }}
-            >
+            <span key={tag} className={styles.tag}>
               #{tag}
             </span>
           ))}
         </div>
 
         {/* Full Story Content */}
-        <article
-          style={{
-            fontSize: '18px',
-            lineHeight: '1.8',
-            color: '#E8E4D9',
-            marginBottom: '64px',
-          }}
-        >
+        <article className={styles.article}>
           {story.fullContent.split('\n').map((paragraph, index) =>
             paragraph.trim() ? (
-              <p key={index} style={{ marginBottom: '24px' }}>
-                {paragraph.trim()}
-              </p>
+              <p key={index}>{paragraph.trim()}</p>
             ) : null
           )}
         </article>
 
         {/* Related Stories */}
         {relatedStories.length > 0 && (
-          <div>
-            <h2
-              style={{
-                fontSize: '32px',
-                color: '#E8E4D9',
-                marginBottom: '24px',
-                fontFamily: 'Cinzel, serif',
-                borderBottom: '2px solid #8B0000',
-                paddingBottom: '16px',
-              }}
-            >
-              More Horror Tales
-            </h2>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-                gap: '24px',
-              }}
-            >
+          <div className={styles.relatedSection}>
+            <h2 className={styles.relatedTitle}>More Horror Tales</h2>
+            <div className={styles.relatedGrid}>
               {relatedStories.map((related) => (
                 <Link
                   key={related.id}
                   href={`/stories/${related.slug}`}
-                  style={{
-                    textDecoration: 'none',
-                    display: 'block',
-                    border: '1px solid #8B0000',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    transition: 'all 0.3s ease',
-                  }}
+                  className={styles.relatedCard}
                 >
-                  <div
-                    style={{
-                      position: 'relative',
-                      width: '100%',
-                      height: '150px',
-                    }}
-                  >
+                  <div className={styles.relatedImage}>
                     <Image
                       src={related.imageUrl}
                       alt={related.title}
@@ -402,23 +186,11 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
                       style={{ objectFit: 'cover' }}
                     />
                   </div>
-                  <div style={{ padding: '16px' }}>
-                    <h3
-                      style={{
-                        color: '#E8E4D9',
-                        fontSize: '16px',
-                        marginBottom: '8px',
-                      }}
-                    >
+                  <div className={styles.relatedContent}>
+                    <h3 className={styles.relatedCardTitle}>
                       {related.title}
                     </h3>
-                    <p
-                      style={{
-                        color: '#B8B8B8',
-                        fontSize: '14px',
-                        lineHeight: '1.4',
-                      }}
-                    >
+                    <p className={styles.relatedExcerpt}>
                       {related.excerpt.substring(0, 80)}...
                     </p>
                   </div>

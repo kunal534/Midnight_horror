@@ -1,4 +1,4 @@
-// app/stories/page.tsx
+// //use => LIST
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -159,8 +159,21 @@ export default function StoriesArchivePage() {
             )}
           </div>
 
-          {/* Tags (only tags from filtered stories) */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {/* Tags Container with 3 rows max + vertical scroll */}
+          <div
+            style={{
+              maxHeight: '140px', // Approximately 3 rows (each ~44-48px)
+              overflowY: 'auto',
+              display: 'flex',
+              gap: '8px',
+              flexWrap: 'wrap',
+              padding: '4px 0',
+              // Custom scrollbar styling
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#DC143C rgba(28, 28, 28, 0.4)',
+            }}
+            className="tags-scroll-container"
+          >
             <button
               onClick={() => setSelectedTag(null)}
               style={{
@@ -175,6 +188,7 @@ export default function StoriesArchivePage() {
                 borderRadius: '20px',
                 cursor: 'pointer',
                 fontSize: '14px',
+                height: 'fit-content',
               }}
             >
               All Stories
@@ -200,12 +214,31 @@ export default function StoriesArchivePage() {
                   borderRadius: '20px',
                   cursor: 'pointer',
                   fontSize: '14px',
+                  height: 'fit-content',
                 }}
               >
                 #{tag}
               </button>
             ))}
           </div>
+
+          {/* Add custom scrollbar styles */}
+          <style jsx>{`
+            .tags-scroll-container::-webkit-scrollbar {
+              width: 6px;
+            }
+            .tags-scroll-container::-webkit-scrollbar-track {
+              background: rgba(28, 28, 28, 0.4);
+              border-radius: 10px;
+            }
+            .tags-scroll-container::-webkit-scrollbar-thumb {
+              background: #DC143C;
+              border-radius: 10px;
+            }
+            .tags-scroll-container::-webkit-scrollbar-thumb:hover {
+              background: #FF1744;
+            }
+          `}</style>
         </div>
 
         {/* Stories Grid */}

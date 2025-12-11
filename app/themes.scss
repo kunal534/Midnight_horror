@@ -10,16 +10,15 @@ $maroon: #800000;              // Deep maroon
 
 // Secondary Colors
 $ash-gray: #4A4A4A;            // Dark gray
-$smoke-gray: #6B6B6B;          // Medium gray
+$bone-white: #E8E4D9;          // Off-white bone color
+$text-primary: #E8E4D9;        // Same as bone white
 
 // Accent Colors
 $midnight-black: #0A0A0A;      // Almost black
 $charcoal: #1C1C1C;            // Dark charcoal
-$bone-white: #E8E4D9;          // Off-white (keep this)
 $rust-red: #A52A2A;            // Rust/brown red
 
 // Text Colors
-$text-primary: #E8E4D9;        // Bone white
 $text-secondary: #B8B8B8;      // Light gray
 $text-muted: #808080;          // Medium gray
 $text-red: #FF4444;            // Bright red for accents
@@ -30,14 +29,15 @@ $blood-gradient: linear-gradient(180deg, $blood-red 0%, $dark-red 100%);
 $red-glow: linear-gradient(135deg, $dark-red 0%, $crimson 50%, $blood-red 100%);
 
 // ========================================
-// TYPOGRAPHY (Keep same)
+// TYPOGRAPHY
 // ========================================
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&family=Creepster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&family=Creepster&display=swap');
 
 $font-heading: 'Cinzel', serif;
 $font-body: 'Lora', serif;
 $font-accent: 'Creepster', cursive;
+$font-horror: 'Nosifer', cursive;
 
 // Font sizes
 $font-size-xs: 12px;
@@ -49,7 +49,7 @@ $font-size-2xl: 32px;
 $font-size-3xl: 48px;
 
 // ========================================
-// SPACING (Keep same)
+// SPACING
 // ========================================
 
 $spacing-xs: 4px;
@@ -60,7 +60,7 @@ $spacing-xl: 32px;
 $spacing-2xl: 48px;
 
 // ========================================
-// BORDER RADIUS (Keep same)
+// BORDER RADIUS
 // ========================================
 
 $radius-sm: 4px;
@@ -78,7 +78,7 @@ $shadow-lg: 0 8px 32px rgba(139, 0, 0, 0.6);
 $shadow-red-glow: 0 0 20px rgba(220, 20, 60, 0.5);
 
 // ========================================
-// TRANSITIONS (Keep same)
+// TRANSITIONS
 // ========================================
 
 $transition-base: 300ms ease-in-out;

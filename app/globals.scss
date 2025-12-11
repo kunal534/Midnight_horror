@@ -16,7 +16,7 @@ html {
 
 body {
   font-family: $font-body;
-  background: $midnight-black;  // Changed to black
+  background: $midnight-black;
   color: $text-primary;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: $spacing-md;
-  text-shadow: 0 0 10px rgba($crimson, 0.3);  // Red glow
+  text-shadow: 0 0 10px rgba($crimson, 0.3);
 }
 
 h1 {
@@ -68,8 +68,101 @@ a {
   text-decoration: none;
   transition: color $transition-base;
   &:hover { 
-    color: $crimson;  // Red on hover
+    color: $crimson;
     text-decoration: underline;
+  }
+}
+
+// ========================================
+// CONTENT TEXT STYLES (Stories, Thoughts, Archive)
+// ========================================
+
+.content-text,
+.story-content,
+.thought-content {
+  font-family: $font-body;
+  font-size: 18px;
+  line-height: 1.9;
+  color: $text-primary;
+  letter-spacing: 0.3px;
+  
+  p {
+    margin-bottom: 2rem;
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: 0.1em;
+    hyphens: auto;
+  }
+  
+  // Optional: Drop cap for first paragraph
+  p:first-of-type::first-letter {
+    font-size: 3.5em;
+    line-height: 0.9;
+    float: left;
+    margin: 0.1em 0.15em 0 0;
+    font-family: $font-heading;
+    color: $crimson;
+    font-weight: 700;
+  }
+  
+  // Bullet lists
+  ul {
+    list-style: none;
+    padding-left: 2rem;
+    margin: 2rem 0;
+    
+    li {
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      line-height: 1.8;
+      position: relative;
+      text-align: left;
+      
+      &::before {
+        content: "☠";
+        position: absolute;
+        left: -1.5rem;
+        color: $blood-red;
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  // Ordered lists
+  ol {
+    padding-left: 2rem;
+    margin: 2rem 0;
+    
+    li {
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      line-height: 1.8;
+      
+      &::marker {
+        color: $crimson;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  // Blockquotes
+  blockquote {
+    border-left: 3px solid $blood-red;
+    padding-left: $spacing-lg;
+    margin: $spacing-xl 0;
+    font-style: italic;
+    color: $text-secondary;
+  }
+  
+  // Strong/Bold text
+  strong, b {
+    color: $crimson;
+    font-weight: 600;
+  }
+  
+  // Emphasis/Italic
+  em, i {
+    color: $text-secondary;
   }
 }
 
@@ -80,7 +173,7 @@ a {
 button, [role="button"] {
   font-family: $font-body;
   padding: $spacing-sm $spacing-md;
-  border: 2px solid $blood-red;  // Red border
+  border: 2px solid $blood-red;
   background: transparent;
   color: $bone-white;
   cursor: pointer;
@@ -89,7 +182,7 @@ button, [role="button"] {
   font-size: $font-size-base;
   
   &:hover {
-    background: rgba($blood-red, 0.2);  // Red hover
+    background: rgba($blood-red, 0.2);
     border-color: $crimson;
     box-shadow: 0 0 15px rgba($crimson, 0.3);
     transform: translateY(-2px);
@@ -106,9 +199,9 @@ button, [role="button"] {
 
 input, select, textarea {
   font-family: $font-body;
-  background: rgba($charcoal, 0.8);  // Dark background
+  background: rgba($charcoal, 0.8);
   color: $text-primary;
-  border: 1px solid $blood-red;  // Red border
+  border: 1px solid $blood-red;
   border-radius: $radius-md;
   padding: $spacing-sm $spacing-md;
   font-size: $font-size-base;
@@ -156,7 +249,7 @@ input, select, textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $blood-red;  // Red scrollbar
+  background: $blood-red;
   border-radius: 5px;
   
   &:hover {

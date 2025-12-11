@@ -1,3 +1,5 @@
+// use=> Route: /thoughts/[slug] (individual thought)
+
 'use client';
 
 import { notFound } from 'next/navigation';
@@ -18,8 +20,41 @@ export default function ThoughtDetailPage({ params }: { params: { slug: string }
       case 'writing': return '#8B4789';
       case 'personal': return '#4B7F89';
       case 'updates': return '#8B8B00';
+      case 'Self Realization': return '#FF8C00';
+      case 'social critique': return '#B8860B';
       default: return '#DC143C';
     }
+  };
+
+  const renderContent = (content: string) => {
+    const sections = content.split('\n\n');
+    
+    return sections.map((section, idx) => {
+      const trimmed = section.trim();
+      
+      // Check if section contains bullet points
+      if (trimmed.includes('\n- ')) {
+        const lines = trimmed.split('\n');
+        const bulletItems = lines.filter(line => line.trim().startsWith('- '));
+        
+        if (bulletItems.length > 0) {
+          return (
+            <ul key={idx} className={styles.bulletList}>
+              {bulletItems.map((item, i) => (
+                <li key={i}>{item.replace(/^- /, '').trim()}</li>
+              ))}
+            </ul>
+          );
+        }
+      }
+      
+      // Regular paragraph
+      if (trimmed) {
+        return <p key={idx} className={styles.paragraph}>{trimmed}</p>;
+      }
+      
+      return null;
+    });
   };
 
   return (
@@ -44,12 +79,8 @@ export default function ThoughtDetailPage({ params }: { params: { slug: string }
         </div>
       </header>
 
-      <div className={styles.content}>
-        {thought.fullContent.split('\n\n').map((paragraph, index) => (
-          <p key={index} className={styles.paragraph}>
-            {paragraph.trim()}
-          </p>
-        ))}
+      <div className={styles.content+' content-text'}>
+        {renderContent(thought.fullContent)}
       </div>
 
       <footer className={styles.footer}>
