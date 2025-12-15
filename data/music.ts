@@ -70,4 +70,11 @@ export const musicPlaylist: Track[] = [
     file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Ashes%20Cradle%20Secrets.mp3',
     duration:'2:43'
   },
+  {
+    id:'10',
+    title:'Bleed Where Faith Begins',
+    artist:'Midnight',
+    file:'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/Bleed%20Where%20Faith%20Begins.mp3',
+    duration:'2:15'
+  }
 ];

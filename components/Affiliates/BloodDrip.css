@@ -1,0 +1,96 @@
+/* Dripping Effect */
+.drip-1,
+.drip-2,
+.drip-3 {
+  position: absolute;
+  width: 19px;
+  height: 0px;
+  border-radius: 0 0 21px 21px;
+  background: #DC143C;
+  bottom: -1px;
+  transition-property: height;
+  transition-timing-function: ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.drip-1 {
+  left: 50%;
+  margin-left: -9px;
+  transition-duration: 0.9s;
+}
+
+.drip-2 {
+  left: 30%;
+  margin-left: -9px;
+  transition-duration: 1.5s;
+}
+
+.drip-3 {
+  left: 70%;
+  margin-left: -9px;
+  transition-duration: 0.7s;
+}
+
+/* Active drips - extends when button has 'active' class */
+.active .drip-1 {
+  height: 50px !important;
+}
+
+.active .drip-2 {
+  height: 90px !important;
+}
+
+.active .drip-3 {
+  height: 30px !important;
+}
+
+/* Liquid Wave Effect - GOLDEN VERSION */
+.liquid {
+  position: absolute;
+  top: -120px; /* Always visible */
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: #fcc200; /* Golden yellow */
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.liquid::after,
+.liquid::before {
+  content: '';
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.liquid::before {
+  border-radius: 45%;
+  background: rgba(20, 20, 20, 1); /* Dark wave */
+  animation: animate 5s linear infinite;
+}
+
+.liquid::after {
+  border-radius: 40%;
+  background: rgba(20, 20, 20, 0.5); /* Semi-transparent dark wave */
+  animation: animate 10s linear infinite;
+}
+
+.active .liquid {
+  top: -120px;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}

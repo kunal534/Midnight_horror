@@ -77,23 +77,6 @@ $text-secondary: #B8B8B8;
     position: relative;
   }
 }
-
-// .stickyTitle {
-//   font-family: $font-nosifer;
-//   color: $text-primary;
-//   font-size: 20px;
-//   margin: 0;
-//   text-shadow: 
-//     0 0 10px rgba(255, 0, 0, 0.8),
-//     0 0 20px rgba($blood-red, 0.6);
-//   letter-spacing: 2px;
-//   white-space: nowrap;
-
-//   &.scrolling {
-//     display: inline-block;
-//     animation: marquee 10s linear infinite;
-//   }
-// }
 .stickyTitle {
   font-family: $font-nosifer;
   color: $text-primary;
@@ -366,4 +349,21 @@ $text-secondary: #B8B8B8;
   line-height: 1.7;
   color: $text-primary;
   max-width: 640px;
+}
+
+.heroLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.heroOverlay {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heroContent {
+  z-index: 3;
+  pointer-events: none;
 }

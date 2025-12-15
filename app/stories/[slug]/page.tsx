@@ -130,24 +130,42 @@ export default function StoryPage({ params }: { params: { slug: string } }) {
         <Link href="/stories" className={styles.backButton}>
           ← Back to Stories
         </Link>
+{/* Story Header */}
+<div ref={heroRef} className={styles.hero}>
+  {story.pinterestUrl ? (
+    <a
+      href={story.pinterestUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.heroLink}
+    >
+      <Image
+        src={story.imageUrl}
+        alt={story.title}
+        fill
+        style={{ objectFit: 'cover' }}
+      />
+    </a>
+  ) : (
+    <Image
+      src={story.imageUrl}
+      alt={story.title}
+      fill
+      style={{ objectFit: 'cover' }}
+    />
+  )}
 
-        {/* Story Header */}
-        <div ref={heroRef} className={styles.hero}>
-          <Image
-            src={story.imageUrl}
-            alt={story.title}
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-          <div className={styles.heroOverlay} />
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>{story.title}</h1>
-            <div className={styles.heroMeta}>
-              <span>{story.publishedDate}</span>
-              {story.readTime && <span>⏱️ {story.readTime}</span>}
-            </div>
-          </div>
-        </div>
+  <div className={styles.heroOverlay} />
+  <div className={styles.heroContent}>
+    <h1 className={styles.heroTitle}>{story.title}</h1>
+    <div className={styles.heroMeta}>
+      <span>{story.publishedDate}</span>
+      {story.readTime && <span>⏱️ {story.readTime}</span>}
+    </div>
+  </div>
+</div>
+
+
 
         {/* Tags */}
         <div className={styles.tags}>
