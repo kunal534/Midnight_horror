@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, ReactNode } from 'react';
 import styles from './HorrorCursor.module.scss';
 
-export default function HorrorCursor() {
+export default function HorrorCursor({ children }: { children: ReactNode }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const critterRef = useRef<any>(null);
 
@@ -490,9 +490,12 @@ export default function HorrorCursor() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={styles.horrorCursor}
-    />
+   <>
+      <canvas
+        ref={canvasRef}
+        className={styles.horrorCursor}
+      />
+      {children}
+    </>
   );
 }

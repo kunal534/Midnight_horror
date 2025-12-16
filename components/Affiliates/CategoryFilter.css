@@ -21,7 +21,7 @@
 }
 
 .category-button.active {
-  border: 2px solid #DC143C;
+  border: 1px solid #DC143C;
   background: #000000;
   box-shadow: 0 0 20px rgba(220, 20, 60, 0.6), 
               inset 0 0 15px rgba(0, 0, 0, 0.8);
@@ -30,7 +30,7 @@
 
 .category-text {
   position: relative;
-  color: #E30926;
+  color: #FFFFFF;
   font-size: 12px;
   font-family: 'Cinzel', serif;
   letter-spacing: 2px;
@@ -44,7 +44,7 @@
   left: 0;
   width: 100%;
   height: 200px;
-  background: #FFDF20;
+  background: #e30022;
   pointer-events: none;
   border-radius: 50px; /* Match button shape */
   z-index: 0;
@@ -84,12 +84,13 @@
 
 .category-button .category-text {
   position: relative;
-  color: #DC143C; 
+  color: #FFFFFF; 
   font-size: 12px;
   font-family: 'Cinzel', serif;
   letter-spacing: 2px;
   z-index: 2;
   pointer-events: none;
+  font-weight: bold;
   animation: text-blink 1.5s ease-in-out infinite;
 }
 

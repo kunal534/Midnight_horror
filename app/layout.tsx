@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Nosifer, Cinzel, Lora } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import BoneNavigation from '@/components/Navigation/BoneNavigation';
 import EnhancedMusicPlayer from '@/components/MusicPlayer/EnhancedMusicPlayer';
 import Footer from '@/components/Footer/Footer';
@@ -9,6 +10,13 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.scss';
 import { AgeProvider } from '@/components/AgeGate/AgeContext';
 import AgeGateOverlay from '@/components/AgeGate/AgeGateOverlay';
+import HorrorCursor from '@/components/HorrorCursor/HorrorCursor';
+
+// Dynamic import to prevent SSR issues
+const JumpScare = dynamic(
+  () => import('@/components/JumpScare/JumpScare'),
+  { ssr: false }
+);
 
 // Configure Google Fonts
 const nosifer = Nosifer({
@@ -43,20 +51,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${nosifer.variable} ${cinzel.variable} ${lora.variable}`}
     >
       <body>
-        <AgeProvider>
-          {/* Popup shows only until user picks a mode */}
-          <AgeGateOverlay />
+        <HorrorCursor>
+          <AgeProvider>
+            {/* Jump scare effect across all pages */}
+            <JumpScare />
+            
+            {/* Popup shows only until user picks a mode */}
+            <AgeGateOverlay />
 
-          <BoneNavigation />
-          <main className="main-content">{children}</main>
+            <BoneNavigation />
+            <main className="main-content">{children}</main>
 
-          {/* Always available, even for minors */}
-          <EnhancedMusicPlayer />
-          <Footer />
-        </AgeProvider>
+            {/* Always available, even for minors */}
+            <EnhancedMusicPlayer />
+            <Footer />
+          </AgeProvider>
 
-        <Analytics />
-        <SpeedInsights />
+          <Analytics />
+          <SpeedInsights />
+        </HorrorCursor>
       </body>
     </html>
   );

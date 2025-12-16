@@ -14,6 +14,7 @@ const HorrorAnimation = dynamic(
   { ssr: false }
 );
 
+
 const HomeStoryGrid = dynamic(
   () => import('./HomeStoryGrid'),
   { ssr: false }

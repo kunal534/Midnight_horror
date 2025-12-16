@@ -1,0 +1,224 @@
+.jumpscareContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+.jumpscare {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  opacity: 0;
+  z-index: 99999;
+  animation: flashScare 1.2s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.glitchWrapper {
+  position: relative;
+  animation: shake 0.5s ease-in-out infinite;
+  max-width: 90vw;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitch {
+  font-family: 'Nosifer', cursive;
+  font-size: clamp(2rem, 10vw, 8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+  color: #fff;
+  letter-spacing: 0.2em;
+  animation: glitch-skew 1s infinite linear alternate-reverse;
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 1),
+    0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 0, 0, 0.4),
+    0 0 70px rgba(255, 0, 0, 0.2),
+    0 0 100px rgba(255, 0, 0, 0.1);
+  word-wrap: break-word;
+  max-width: 100%;
+  line-height: 1.2;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
+  color: #ff0000;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+  color: #00ff00;
+  z-index: -2;
+}
+
+@keyframes flashScare {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  10% {
+    transform: translateX(-10px) translateY(-5px) rotate(-1deg);
+  }
+  20% {
+    transform: translateX(10px) translateY(5px) rotate(1deg);
+  }
+  30% {
+    transform: translateX(-10px) translateY(5px) rotate(-1deg);
+  }
+  40% {
+    transform: translateX(10px) translateY(-5px) rotate(1deg);
+  }
+  50% {
+    transform: translateX(-10px) translateY(-5px) rotate(-1deg);
+  }
+  60% {
+    transform: translateX(10px) translateY(5px) rotate(1deg);
+  }
+  70% {
+    transform: translateX(-10px) translateY(-5px) rotate(-1deg);
+  }
+  80% {
+    transform: translateX(10px) translateY(5px) rotate(1deg);
+  }
+  90% {
+    transform: translateX(-10px) translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg, 0deg);
+  }
+  20% {
+    transform: skew(-2deg, 1deg);
+  }
+  40% {
+    transform: skew(2deg, -1deg);
+  }
+  60% {
+    transform: skew(-1deg, 2deg);
+  }
+  80% {
+    transform: skew(1deg, -2deg);
+  }
+  100% {
+    transform: skew(0deg, 0deg);
+  }
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-20px, -10px);
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(10px, 10px);
+  }
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-10px, 5px);
+  }
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(10px, -5px);
+  }
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-10px, 10px);
+  }
+  100% {
+    clip-path: inset(58% 0 43% 0);
+    transform: translate(10px, -10px);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip-path: inset(65% 0 20% 0);
+    transform: translate(20px, 10px);
+  }
+  20% {
+    clip-path: inset(12% 0 41% 0);
+    transform: translate(-10px, -10px);
+  }
+  40% {
+    clip-path: inset(85% 0 8% 0);
+    transform: translate(10px, -5px);
+  }
+  60% {
+    clip-path: inset(38% 0 31% 0);
+    transform: translate(-10px, 5px);
+  }
+  80% {
+    clip-path: inset(5% 0 92% 0);
+    transform: translate(10px, -10px);
+  }
+  100% {
+    clip-path: inset(21% 0 24% 0);
+    transform: translate(-10px, 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .glitch {
+    font-size: clamp(1.5rem, 8vw, 4rem);
+    letter-spacing: 0.15em;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch {
+    font-size: clamp(1.2rem, 7vw, 3rem);
+    letter-spacing: 0.1em;
+  }
+  
+  .glitchWrapper {
+    max-width: 95vw;
+    padding: 0 10px;
+  }
+}
