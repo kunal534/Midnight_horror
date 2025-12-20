@@ -13,6 +13,7 @@
     box-shadow 0.3s ease,
     border-color 0.3s ease,
     background 0.3s ease;
+  max-width: 100%;
 }
 
 .affiliate-card::after {
@@ -21,6 +22,7 @@
   margin: 24px 24px 0;
   border-bottom: 1px solid #8b0000;
 }
+
 /* Simple fade / slide-in on first paint (optional) */
 .affiliate-card {
   opacity: 0;
@@ -52,6 +54,14 @@
   border-color: #dc143c;
 }
 
+/* Image container */
+.affiliate-image-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
 /* Badge on image */
 .affiliate-badge {
   position: absolute;
@@ -63,21 +73,37 @@
   border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
+  z-index: 2;
+}
+
+/* Card content wrapper */
+.affiliate-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
 }
 
 /* Text styles */
 .affiliate-title {
-  font-size: 20px;
+  font-size: clamp(16px, 4vw, 20px);
   color: #e8e4d9;
   margin-bottom: 12px;
   font-family: 'Cinzel', serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.3;
 }
 
 .affiliate-description {
-  font-size: 14px;
+  font-size: clamp(13px, 3vw, 14px);
   color: #b8b8b8;
   margin-bottom: 16px;
   line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Footer row */
@@ -87,12 +113,15 @@
   align-items: center;
   padding-top: 16px;
   border-top: 1px solid #8b0000;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .affiliate-price {
-  font-size: 24px;
+  font-size: clamp(20px, 5vw, 24px);
   font-weight: bold;
   color: #dc143c;
+  white-space: nowrap;
 }
 
 .affiliate-button {
@@ -103,4 +132,59 @@
   border: none;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: clamp(12px, 3vw, 14px);
+}
+
+.affiliate-button:hover {
+  background: linear-gradient(135deg, #7c0000 0%, #ab0000 50%, #ff1c4c 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .affiliate-content {
+    padding: 20px;
+  }
+
+  .affiliate-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .affiliate-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .affiliate-image-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .affiliate-content {
+    padding: 16px;
+  }
+
+  .affiliate-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .affiliate-description {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .affiliate-price {
+    font-size: 20px;
+  }
+
+  .affiliate-image-container {
+    height: 180px;
+  }
 }

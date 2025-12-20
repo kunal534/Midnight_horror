@@ -1,127 +1,90 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import './Navigation.css';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import styles from './BoneNavigation.module.scss';
 
-interface NavItem {
-  id: string;
-  label: string;
-  path: string;
-  icon: string;
-}
-
-const navItems: NavItem[] = [
-  { id: '1', label: 'Previous Stories', path: '/previous-stories', icon: '📚' },
-  { id: '2', label: 'Affiliate Page', path: '/affiliate', icon: '💰' },
-  { id: '3', label: 'Longer Stories', path: '/longer-stories', icon: '📖' },
-  { id: '4', label: 'My Thoughts', path: '/thoughts', icon: '💭' },
-  { id: '5', label: 'Contact', path: '/thoughts#contact', icon: '📨' },
+const NAV_ITEMS = [
+  { label: 'Stories', route: '/', icon: '💀' },
+  { label: 'Archive', route: '/stories', icon: '📖' },
+  { label: 'Thoughts', route: '/thoughts', icon: '🧠' },
+  { label: 'Affiliate', route: '/affiliate', icon: '🪙' },
+  { label: 'Feedback', route: '/feedback', icon: '📝' },
 ];
 
-export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [musicPlayerExpanded, setMusicPlayerExpanded] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+export default function BoneNavigation() {
   const pathname = usePathname();
-
-  // Check if music player is expanded
-  useEffect(() => {
-    const checkMusicPlayer = () => {
-      const musicPlayer = document.querySelector('.music-player.expanded');
-      setMusicPlayerExpanded(!!musicPlayer);
-    };
-
-    checkMusicPlayer();
-    const observer = new MutationObserver(checkMusicPlayer);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-    
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  const handleToggle = () => {
-    if (isOpen) {
-      // Closing animation
-      setIsAnimating(true);
-      setIsOpen(false);
-      setTimeout(() => setIsAnimating(false), 500);
-    } else {
-      // Opening animation
-      setIsAnimating(true);
-      setIsOpen(true);
-      setTimeout(() => setIsAnimating(false), 300);
-    }
-  };
-
-  const handleNavigate = (path: string) => {
-    // Closing animation when navigating
-    setIsAnimating(true);
-    setIsOpen(false);
-    setTimeout(() => {
-      setIsAnimating(false);
-      router.push(path);
-    }, 400);
-  };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div 
-      className={`navigation-container ${musicPlayerExpanded ? 'music-player-open' : ''}`} 
-      ref={dropdownRef}
-      style={{ right: musicPlayerExpanded ? '420px' : '20px' }}
-    >
-      <button
-        className={`nav-toggle ${isOpen ? 'open' : ''} ${isAnimating ? 'animating' : ''}`}
-        onClick={handleToggle}
-        aria-label="Toggle navigation"
-      >
-        <span className="nav-icon-line"></span>
-        <span className="nav-icon-line"></span>
-        <span className="nav-icon-line"></span>
-        <span className="nav-icon-glow"></span>
-      </button>
-
-      <div className={`nav-dropdown ${isOpen ? 'open' : ''}`}>
-        <div className="nav-dropdown-content">
-          <div className="nav-header">
-            <h3>Navigate</h3>
-            <span className="nav-header-glow"></span>
-          </div>
-          <ul className="nav-list">
-            {navItems.map((item, index) => (
-              <li key={item.id}>
-                <button
-                  className={`nav-item ${pathname === item.path ? 'active' : ''}`}
-                  onClick={() => handleNavigate(item.path)}
-                >
-                  <span className="nav-icon">{item.icon}</span>
-                  <span className="nav-label">{item.label}</span>
-                  <span className="nav-hover-effect"></span>
-                </button>
-              </li>
-            ))}
-          </ul>
+    <nav className={styles.boneNav}>
+      <div className={styles.navContainer}>
+        <div className={styles.logo}>
+          <h1 className={styles.title}>🩸 Midnight Horror</h1>
         </div>
+
+        {/* Desktop nav – single row, scrollable if needed */}
+        <div className={styles.desktopNav}>
+          {NAV_ITEMS.map((item, index) => (
+            <div key={item.route} className={styles.navItemWrapper}>
+              <Link
+                href={item.route}
+                className={`${styles.navLink} ${
+                  pathname === item.route ? styles.active : ''
+                }`}
+              >
+                <span className={styles.icon}>{item.icon}</span>
+                <span className={styles.label}>{item.label}</span>
+              </Link>
+              {index < NAV_ITEMS.length - 1 && (
+                <div className={styles.boneConnector}>
+                  <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M 10 10 L 90 10"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    <circle cx="10" cy="10" r="5" fill="currentColor" />
+                    <circle cx="90" cy="10" r="5" fill="currentColor" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className={styles.hamburger}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </div>
-    </div>
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className={styles.mobileNav}>
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.route}
+              href={item.route}
+              className={`${styles.mobileNavLink} ${
+                pathname === item.route ? styles.active : ''
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className={styles.icon}>{item.icon}</span>
+              <span>{item.label}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </nav>
   );
 }
-

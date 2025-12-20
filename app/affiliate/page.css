@@ -1,15 +1,17 @@
 .page-header {
   text-align: center;
-  margin-bottom: clamp(40px, 8vw, 60px); /* Fluid margin */
-  padding: clamp(24px, 5vw, 40px) clamp(16px, 3vw, 20px); /* Fluid padding */
+  margin: 0 auto clamp(40px, 8vw, 60px);
+  padding: clamp(24px, 5vw, 40px) clamp(16px, 3vw, 20px);
+  max-width: 100%;                 /* never wider than viewport */
   background: linear-gradient(
     135deg,
     rgba(139, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 100%
   );
-  border-radius: clamp(12px, 2.5vw, 20px); /* Fluid border radius */
+  border-radius: clamp(12px, 2.5vw, 20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  /* Avoid heavy blur on mobile (Android) */
+  backdrop-filter: none;
 }
 
 .page-header h1 {
@@ -55,6 +57,11 @@
   font-style: italic;
 }
 
+.affiliate-page-root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 /* Affiliate disclosure container */
 .affiliate-info {
   margin-top: clamp(24px, 5vw, 40px); /* Fluid margin */

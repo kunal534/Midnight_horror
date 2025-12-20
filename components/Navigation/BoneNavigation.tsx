@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { label: 'Archive', route: '/stories', icon: '📖' },
   { label: 'Thoughts', route: '/thoughts', icon: '🧠' },
   { label: 'Affiliate', route: '/affiliate', icon: '🪙' },
-  { label: 'Feedback', route: '/feedback', icon: '📝' }, 
+  { label: 'Feedback', route: '/feedback', icon: '📝' },
 ];
 
 export default function BoneNavigation() {
@@ -24,6 +24,7 @@ export default function BoneNavigation() {
           <h1 className={styles.title}>🩸 Midnight Horror</h1>
         </div>
 
+        {/* Desktop nav */}
         <div className={styles.desktopNav}>
           {NAV_ITEMS.map((item, index) => (
             <div key={item.route} className={styles.navItemWrapper}>
@@ -39,7 +40,12 @@ export default function BoneNavigation() {
               {index < NAV_ITEMS.length - 1 && (
                 <div className={styles.boneConnector}>
                   <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 10 10 L 90 10" stroke="currentColor" strokeWidth="3" fill="none" />
+                    <path
+                      d="M 10 10 L 90 10"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      fill="none"
+                    />
                     <circle cx="10" cy="10" r="5" fill="currentColor" />
                     <circle cx="90" cy="10" r="5" fill="currentColor" />
                   </svg>
@@ -49,17 +55,19 @@ export default function BoneNavigation() {
           ))}
         </div>
 
+        {/* Mobile hamburger */}
         <button
           className={styles.hamburger}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </button>
       </div>
 
+      {/* Mobile dropdown – fixed to right edge */}
       {isMobileMenuOpen && (
         <div className={styles.mobileNav}>
           {NAV_ITEMS.map((item) => (

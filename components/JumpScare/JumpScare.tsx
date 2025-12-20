@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback ,useRef} from 'react';
 import { useAge } from '@/components/AgeGate/AgeContext';
 import { usePathname } from 'next/navigation';
 import styles from './JumpScare.module.scss';
@@ -101,88 +101,95 @@ const JumpScare = () => {
   const [scaryText, setScaryText] = useState('');
   const [isScrolling, setIsScrolling] = useState(false);
 
-  // Check if user is on a reading page (story or thought detail page)
-  const isReadingPage = pathname?.includes('/stories/') || 
-                        pathname?.includes('/thoughts/') || 
-                        pathname?.includes('/story/') || 
-                        pathname?.includes('/thought/');
+  const timeoutsRef = useRef<number[]>([]);
+  const [isAndroid, setIsAndroid] = useState(false);
+
+  // detect platform once
+  useEffect(() => {
+    if (typeof navigator !== 'undefined') {
+      setIsAndroid(/Android/i.test(navigator.userAgent));
+    }
+  }, []);
+
+  const isReadingPage =
+    pathname?.includes('/stories/') ||
+    pathname?.includes('/thoughts/') ||
+    pathname?.includes('/story/') ||
+    pathname?.includes('/thought/');
 
   const triggerJumpScare = useCallback(() => {
-    // Don't trigger if user is a minor, reading, or scrolling
-    if (isMinor || isReadingPage || isScrolling) return;
+    if (isMinor || isReadingPage || isScrolling || isAndroid) return;
 
-    // Get page-aware scary message
     const randomText = getScaryMessage(pathname);
     setScaryText(randomText);
     setJumpScare(true);
 
-    setTimeout(() => {
+    const hideId = window.setTimeout(() => {
       setJumpScare(false);
     }, 1200);
-  }, [isMinor, isReadingPage, isScrolling, pathname]);
+
+    timeoutsRef.current.push(hideId);
+  }, [isMinor, isReadingPage, isScrolling, pathname, isAndroid]);
 
   const scheduleRandomScare = useCallback(() => {
-    // Don't schedule if user is a minor or on reading page
-    if (isMinor || isReadingPage) return;
+    if (isMinor || isReadingPage || isAndroid) return;
 
-    const minDelay = 30000;  // 30 seconds
-    const maxDelay = 120000; // 2 minutes
+    const minDelay = 30000;
+    const maxDelay = 120000;
     const delay = minDelay + Math.random() * (maxDelay - minDelay);
 
-    setTimeout(() => {
+    const id = window.setTimeout(() => {
       triggerJumpScare();
       scheduleRandomScare();
     }, delay);
-  }, [triggerJumpScare, isMinor, isReadingPage]);
 
-  // Detect scrolling
+    timeoutsRef.current.push(id);
+  }, [triggerJumpScare, isMinor, isReadingPage, isAndroid]);
+
+  // scrolling listener with cleanup
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: number | undefined;
 
     const handleScroll = () => {
       setIsScrolling(true);
-      
-      // Clear existing timeout
-      clearTimeout(scrollTimeout);
-      
-      // Set scrolling to false after 2 seconds of no scrolling
-      scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 2000);
+      if (scrollTimeout) window.clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => setIsScrolling(false), 2000);
     };
 
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout);
+      if (scrollTimeout) window.clearTimeout(scrollTimeout);
     };
   }, []);
 
+  // start scheduling & cleanup all timers on unmount / dependency change
   useEffect(() => {
-    // Only start scheduling if user is NOT a minor and NOT on reading page
-    if (!isMinor && !isReadingPage) {
+    if (!isMinor && !isReadingPage && !isAndroid) {
       scheduleRandomScare();
     }
-  }, [scheduleRandomScare, isMinor, isReadingPage]);
 
-  // Don't render anything if user is a minor or on reading page
-  if (isMinor || isReadingPage) return null;
+    return () => {
+      timeoutsRef.current.forEach(id => window.clearTimeout(id));
+      timeoutsRef.current = [];
+    };
+  }, [scheduleRandomScare, isMinor, isReadingPage, isAndroid]);
+
+  if (isMinor || isReadingPage || isAndroid) return null;
 
   return (
-    <>
-      {jumpScare && (
-        <div className={styles.jumpscareContainer}>
-          <div className={styles.jumpscare}>
-            <div className={styles.glitchWrapper}>
-              <div className={styles.glitch} data-text={scaryText}>
-                {scaryText}
-              </div>
+    jumpScare && (
+      <div className={styles.jumpscareContainer}>
+        <div className={styles.jumpscare}>
+          <div className={styles.glitchWrapper}>
+            <div className={styles.glitch} data-text={scaryText}>
+              {scaryText}
             </div>
           </div>
         </div>
-      )}
-    </>
+      </div>
+    )
   );
 };
 
