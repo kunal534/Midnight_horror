@@ -10,6 +10,7 @@ export interface Story {
   publishedDate: string;
   month: string;
   readTime?: string;  
+  audioUrl?: string;
 }
 
 export const stories: Story[] = [
@@ -20,7 +21,7 @@ export const stories: Story[] = [
     excerpt: 'A mysterious voice calls from the darkness, and those who answer are never the same...',
     fullContent: `
 Hollow Hunger situates the Wendigo within the cultural traditions of Algonquian speaking Indigenous peoples in northern North America. The figure appears in oral narratives as both a literal threat and a symbolic mechanism for examining extreme behavior under severe winter scarcity.
-Most ethnographic accounts describe the Wendigo as emerging from a grave moral violation most commonly cannibalism during starvation. In many Indigenous interpretations, the transformation is not depicted as a sudden supernatural event but as the gradual erosion of ethical judgement. Individuals who demonstrated persistent greed, violence, or antisocial behavior were considered vulnerable to becoming Wendigo, reinforcing community expectations around cooperation, restraint, and collective survival.
+Most ethnographic accounts describe the Wendigo as emerging from a grave moral violation, most commonly cannibalism during starvation. In many Indigenous interpretations, the transformation is not depicted as a sudden supernatural event but as the gradual erosion of ethical judgement. Individuals who demonstrated persistent greed, violence, or antisocial behavior were considered vulnerable to becoming Wendigo, reinforcing community expectations around cooperation, restraint, and collective survival.
 A notable area of scholarship involves historical reports labeled by early observers as Wendigo psychosis instances in which individuals believed they were transforming into the creature or feared they would harm others. Although the accuracy of this diagnosis is contested, these accounts reveal how the legend intersected with mental health interpretations, colonial documentation, and Indigenous justice practices. This blend of folklore, social regulation, and recorded cases distinguishes the Wendigo within North American mythological studies.
 In the end, the legend raises a broader question: when survival fractures the boundaries of community and morality, how far can a person stray before they are no longer seen as human at all?`,
     imageUrl: '/images/Wendigo.jpg',
@@ -29,6 +30,7 @@ In the end, the legend raises a broader question: when survival fractures the bo
     publishedDate: '06 November 2025',
     month: '01-2025-11',
     readTime: '7 min read',
+    audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/Weindigo.mp3'
   },
   {
     id: '2',
@@ -47,7 +49,8 @@ If you ever hear her cry at night would you have the courage to listen, or would
     tags: ['horror', 'supernatural', 'Irish folklore', 'ghost stories', 'wailing spirit'],
     publishedDate: ' 16 November 2025',
     month: '2025-11',
-    readTime: '6 min read'
+    readTime: '6 min read',
+    audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/Banshee.mp3'
   },
   {
     id: '3',
@@ -55,16 +58,16 @@ If you ever hear her cry at night would you have the courage to listen, or would
     pinterestUrl:'https://pin.it/1u4kHAE8t',
     excerpt: 'In the neon-lit towers of Japan, bodies fall… and the powerful laugh from above.',
     fullContent: `
-The Nets Above the City examines a modern urban horror where the machinery of corporate power turns human life into expendable currency.
-High-rise offices and industrial complexes merge into a sprawling labyrinth of glass and steel, where nets are strung not to save lives but to control them. Those who slip, stumble, or falter become grim examples their falls a haunting reminder of the price of obedience.
+The Nets Above the City examines a modern urban horror, where the machinery of corporate power turns human life into expendable currency.
+High-rise offices and industrial complexes merge into a sprawling labyrinth of glass and steel, where nets are strung not to save lives but to control them. Those who slip, stumble, or falter become grim examples, their falls a haunting reminder of the price of obedience.
 Inside the reflective towers, figures in polished offices point and laugh, detached from the suffering below, reveling in their dominance. Streets and service roads become stages for the helpless, while the elite, insulated by design and hierarchy, remain unscathed.
-The horror is systemic the cold, calculating machinery of greed, ambition, and power, rendered in human form. When the nets begin to fray and their limits reach an end, the real question remains how far will they still go in bathing lives in blood just to feed their pride?`,
-    imageUrl: '/images/Japan_netting.jpg',
+The horror is systemic, the cold, calculating machinery of greed, ambition, and power rendered in human form. When the nets begin to fray and their limits reach an end, the real question remains: how far will they still go in bathing lives in blood just to feed their pride?`,imageUrl: '/images/Japan_netting.jpg',
     slug: 'the-nets-above-the-city',
     tags: ['horror', 'corporate dystopia', 'psychological horror', 'urban terror', 'dark modern myth'],
     publishedDate: '18 November 2025',
     month: '2025-11',
-    readTime: '7 min read'
+    readTime: '7 min read',
+    audioUrl:`https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/Net_above.mp3`
   },
   {
     id: '4',
@@ -83,7 +86,8 @@ This image captures the core of the raw exposure of mortality, vulnerability, an
     tags: ['horror', 'selective morality', 'psychological horror', 'dark realism', 'mortality'],
     publishedDate: '20 November 2025',
     month: '2025-11',
-    readTime: '6 min read'
+    readTime: '6 min read',
+    audioUrl:`https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/aghori.mp3`
   },
   {
     id: '5',
@@ -459,13 +463,33 @@ There is no supernatural curse here. The punishment is structural. It is inherit
     "bloodline curse",
     "institutional cruelty",
     "moral outsourcing",
-    "psychological horror",
     "dark history"
   ],
   publishedDate: "21 December 2025",
   month: "2025-12",
   readTime: "5 min read"
+},
+{
+  id: "28",
+  title: "When the Crowd Became the Court",
+  pinterestUrl: "https://pin.it/1CYQuo5TC",
+  excerpt: "In moments where accusation replaces verification, public space transforms into a courtroom without law. Judgment is enacted collectively, responsibility diluted through numbers, and punishment carried out before truth is examined…",
+  fullContent: `The incident took place on an urban street in the Mymensingh district of Bangladesh. A local man was accused of insulting religious beliefs, an allegation that was not verified by authorities before events unfolded.
+Following the accusation, the man was seized by a group of locals and brought into the open street. He was restrained upright against a pole, his movement restricted in full public view. Shops remained closed nearby, and streetlights illuminated the scene as people gathered around.
+A crowd formed at close range. Some individuals held torches. Others stood observing. No formal authority was present at the time. The situation escalated as restraint turned into physical violence. Fire was introduced at ground level near the pole as part of the assault.
+The man died during the attack. After his death, the crowd dispersed, leaving the street behind without immediate accountability or on-site intervention. The accusation that initiated the violence was later reported as unproven.
+The case drew public condemnation and protests, highlighting the vulnerability of individuals when allegations are acted upon by crowds rather than investigated through legal process. The incident stands as a documented example of how unverified claims can lead to irreversible violence when public spaces become sites of punishment.`,
+  imageUrl: "/images/Private_Belief.jpg",
+  slug: "when-the-crowd-became-the-court",
+  "tags": [
+    "true crime",
+    "collective violence",
+    "moral collapse",
+    "psychological horror",
+    "real incidents"
+  ],
+  publishedDate: "25 December 2025",
+  month: "2025-12",
+  readTime: "4 min read"
 }
-
-
 ];

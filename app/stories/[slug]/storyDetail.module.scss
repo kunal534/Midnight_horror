@@ -1,9 +1,6 @@
 // Import Google Font - Nosifer
 @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Lora:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600;700&display=swap');
 
-// If you have a themes file, import it
-// @import '../../themes.scss';
-
 // Variables
 $font-nosifer: 'Nosifer', cursive;
 $font-lora: 'Lora', serif;
@@ -77,6 +74,7 @@ $text-secondary: #B8B8B8;
     position: relative;
   }
 }
+
 .stickyTitle {
   font-family: $font-nosifer;
   color: $text-primary;
@@ -90,10 +88,11 @@ $text-secondary: #B8B8B8;
 
   &.scrolling {
     display: inline-block;
-    padding-right: 50px; // Safety margin for last character
+    padding-right: 50px;
     animation: marquee-bounce 12s ease-in-out infinite;
   }
 }
+
 @keyframes marquee-bounce {
   0% {
     transform: translateX(0);
@@ -109,11 +108,45 @@ $text-secondary: #B8B8B8;
   }
 }
 
+// Sticky header adjustments
+.stickyMetaGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .stickyReadTime {
-  color: $text-secondary;
-  font-size: 14px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
-  flex-shrink: 0;
+}
+
+// Compact audio button for sticky header
+.audioButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  pointer-events: auto;
+  
+  &:hover {
+    color: #ff4444;
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 // Main Content Container
@@ -158,10 +191,19 @@ $text-secondary: #B8B8B8;
   }
 }
 
+.heroLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
 .heroOverlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .heroContent {
@@ -169,11 +211,17 @@ $text-secondary: #B8B8B8;
   bottom: 32px;
   left: 32px;
   right: 32px;
+  z-index: 3;
+  pointer-events: none;
 
   @media (max-width: 768px) {
     bottom: 24px;
     left: 24px;
     right: 24px;
+  }
+  
+  h1, span, button {
+    pointer-events: auto;
   }
 }
 
@@ -196,10 +244,46 @@ $text-secondary: #B8B8B8;
 
 .heroMeta {
   display: flex;
-  gap: 16px;
-  font-size: 14px;
-  color: $text-secondary;
-  font-family: $font-lora;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  pointer-events: auto;
+  
+  span {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    pointer-events: auto;
+  }
+}
+
+// Audio button styled to match date/read time
+.audioButtonHero {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  position: relative;
+  z-index: 4;
+  
+  &:hover {
+    color: #ff4444;
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 // Tags
@@ -240,7 +324,6 @@ $text-secondary: #B8B8B8;
     text-align: justify;
     text-justify: inter-word;
     word-spacing: 0.1em;
-    // hyphens: auto;
   }
 }
 
@@ -313,22 +396,6 @@ $text-secondary: #B8B8B8;
   line-height: 1.4;
 }
 
-// Marquee Animation
-@keyframes marquee {
-  0% {
-      transform: translateX(0);
-    }
-    45% {
-      transform: translateX(calc(-100% + 100vw - 120px));
-    }
-    55% {
-      transform: translateX(calc(-100% + 100vw - 120px));
-    }
-    100% {
-      transform: translateX(0);
-    }
-}
-
 // Lock Screen (for minors)
 .lockScreen {
   max-width: 900px;
@@ -351,19 +418,18 @@ $text-secondary: #B8B8B8;
   max-width: 640px;
 }
 
-.heroLink {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  cursor: pointer;
-}
-
-.heroOverlay {
-  z-index: 2;
-  pointer-events: none;
-}
-
-.heroContent {
-  z-index: 3;
-  pointer-events: none;
+// Responsive adjustments
+@media (max-width: 768px) {
+  .heroMeta {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .audioButtonHero {
+    font-size: 0.9rem;
+  }
+  
+  .audioButton {
+    font-size: 0.85rem;
+  }
 }

@@ -9,6 +9,38 @@ export interface Thought {
 }
 
 export const thoughtsList: Thought[] = [
+   {
+  id: '7',
+  title: 'Love as a Trojan Horse',
+  slug: 'love-as-a-trojan-horse',
+  excerpt: 'A critique of how modern culture mythologizes love while ignoring its biological role as vulnerability, leverage, and regulation.',
+  fullContent: `
+Love is rarely examined as a mechanism. It is presented as a virtue, a destiny, or a moral achievement. Historically, it was none of those. It was a liability that needed to be managed.
+
+In pre-modern contexts, attachment was understood as exposure. A person with no emotional anchors was harder to control, harder to threaten, and harder to predict. The fastest way to weaken a disciplined or capable individual was not through force or intellect, but through attachment. Once emotional investment existed, leverage followed naturally. Protection instincts could be exploited. Judgment could be clouded. Risk tolerance shifted.
+
+This pattern repeats across history. Leaders threatened through their families. Warriors neutralized through romantic entanglement. Strategists compromised through emotional bonds. Love did not function as purity rather it functioned as access.
+
+Modern culture flipped the narrative. Instead of treating love as a force that requires structure and containment, it romanticized it as an end in itself. Media reduced it to intensity, chemistry, and emotional highs. What disappeared from the story was cost, regulation, and asymmetry of effort. The mundane reality of cooperation was replaced with fantasy-driven desire.
+
+Biology never supported this distortion. Emotions exist to force action under survival conditions, not to serve as long-term decision frameworks. Fear heightens sensory input to enable fight or flight. Attachment increases proximity and risk-taking to ensure pair bonding and offspring survival. Neither emotion was designed to guide complex, long-range planning. Their intensity exists because hesitation once meant death.
+
+Treating emotional intensity as truth is a biological misunderstanding. Strong signals are not wise signals. They are urgent signals.
+
+Pair bonding itself follows functional logic. Humans often seek complementary traits cognitive, physical, behavioral because diversity increases resilience. This is not romance, it is efficiency. But complementarity only works when both individuals are independently regulated. When weakness seeks strength without accountability, dependence replaces cooperation. Two incomplete systems do not create a whole, they create fragility.
+
+The modern conflict emerges from denial. Mate preferences rooted in biology are reframed as moral failings or virtues instead of adaptive tendencies. Resource security, future potential, fertility cues, and status markers are treated as taboo to acknowledge, even though they quietly guide behavior. The result is confusion, resentment, and unrealistic expectations.
+
+At the same time, attention-driven systems inflate perceived value without increasing competence. Validation becomes detached from contribution. Desire becomes detached from reality. People mistake being wanted for being capable, and relationships inherit that illusion.
+
+Love itself is not false. What is false is the version stripped of responsibility and structure. Without regulation, love becomes a Trojan horse entering as meaning and exiting as control, distraction, or self-betrayal. It lowers defenses without building foundations.
+
+When attachment is examined rather than worshipped, its function becomes clear. It can amplify stability or accelerate collapse. It can support growth or sabotage potential. The difference is not emotion, but awareness.
+
+Unquestioned love weakens. Structured love strengthens. And a society that refuses to examine the difference keeps repeating the same failures while calling them romance.`,
+  date: 'December 24, 2025',
+  category: 'social critique'
+},
 {
     id:'5',
     title:'Why Not have Unregulated Freedom',
@@ -316,5 +348,7 @@ The deeper issue isn’t whether people follow rules. It’s whether they ever a
 The truth is simple: if a rule was born from crisis, it should disappear when the crisis ends. But humans resist that. They cling to old frameworks because they offer identity, security, and predictable roles — even if they create more harm than good.`,
     date: "November 27, 2025",
     category: "social critique"
-  }
+  },
+ 
+
 ];
