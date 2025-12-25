@@ -2,7 +2,7 @@ import type { AffiliateProduct } from './affiliate-common';
 
 export const affiliateProductsIN: AffiliateProduct[] = [
   {
-    id: '1',
+    // id: '1',
     title: '3D Skull Drinking Mug',
     description: 'A horror tankard Mug bold design that demands attention',
     imageUrl: 'https://m.media-amazon.com/images/I/51yzDnzGRvL.jpg',
@@ -11,7 +11,7 @@ export const affiliateProductsIN: AffiliateProduct[] = [
     category: 'Mug',
   },
   {
-    id: '2',
+    // id: '2',
     title: 'Stranger Things Collectible',
     description: 'Cool asthetic coaster reminding you to keep eye on things around you',
     imageUrl: 'https://m.media-amazon.com/images/I/61TvW35KO6L._SX679_.jpg',
@@ -20,7 +20,7 @@ export const affiliateProductsIN: AffiliateProduct[] = [
     category: 'Coasters',
   },
   {
-    id: '3',
+    // id: '3',
     title: 'Harry Potter music box',
     description: 'Feel the good old errie harry potter music in a box',
     imageUrl: 'https://m.media-amazon.com/images/I/61GeyhFJB1L._SL1100_.jpg',
@@ -29,7 +29,7 @@ export const affiliateProductsIN: AffiliateProduct[] = [
     category: 'Music Box',
   },
   {
-    id: '4',
+    // id: '4',
     title: 'Bloody Creepy Cloth',
     description: 'How about decorating room with blood stained cloth',
     imageUrl: 'https://m.media-amazon.com/images/I/91uBrGUYkNL._SX679_.jpg',
@@ -37,4 +37,69 @@ export const affiliateProductsIN: AffiliateProduct[] = [
     price: '₹349/-',
     category: 'Ornaments',
   },
-];
+  {
+    // id: '5',
+    title: 'Gothic Jewellery Set',
+    description: 'A black lace choker dripping with layered chains and teardrop crystals complete with matching onyx earrings that catch the light like shattered glass, turning every glance into a double take.',
+    imageUrl: 'https://m.media-amazon.com/images/I/71FDFiDPrvL._SY695_.jpg',
+    affiliateLink: 'https://amzn.to/49xyT8v',
+    price: '₹299/-',
+    category: 'Ornaments',
+  },
+  {
+  // id: '6',
+  title: 'Sacred Heart Earrings',
+  description: 'Dark red enamel hearts wrapped in silver thorns with all-seeing eyes at the center—dangle earrings that mix devotion with defiance, swinging like tiny relics stolen from a forbidden altar.',
+  imageUrl: 'https://m.media-amazon.com/images/I/61ejRrwN0hL._SY695_.jpg',
+  affiliateLink: 'https://amzn.to/3Lbkp5L',
+  price: '₹359/-',
+  category: 'Ornaments',
+},
+{
+  // id: '7',
+  title: 'Flame Gothic Hoodie',
+  description: 'Oversized black hoodie with white flame graphics crawling up the sleeves—heavyweight cotton that hits like metal band merch meets streetwear, made for layering or making an entrance.',
+  imageUrl: 'https://m.media-amazon.com/images/I/41N6SUmoukL.jpg',
+  affiliateLink: 'https://amzn.to/4pcX5m6',
+  price: '₹999/-',
+  category: 'Clothing',
+},
+{
+  // id: '8',
+  title: 'Crescent Moon Amethyst Necklace',
+  description: 'Purple amethyst crescent wrapped in silver wire like a captured lunar eclipse—raw crystal moon pendant that glows with witchy energy, hanging between celestial and something slightly cursed.',
+  imageUrl: 'https://m.media-amazon.com/images/I/310-0RBtQ3L._SY300_SX300_QL70_ML2_.jpg',
+  affiliateLink: 'https://amzn.to/4qu4n6f',
+  price: '₹746/-',
+  category: 'Ornaments',
+},
+{
+  // id: '9',
+  title: 'Skull Bow Hairclip',
+  description: 'Black lace bow with glittering skull faces and red gem eyes—clips into your hair like tiny death heads peeking through tulle, giving witch-meets-costume-party vibes without trying too hard.',
+  imageUrl: 'https://m.media-amazon.com/images/I/71ZG4hGLnXL._SX679_.jpg',
+  affiliateLink: 'https://amzn.to/3MSqswQ',
+  price: '₹299/-',
+  category: 'Ornaments',
+}
+,
+{
+  // id: '10',
+  title: 'Lace Arm Sleeves',
+  description: 'Sheer black lace gloves that drape past your elbows with scalloped edges and ribbon ties—Victorian vampire elegance that transforms bare arms into something straight out of a candlelit manor.',
+  imageUrl: 'https://m.media-amazon.com/images/I/61iKMD8gUvL._SY879_.jpg',
+  affiliateLink: 'https://amzn.to/4javvV8',
+  price: '₹3,729/-',
+  category: 'Clothing',
+},
+{
+  // id: '11',
+  title: 'Witch on the Roof Poster',
+  description: 'Framed black-and-white print of a witch silhouette perched on a chapel roof under foggy skies—moody, silent, and unsettling, like the beginning of a story that doesn\'t end well.',
+  imageUrl: 'https://m.media-amazon.com/images/I/61HXCdCSqZL._SX679_.jpg',
+  affiliateLink: 'https://amzn.to/49t0Qz6',
+  price: '₹877/-',
+  category: 'Decoration',
+}
+
+].map((item, index) => ({ ...item, id: `${index + 1}` }));
