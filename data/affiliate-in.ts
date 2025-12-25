@@ -34,7 +34,7 @@ export const affiliateProductsIN: AffiliateProduct[] = [
     description: 'How about decorating room with blood stained cloth',
     imageUrl: 'https://m.media-amazon.com/images/I/91uBrGUYkNL._SX679_.jpg',
     affiliateLink: 'https://amzn.to/494kFwy',
-    price: '349/-',
+    price: '₹349/-',
     category: 'Ornaments',
   },
 ];

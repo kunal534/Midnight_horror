@@ -53,7 +53,7 @@ export const affiliateProductsUS: AffiliateProduct[] = [
     description:'Desktop companion that shifts from memento mori to fidget piece, holding that eerie stillness between collectible and decor.',
     imageUrl:'https://m.media-amazon.com/images/I/61zsWzylJpL._AC_SL1500_.jpg',
     affiliateLink:'https://amzn.to/4aizMDJ',
-    price:'14.99/-',
+    price:'$14.99/-',
     category:'Collectible'
   },
 ];
