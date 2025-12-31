@@ -43,7 +43,7 @@
     }
   }
 
-  /* DESKTOP NAV – full line */
+  /* DESKTOP NAV – only laptops and larger */
   .desktopNav {
     display: flex;
     align-items: center;
@@ -53,7 +53,7 @@
     white-space: nowrap;
     overflow: hidden;
 
-    @media (max-width: 900px) {
+    @media (max-width: 1223px) {  // Changed from 900px
       display: none;
     }
 
@@ -121,7 +121,7 @@
     }
   }
 
-  /* HAMBURGER – only on mobile */
+  /* HAMBURGER – tablets and mobile */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -131,7 +131,7 @@
     cursor: pointer;
     padding: 0;
 
-    @media (max-width: 900px) {
+    @media (max-width: 1223px) {  // Changed from 900px
       display: flex;
       margin-left: auto;
     }
@@ -150,10 +150,10 @@
     }
   }
 
-  /* MOBILE DROPDOWN – fixed to right edge */
+  /* MOBILE DROPDOWN – tablets and mobile */
   .mobileNav {
     position: fixed;
-    top: 60px;                    // beneath nav bar; adjust if needed
+    top: 60px;
     right: 0;
     width: 70vw;
     max-width: 320px;
@@ -168,7 +168,7 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
     z-index: 1000;
 
-    @media (min-width: 901px) {
+    @media (min-width: 1224px) {  // Changed from 901px
       display: none;
     }
   }
@@ -249,5 +249,13 @@
       0 0 4px rgba($crimson, 0.4),
       0 0 10px rgba($crimson, 0.5),
       0 0 18px rgba($blood-red, 0.4);
+  }
+}
+
+.mainContent {
+  padding-top: 60px;
+  
+  @media (max-width: 640px) {
+    padding-top: 50px;
   }
 }

@@ -7,15 +7,28 @@
   border: 2px solid #8B0000;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(139, 0, 0, 0.6);
+  overflow: hidden;
   backdrop-filter: blur(10px);
   z-index: 1000;
   cursor: move;
+  
+  // SMOOTH ANIMATIONS for expand/collapse (will be overridden during drag)
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border 0.3s ease-in-out,
+              box-shadow 0.3s ease-in-out;
 
   @media (max-width: 640px) {
     width: 280px;
   }
 }
-
+.noDragTransition {
+  transition: none !important;
+  
+  * {
+    transition: none !important;
+  }
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -25,6 +38,9 @@
   border-radius: 10px 10px 0 0;
   cursor: grab;
   user-select: none;
+  
+  // SMOOTH transition for header changes
+  transition: padding 0.3s ease-in-out;
 
   &:active {
     cursor: grabbing;
@@ -52,7 +68,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  transition: all 300ms ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     background: rgba(232, 228, 217, 0.2);
@@ -68,14 +84,40 @@
 .content {
   padding: 16px;
   overflow: hidden;
+  
+  // SMOOTH fade-in when expanding
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .audioElement {
   width: 100%;
   max-width: 100%;
+  
+  // CRITICAL: Allow native audio control touch interactions
+  touch-action: auto !important;
+  pointer-events: auto !important;
+  
+  // SMOOTH appearance transition
+  transition: opacity 0.3s ease-in-out, margin 0.3s ease-in-out;
 
   &::-webkit-media-controls-panel {
     background-color: #1C1C1C;
+  }
+  
+  // Ensure slider is always interactive
+  &::-webkit-media-controls-timeline {
+    touch-action: auto !important;
   }
 }
 

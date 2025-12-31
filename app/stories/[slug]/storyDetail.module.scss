@@ -1,7 +1,829 @@
+// // Import Google Font - Nosifer
+// @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Lora:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600;700&display=swap');
+
+// // Variables
+// $font-nosifer: 'Nosifer', cursive;
+// $font-lora: 'Lora', serif;
+// $font-cinzel: 'Cinzel', serif;
+
+// $crimson: #DC143C;
+// $blood-red: #8B0000;
+// $text-primary: #E8E4D9;
+// $text-secondary: #B8B8B8;
+
+// // Sticky Header
+// .stickyHeader {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   z-index: 1000;
+//   background: linear-gradient(135deg, rgba(26, 0, 0, 0.98) 0%, rgba(45, 0, 0, 0.98) 100%);
+//   backdrop-filter: blur(15px);
+//   border-bottom: 2px solid $blood-red;
+//   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+//   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+//   &.hidden {
+//     opacity: 0;
+//     transform: translateY(-100%);
+//     pointer-events: none;
+//   }
+
+//   &.visible {
+//     opacity: 1;
+//     transform: translateY(0);
+//     pointer-events: auto;
+//   }
+// }
+
+// .stickyContent {
+//   max-width: 900px;
+//   margin: 0 auto;
+//   padding: 16px 24px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   gap: 16px;
+// }
+
+// .stickyBackButton {
+//   font-family: $font-lora;
+//   color: $text-primary;
+//   font-size: 14px;
+//   text-decoration: none;
+//   padding: 6px 12px;
+//   border: 1px solid rgba($blood-red, 0.5);
+//   border-radius: 6px;
+//   transition: all 0.2s ease;
+//   white-space: nowrap;
+//   flex-shrink: 0;
+
+//   &:hover {
+//     background: rgba($crimson, 0.1);
+//     border-color: $crimson;
+//   }
+// }
+
+// .stickyTitleContainer {
+//   flex: 1;
+//   min-width: 0;
+//   overflow: hidden;
+
+//   &.marquee {
+//     position: relative;
+//   }
+// }
+
+// .stickyTitle {
+//   font-family: $font-nosifer;
+//   color: $text-primary;
+//   font-size: 20px;
+//   margin: 0;
+//   text-shadow: 
+//     0 0 10px rgba(255, 0, 0, 0.8),
+//     0 0 20px rgba($blood-red, 0.6);
+//   letter-spacing: 2px;
+//   white-space: nowrap;
+
+//   &.scrolling {
+//     display: inline-block;
+//     padding-right: 50px;
+//     animation: marquee-bounce 12s ease-in-out infinite;
+//   }
+// }
+
+// @keyframes marquee-bounce {
+//   0% {
+//     transform: translateX(0);
+//   }
+//   45% {
+//     transform: translateX(var(--scroll-distance, -200px));
+//   }
+//   55% {
+//     transform: translateX(var(--scroll-distance, -200px));
+//   }
+//   100% {
+//     transform: translateX(0);
+//   }
+// }
+
+// // Sticky header adjustments
+// .stickyMetaGroup {
+//   display: flex;
+//   align-items: center;
+//   gap: 1rem;
+// }
+
+// .stickyReadTime {
+//   font-size: 0.9rem;
+//   color: rgba(255, 255, 255, 0.9);
+//   white-space: nowrap;
+// }
+
+// // Compact audio button for sticky header
+// .audioButton {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 0.3rem;
+//   background: transparent;
+//   border: none;
+//   color: rgba(255, 255, 255, 0.9);
+//   padding: 0;
+//   cursor: pointer;
+//   font-family: inherit;
+//   font-size: 0.9rem;
+//   font-weight: 400;
+//   transition: all 0.3s ease;
+//   white-space: nowrap;
+//   pointer-events: auto;
+  
+//   &:hover {
+//     color: #ff4444;
+//     transform: scale(1.05);
+//   }
+  
+//   &:active {
+//     transform: scale(0.98);
+//   }
+// }
+
+// // Main Content Container
+// .container {
+//   max-width: 900px;
+//   margin: 0 auto;
+//   padding: 48px 24px;
+
+//   @media (max-width: 768px) {
+//     padding: 32px 16px;
+//   }
+// }
+
+// .backButton {
+//   display: inline-flex;
+//   align-items: center;
+//   gap: 8px;
+//   color: $crimson;
+//   margin-bottom: 24px;
+//   font-size: 16px;
+//   text-decoration: none;
+//   font-family: $font-lora;
+//   transition: all 0.3s ease;
+
+//   &:hover {
+//     color: lighten($crimson, 10%);
+//     transform: translateX(-4px);
+//   }
+// }
+
+// // Hero Section
+// .hero {
+//   position: relative;
+//   width: 100%;
+//   height: 400px;
+//   border-radius: 12px;
+//   overflow: hidden;
+//   margin-bottom: 32px;
+
+//   @media (max-width: 768px) {
+//     height: 300px;
+//   }
+// }
+
+// .heroLink {
+//   position: absolute;
+//   inset: 0;
+//   z-index: 1;
+//   cursor: pointer;
+// }
+
+// .heroOverlay {
+//   position: absolute;
+//   inset: 0;
+//   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+//   z-index: 2;
+//   pointer-events: none;
+// }
+
+// .heroContent {
+//   position: absolute;
+//   bottom: 32px;
+//   left: 32px;
+//   right: 32px;
+//   z-index: 3;
+//   pointer-events: none;
+
+//   @media (max-width: 768px) {
+//     bottom: 24px;
+//     left: 24px;
+//     right: 24px;
+//   }
+  
+//   h1, span, button {
+//     pointer-events: auto;
+//   }
+// }
+
+// .heroTitle {
+//   font-family: $font-nosifer;
+//   font-size: 48px;
+//   color: $text-primary;
+//   margin-bottom: 16px;
+//   text-shadow: 
+//     0 0 10px rgba(255, 0, 0, 0.8),
+//     0 0 20px rgba($blood-red, 0.6),
+//     0 4px 20px rgba(0, 0, 0, 0.9);
+//   letter-spacing: 2px;
+//   line-height: 1.2;
+
+//   @media (max-width: 768px) {
+//     font-size: 32px;
+//   }
+// }
+
+// .heroMeta {
+//   display: flex;
+//   align-items: center;
+//   gap: 1.5rem;
+//   flex-wrap: wrap;
+//   pointer-events: auto;
+  
+//   span {
+//     font-size: 1rem;
+//     color: rgba(255, 255, 255, 0.95);
+//     font-weight: 400;
+//     pointer-events: auto;
+//   }
+// }
+
+// // Audio button styled to match date/read time
+// .audioButtonHero {
+//   display: inline-flex;
+//   align-items: center;
+//   gap: 0.5rem;
+//   background: transparent;
+//   border: none;
+//   color: rgba(255, 255, 255, 0.95);
+//   padding: 0;
+//   cursor: pointer;
+//   font-family: inherit;
+//   font-size: 1rem;
+//   font-weight: 400;
+//   letter-spacing: normal;
+//   transition: all 0.3s ease;
+//   pointer-events: auto;
+//   position: relative;
+//   z-index: 4;
+  
+//   &:hover {
+//     color: #ff4444;
+//     transform: scale(1.05);
+//   }
+  
+//   &:active {
+//     transform: scale(0.98);
+//   }
+// }
+
+// // Tags
+// .tags {
+//   display: flex;
+//   gap: 8px;
+//   margin-bottom: 32px;
+//   flex-wrap: wrap;
+// }
+
+// .tag {
+//   background: rgba($crimson, 0.2);
+//   color: $crimson;
+//   padding: 6px 16px;
+//   border-radius: 20px;
+//   font-size: 14px;
+//   border: 1px solid $blood-red;
+//   font-family: $font-lora;
+//   transition: all 0.3s ease;
+
+//   &:hover {
+//     background: rgba($crimson, 0.3);
+//     transform: translateY(-2px);
+//   }
+// }
+
+// // Story Content
+// .article {
+//   font-family: $font-lora;
+//   font-size: 18px;
+//   line-height: 1.9;
+//   color: $text-primary;
+//   margin-bottom: 64px;
+//   letter-spacing: 0.3px;
+
+//   p {
+//     margin-bottom: 24px;
+//     text-align: justify;
+//     text-justify: inter-word;
+//     word-spacing: 0.1em;
+//   }
+// }
+
+// // Related Stories
+// .relatedSection {
+//   margin-top: 64px;
+// }
+
+// .relatedTitle {
+//   font-family: $font-nosifer;
+//   font-size: 32px;
+//   color: $text-primary;
+//   margin-bottom: 24px;
+//   border-bottom: 2px solid $blood-red;
+//   padding-bottom: 16px;
+//   letter-spacing: 2px;
+//   text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+
+//   @media (max-width: 768px) {
+//     font-size: 24px;
+//   }
+// }
+
+// .relatedGrid {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+//   gap: 24px;
+
+//   @media (max-width: 768px) {
+//     grid-template-columns: 1fr;
+//   }
+// }
+
+// .relatedCard {
+//   text-decoration: none;
+//   display: block;
+//   border: 1px solid $blood-red;
+//   border-radius: 12px;
+//   overflow: hidden;
+//   transition: all 0.3s ease;
+
+//   &:hover {
+//     transform: translateY(-8px);
+//     box-shadow: 0 12px 40px rgba($crimson, 0.4);
+//     border-color: $crimson;
+//   }
+// }
+
+// .relatedImage {
+//   position: relative;
+//   width: 100%;
+//   height: 150px;
+// }
+
+// .relatedContent {
+//   padding: 16px;
+// }
+
+// .relatedCardTitle {
+//   font-family: $font-cinzel;
+//   color: $text-primary;
+//   font-size: 16px;
+//   margin-bottom: 8px;
+// }
+
+// .relatedExcerpt {
+//   font-family: $font-lora;
+//   color: $text-secondary;
+//   font-size: 14px;
+//   line-height: 1.4;
+// }
+
+// // Lock Screen (for minors)
+// .lockScreen {
+//   max-width: 900px;
+//   margin: 0 auto;
+//   padding: 48px 24px;
+// }
+
+// .lockTitle {
+//   font-family: $font-cinzel;
+//   font-size: 32px;
+//   color: $text-primary;
+//   margin-bottom: 16px;
+// }
+
+// .lockMessage {
+//   font-family: $font-lora;
+//   font-size: 18px;
+//   line-height: 1.7;
+//   color: $text-primary;
+//   max-width: 640px;
+// }
+
+// // Responsive adjustments
+// @media (max-width: 768px) {
+//   .heroMeta {
+//     gap: 1rem;
+//     font-size: 0.9rem;
+//   }
+  
+//   .audioButtonHero {
+//     font-size: 0.9rem;
+//   }
+  
+//   .audioButton {
+//     font-size: 0.85rem;
+//   }
+// }
+// // Lightbox Styles
+// .lightboxOverlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background: rgba(0, 0, 0, 0.95);
+//   z-index: 9999;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 20px;
+//   animation: fadeIn 0.2s ease-out;
+// }
+
+// .lightboxContent {
+//   position: relative;
+//   max-width: 1400px;
+//   max-height: 90vh;
+//   animation: scaleIn 0.3s ease-out;
+// }
+
+// .lightboxClose {
+//   position: fixed;
+//   top: 20px;
+//   right: 20px;
+//   background: rgba(220, 20, 60, 0.9);
+//   border: none;
+//   color: #E8E4D9;
+//   font-size: 32px;
+//   width: 50px;
+//   height: 50px;
+//   border-radius: 50%;
+//   cursor: pointer;
+//   z-index: 10000;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: all 0.2s ease;
+
+//   &:hover {
+//     background: #DC143C;
+//     transform: rotate(90deg);
+//   }
+// }
+
+// .lightboxPinterest {
+//   position: fixed;
+//   bottom: 30px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   background: rgba(220, 20, 60, 0.9);
+//   color: #E8E4D9;
+//   padding: 12px 24px;
+//   border-radius: 25px;
+//   text-decoration: none;
+//   font-size: 16px;
+//   font-weight: 600;
+//   z-index: 10000;
+//   transition: all 0.2s ease;
+//   border: 2px solid transparent;
+
+//   &:hover {
+//     background: #DC143C;
+//     border-color: #E8E4D9;
+//     transform: translateX(-50%) scale(1.05);
+//   }
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes scaleIn {
+//   from {
+//     transform: scale(0.9);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: scale(1);
+//     opacity: 1;
+//   }
+// }
+
+// // Mobile responsive
+// @media (max-width: 768px) {
+//   .lightboxContent {
+//     max-width: 95vw;
+//   }
+
+//   .lightboxClose {
+//     top: 10px;
+//     right: 10px;
+//     width: 40px;
+//     height: 40px;
+//     font-size: 24px;
+//   }
+
+//   .lightboxPinterest {
+//     bottom: 20px;
+//     font-size: 14px;
+//     padding: 10px 20px;
+//   }
+// }
+// // ========================================
+// // LOADING SKELETON STYLES
+// // ========================================
+// .imageSkeleton {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: linear-gradient(
+//     90deg,
+//     rgba(26, 26, 26, 1) 0%,
+//     rgba(42, 42, 42, 1) 50%,
+//     rgba(26, 26, 26, 1) 100%
+//   );
+//   background-size: 200% 100%;
+//   animation: shimmer 1.5s infinite;
+//   z-index: 1;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .skeletonPulse {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 16px;
+// }
+
+// .skeletonSpinner {
+//   width: 50px;
+//   height: 50px;
+//   border: 4px solid rgba(220, 20, 60, 0.2);
+//   border-top-color: #DC143C;
+//   border-radius: 50%;
+//   animation: spin 1s linear infinite;
+// }
+
+// @keyframes shimmer {
+//   0% {
+//     background-position: 200% 0;
+//   }
+//   100% {
+//     background-position: -200% 0;
+//   }
+// }
+
+// @keyframes spin {
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// // ========================================
+// // LIGHTBOX STYLES
+// // ========================================
+// .lightboxOverlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background: rgba(0, 0, 0, 0.95);
+//   z-index: 9999;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 20px;
+//   animation: fadeIn 0.2s ease-out;
+//   overflow: auto;
+// }
+
+// .lightboxContent {
+//   position: relative;
+//   max-width: 1400px;
+//   max-height: 90vh;
+//   animation: scaleIn 0.3s ease-out;
+//   z-index: 2;
+// }
+
+// .lightboxLoader {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+//   color: #E8E4D9;
+//   z-index: 1;
+  
+//   p {
+//     margin-top: 16px;
+//     font-size: 16px;
+//     color: #B8B8B8;
+//   }
+// }
+
+// .spinner {
+//   width: 60px;
+//   height: 60px;
+//   border: 4px solid rgba(220, 20, 60, 0.3);
+//   border-top-color: #DC143C;
+//   border-radius: 50%;
+//   animation: spin 1s linear infinite;
+//   margin: 0 auto;
+// }
+
+// .lightboxClose {
+//   position: fixed;
+//   top: 20px;
+//   right: 20px;
+//   background: rgba(220, 20, 60, 0.9);
+//   border: none;
+//   color: #E8E4D9;
+//   font-size: 32px;
+//   width: 50px;
+//   height: 50px;
+//   border-radius: 50%;
+//   cursor: pointer;
+//   z-index: 10000;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: all 0.2s ease;
+//   line-height: 1;
+
+//   &:hover {
+//     background: #DC143C;
+//     transform: rotate(90deg);
+//   }
+
+//   &:active {
+//     transform: rotate(90deg) scale(0.95);
+//   }
+// }
+
+// .lightboxPinterest {
+//   position: fixed;
+//   bottom: 30px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   background: rgba(220, 20, 60, 0.9);
+//   color: #E8E4D9;
+//   padding: 12px 24px;
+//   border-radius: 25px;
+//   text-decoration: none;
+//   font-size: 16px;
+//   font-weight: 600;
+//   z-index: 10000;
+//   transition: all 0.2s ease;
+//   border: 2px solid transparent;
+//   backdrop-filter: blur(10px);
+
+//   &:hover {
+//     background: #DC143C;
+//     border-color: #E8E4D9;
+//     transform: translateX(-50%) scale(1.05);
+//   }
+
+//   &:active {
+//     transform: translateX(-50%) scale(0.98);
+//   }
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes scaleIn {
+//   from {
+//     transform: scale(0.9);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: scale(1);
+//     opacity: 1;
+//   }
+// }
+
+// // ========================================
+// // MOBILE RESPONSIVE
+// // ========================================
+// @media (max-width: 768px) {
+//   .lightboxContent {
+//     max-width: 95vw;
+//     max-height: 85vh;
+//   }
+
+//   .lightboxClose {
+//     top: 10px;
+//     right: 10px;
+//     width: 44px;
+//     height: 44px;
+//     font-size: 24px;
+//   }
+
+//   .lightboxPinterest {
+//     bottom: 20px;
+//     font-size: 14px;
+//     padding: 10px 20px;
+//   }
+
+//   .lightboxLoader {
+//     p {
+//       font-size: 14px;
+//     }
+//   }
+
+//   .spinner {
+//     width: 50px;
+//     height: 50px;
+//   }
+
+//   .skeletonSpinner {
+//     width: 40px;
+//     height: 40px;
+//     border-width: 3px;
+//   }
+// }
+
+// // ========================================
+// // ANDROID CHROME PERFORMANCE FIX
+// // ========================================
+// @media screen and (-webkit-min-device-pixel-ratio: 0) {
+//   .lightboxContent,
+//   .imageSkeleton,
+//   .lightboxOverlay {
+//     will-change: auto; // Prevent memory leaks on Android
+//     transform: translateZ(0); // Force GPU acceleration
+//   }
+// }
+
+// // Reduce motion for accessibility
+// @media (prefers-reduced-motion: reduce) {
+//   .lightboxOverlay,
+//   .lightboxContent,
+//   .imageSkeleton {
+//     animation-duration: 0.01ms !important;
+//     transition-duration: 0.01ms !important;
+//   }
+// }
+
+// .clickHint {
+//   position: absolute;
+//   bottom: 20px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   background: rgba(0, 0, 0, 0.7);
+//   color: #E8E4D9;
+//   padding: 8px 16px;
+//   border-radius: 20px;
+//   font-size: 12px;
+//   opacity: 0.8;
+//   backdrop-filter: blur(5px);
+//   pointer-events: none;
+//   animation: pulse 2s infinite;
+// }
+
+// @keyframes pulse {
+//   0%, 100% { opacity: 0.8; }
+//   50% { opacity: 0.5; }
+// }
+
+// @media (max-width: 768px) {
+//   .clickHint {
+//     bottom: 10px;
+//     font-size: 11px;
+//     padding: 6px 12px;
+//   }
+// }
 // Import Google Font - Nosifer
 @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Lora:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600;700&display=swap');
 
-// Variables
+// ========================================
+// VARIABLES
+// ========================================
 $font-nosifer: 'Nosifer', cursive;
 $font-lora: 'Lora', serif;
 $font-cinzel: 'Cinzel', serif;
@@ -11,7 +833,9 @@ $blood-red: #8B0000;
 $text-primary: #E8E4D9;
 $text-secondary: #B8B8B8;
 
-// Sticky Header
+// ========================================
+// STICKY HEADER
+// ========================================
 .stickyHeader {
   position: fixed;
   top: 0;
@@ -108,7 +932,6 @@ $text-secondary: #B8B8B8;
   }
 }
 
-// Sticky header adjustments
 .stickyMetaGroup {
   display: flex;
   align-items: center;
@@ -121,7 +944,6 @@ $text-secondary: #B8B8B8;
   white-space: nowrap;
 }
 
-// Compact audio button for sticky header
 .audioButton {
   display: inline-flex;
   align-items: center;
@@ -149,7 +971,9 @@ $text-secondary: #B8B8B8;
   }
 }
 
-// Main Content Container
+// ========================================
+// MAIN CONTENT CONTAINER
+// ========================================
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -177,59 +1001,65 @@ $text-secondary: #B8B8B8;
   }
 }
 
-// Hero Section
+// ========================================
+// HERO SECTION
+// ========================================
 .hero {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 450px; // Reduced from 70vh
+  max-height: 500px; // Cap maximum height
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 32px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
 
   @media (max-width: 768px) {
-    height: 300px;
+    height: 60vh;
+    min-height: 400px;
   }
-}
-
-.heroLink {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  cursor: pointer;
 }
 
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
   z-index: 2;
   pointer-events: none;
 }
 
 .heroContent {
   position: absolute;
-  bottom: 32px;
-  left: 32px;
-  right: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 48px 32px;
   z-index: 3;
-  pointer-events: none;
+  color: $text-primary;
 
   @media (max-width: 768px) {
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
-  }
-  
-  h1, span, button {
-    pointer-events: auto;
+    padding: 32px 20px;
   }
 }
 
 .heroTitle {
   font-family: $font-nosifer;
   font-size: 48px;
-  color: $text-primary;
+  font-weight: 700;
   margin-bottom: 16px;
+  color: $text-primary;
   text-shadow: 
     0 0 10px rgba(255, 0, 0, 0.8),
     0 0 20px rgba($blood-red, 0.6),
@@ -247,17 +1077,19 @@ $text-secondary: #B8B8B8;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
-  pointer-events: auto;
   
   span {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.95);
     font-weight: 400;
-    pointer-events: auto;
+  }
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    font-size: 0.9rem;
   }
 }
 
-// Audio button styled to match date/read time
 .audioButtonHero {
   display: inline-flex;
   align-items: center;
@@ -284,9 +1116,53 @@ $text-secondary: #B8B8B8;
   &:active {
     transform: scale(0.98);
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+// ========================================
+// CLICK TO ENLARGE HINT
+// ========================================
+.clickHint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: rgba(232, 228, 217, 0.85);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(220, 20, 60, 0.3);
+  pointer-events: none;
+  z-index: 10;
+  animation: subtlePulse 3s infinite;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.3px;
+  font-family: $font-lora;
+
+  @media (max-width: 768px) {
+    bottom: 12px;
+    font-size: 10px;
+    padding: 5px 12px;
+  }
 }
 
-// Tags
+@keyframes subtlePulse {
+  0%, 100% { 
+    opacity: 0.7;
+  }
+  50% { 
+    opacity: 0.4;
+  }
+}
+
+
+// ========================================
+// TAGS
+// ========================================
 .tags {
   display: flex;
   gap: 8px;
@@ -310,7 +1186,9 @@ $text-secondary: #B8B8B8;
   }
 }
 
-// Story Content
+// ========================================
+// STORY CONTENT
+// ========================================
 .article {
   font-family: $font-lora;
   font-size: 18px;
@@ -327,7 +1205,9 @@ $text-secondary: #B8B8B8;
   }
 }
 
-// Related Stories
+// ========================================
+// RELATED STORIES
+// ========================================
 .relatedSection {
   margin-top: 64px;
 }
@@ -396,7 +1276,227 @@ $text-secondary: #B8B8B8;
   line-height: 1.4;
 }
 
-// Lock Screen (for minors)
+// ========================================
+// LOADING SKELETON
+// ========================================
+.imageSkeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(26, 26, 26, 1) 0%,
+    rgba(42, 42, 42, 1) 50%,
+    rgba(26, 26, 26, 1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeletonPulse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.skeletonSpinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(220, 20, 60, 0.2);
+  border-top-color: $crimson;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ========================================
+// LIGHTBOX
+// ========================================
+.lightboxOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+  overflow: auto;
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 1400px;
+  max-height: 90vh;
+  animation: scaleIn 0.3s ease-out;
+  z-index: 2;
+
+  @media (max-width: 768px) {
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+}
+
+.lightboxLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: $text-primary;
+  z-index: 1;
+  
+  p {
+    margin-top: 16px;
+    font-size: 16px;
+    color: $text-secondary;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(220, 20, 60, 0.3);
+  border-top-color: $crimson;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.lightboxClose {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(220, 20, 60, 0.9);
+  border: none;
+  color: $text-primary;
+  font-size: 32px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+
+  &:hover {
+    background: $crimson;
+    transform: rotate(90deg);
+  }
+
+  &:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+
+  @media (max-width: 768px) {
+    top: 10px;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+}
+
+.lightboxPinterest {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(220, 20, 60, 0.9);
+  color: $text-primary;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 10000;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: $crimson;
+    border-color: $text-primary;
+    transform: translateX(-50%) scale(1.05);
+  }
+
+  &:active {
+    transform: translateX(-50%) scale(0.98);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// ========================================
+// LOCK SCREEN (FOR MINORS)
+// ========================================
 .lockScreen {
   max-width: 900px;
   margin: 0 auto;
@@ -418,18 +1518,29 @@ $text-secondary: #B8B8B8;
   max-width: 640px;
 }
 
-// Responsive adjustments
-@media (max-width: 768px) {
-  .heroMeta {
-    gap: 1rem;
-    font-size: 0.9rem;
+// ========================================
+// PERFORMANCE OPTIMIZATIONS
+// ========================================
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .lightboxContent,
+  .imageSkeleton,
+  .lightboxOverlay,
+  .hero {
+    will-change: auto;
+    transform: translateZ(0);
   }
-  
+}
+
+// Accessibility - Reduce motion
+@media (prefers-reduced-motion: reduce) {
+  .lightboxOverlay,
+  .lightboxContent,
+  .imageSkeleton,
+  .hero,
+  .clickHint,
+  .audioButton,
   .audioButtonHero {
-    font-size: 0.9rem;
-  }
-  
-  .audioButton {
-    font-size: 0.85rem;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

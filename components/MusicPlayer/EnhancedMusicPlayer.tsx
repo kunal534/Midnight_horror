@@ -47,89 +47,123 @@ export default function EnhancedMusicPlayer() {
     isDraggingRef.current = isDragging;
   }, [isDragging]);
 
-  // Freeze page scroll on tablet/phone when expanded OR dragging; allow playlist + audio slider
-  useEffect(() => {
-    if (!isTabletOrPhone) return;
+  // ENHANCED SCROLL PREVENTION WITH AUTO-MINIMIZE
+useEffect(() => {
+  if (!isTabletOrPhone) return;
 
-    const preventScroll = (e: TouchEvent) => {
-      // CRITICAL FIX: Check if user is dragging the player itself
-      if (isDraggingRef.current) {
-        // Allow touches on audio controls and playlist
-        const target = e.target as HTMLElement;
-        const playlistElement = document.querySelector('.playlist-scroll');
-        const audioEl = audioRef.current;
+  // Capture ref values at the start
+  const glowTimeout = glowSequenceTimeoutRef.current;
+  const glowTimeout2 = glowSequenceTimeoutRef2.current;
 
-        if (playlistElement && playlistElement.contains(target)) {
-          e.stopPropagation();
-          return;
-        }
+  let scrollAttempts = 0;
+  let touchStartTime = 0;
+  let initialTouchY = 0;
 
-        if (audioEl && (audioEl === target || audioEl.contains(target))) {
-          return;
-        }
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartTime = Date.now();
+    initialTouchY = e.touches[0].clientY;
+  };
 
-        // Block all other scrolling during drag
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-
-      // Original logic for expanded state
-      if (!isExpandedRef.current && !isDraggingRef.current) return;
-
+  const preventScroll = (e: TouchEvent) => {
+    if (isDraggingRef.current) {
       const target = e.target as HTMLElement;
       const playlistElement = document.querySelector('.playlist-scroll');
       const audioEl = audioRef.current;
 
-      // 1) Allow scroll inside playlist
+      // Allow playlist scrolling
       if (playlistElement && playlistElement.contains(target)) {
         e.stopPropagation();
         return;
       }
 
-      // 2) Allow all touch interaction on the native audio controls (including slider)
-      if (audioEl && (audioEl === target || audioEl.contains(target))) {
-        // do NOT preventDefault/stopPropagation here
+      // CRITICAL: Allow all audio control interactions (including progress bar)
+      if (audioEl && (audioEl === target || target.closest('audio'))) {
         return;
       }
 
-      // 3) Block everything else (background, header, etc.)
       e.preventDefault();
       e.stopPropagation();
+      return;
+    }
 
-      if (!isDraggingRef.current) {
-        const playerElement = playerRef.current;
-        if (!playerElement || !playerElement.contains(target)) {
+    if (!isExpandedRef.current && !isDraggingRef.current) return;
+
+    const target = e.target as HTMLElement;
+    const playlistElement = document.querySelector('.playlist-scroll');
+    const audioEl = audioRef.current;
+    const playerElement = playerRef.current;
+
+    // Allow playlist scrolling
+    if (playlistElement && playlistElement.contains(target)) {
+      e.stopPropagation();
+      return;
+    }
+
+    // CRITICAL: Never block audio controls or progress bar
+    if (audioEl && (audioEl === target || target.closest('audio'))) {
+      return;
+    }
+
+    // Detect scroll intent: vertical movement > 15px
+    const currentTouchY = e.touches[0].clientY;
+    const verticalMovement = Math.abs(currentTouchY - initialTouchY);
+
+    // If touching outside player while expanded
+    if (isExpandedRef.current && playerElement && !playerElement.contains(target)) {
+      // Only count as scroll attempt if significant vertical movement detected
+      if (verticalMovement > 15) {
+        scrollAttempts++;
+
+        // Auto-minimize after 1 scroll attempt (smooth UX)
+        if (scrollAttempts >= 1) {
+          setIsExpanded(false);
+          scrollAttempts = 0;
+
+          // Clear any active warnings/glows
+          setShowScrollWarning(false);
+          setShowMinimizeGlow(false);
           if (glowSequenceTimeoutRef.current) clearTimeout(glowSequenceTimeoutRef.current);
           if (glowSequenceTimeoutRef2.current) clearTimeout(glowSequenceTimeoutRef2.current);
 
-          setShowScrollWarning(false);
-          setShowMinimizeGlow(false);
-
-          setTimeout(() => {
-            setAnimationKey(prev => prev + 1);
-            setShowScrollWarning(true);
-
-            glowSequenceTimeoutRef.current = setTimeout(() => {
-              setShowScrollWarning(false);
-              setShowMinimizeGlow(true);
-
-              glowSequenceTimeoutRef2.current = setTimeout(() => {
-                setShowMinimizeGlow(false);
-              }, 1500);
-            }, 1500);
-          }, 50);
+          return; // Allow scroll after minimizing
         }
       }
-    };
 
-    window.addEventListener('touchmove', preventScroll, { passive: false });
-    return () => {
-      window.removeEventListener('touchmove', preventScroll);
-      if (glowSequenceTimeoutRef.current) clearTimeout(glowSequenceTimeoutRef.current);
-      if (glowSequenceTimeoutRef2.current) clearTimeout(glowSequenceTimeoutRef2.current);
-    };
-  }, [isTabletOrPhone]);
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Show warning on first scroll attempt
+      if (scrollAttempts === 0 && verticalMovement > 15) {
+        setShowScrollWarning(true);
+        setTimeout(() => setShowScrollWarning(false), 800);
+      }
+    } else {
+      // Touching inside player - prevent background scroll
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  const resetAttempts = () => {
+    scrollAttempts = 0;
+    touchStartTime = 0;
+    initialTouchY = 0;
+  };
+
+  window.addEventListener('touchstart', handleTouchStart, { passive: true });
+  window.addEventListener('touchmove', preventScroll, { passive: false });
+  window.addEventListener('touchend', resetAttempts);
+
+  return () => {
+    window.removeEventListener('touchstart', handleTouchStart);
+    window.removeEventListener('touchmove', preventScroll);
+    window.removeEventListener('touchend', resetAttempts);
+    // Use captured values in cleanup
+    if (glowTimeout) clearTimeout(glowTimeout);
+    if (glowTimeout2) clearTimeout(glowTimeout2);
+  };
+}, [isTabletOrPhone]);
+
 
   useEffect(() => {
     const checkDeviceSize = () => {
@@ -450,7 +484,7 @@ export default function EnhancedMusicPlayer() {
         }
 
         .music-player-pulse {
-          animation: pulseWarning 1.5s ease-in-out;
+          animation: pulseWarning 0.8s ease-in-out;
         }
 
         .minimize-button-glow {
@@ -459,17 +493,20 @@ export default function EnhancedMusicPlayer() {
         }
       `}</style>
 
-      <div
-        key={`player-${animationKey}`}
-        ref={playerRef}
-        className={`${styles.musicPlayer} ${showScrollWarning ? 'music-player-pulse' : ''}`}
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          width: isExpanded ? '380px' : isMobile ? '56px' : '240px',
-          border: showScrollWarning ? '3px solid #DC143C' : undefined,
-        }}
-      >
+     <div
+  key={`player-${animationKey}`}
+  ref={playerRef}
+  className={`${styles.musicPlayer} ${showScrollWarning ? 'music-player-pulse' : ''} ${isDragging ? styles.noDragTransition : ''}`}
+  style={{
+    left: `${position.x}px`,
+    top: `${position.y}px`,
+    width: isExpanded ? '380px' : isMobile ? '56px' : '240px',
+    border: showScrollWarning ? '3px solid #DC143C' : undefined,
+    // Only apply transition when NOT dragging
+    transition: isDragging ? 'none' : 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  }}
+>
+
         <div
           ref={dragHeaderRef}
           className={styles.header}
