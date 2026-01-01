@@ -641,6 +641,32 @@ This tale aligns with psychological and atmospheric horror by exploring mass hum
   publishedDate: '29 December 2025',
   month: '2025-12',
   audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/Gashadokuro.mp3'
+},
+{
+  id: '13',
+  title: 'Nikah Halala: The Law of Remaking and the Price of Return',
+  pinterestUrl: 'https://pin.it/1onamLZyp',
+  excerpt: 'When a final divorce becomes irrevocable, ancient law says a woman must pass through another marriage to be lawful again a practice wrapped in intent, interpretation, and controversy…',
+  fullContent: `
+Nikah Halala arises from interpretations of Islamic divorce law found in classical jurisprudence. According to Qur’anic guidance, divorce is permitted but structured to prevent impulsive or repeated separation. A first or second divorce allows reconciliation, but after a third, the marriage is considered irrevocably ended. The text states that reconciliation after such a divorce is only possible if the woman enters a genuine new marriage and that marriage ends on its own.
+
+The moral purpose behind this condition was restraint. It placed weight on divorce, discouraging men from using it casually or as a threat. In principle, the rule was meant to protect the seriousness of marriage and ensure that separation carried consequences, particularly for the one initiating it.
+
+Over time, however, a troubling distortion emerged in certain communities. Instead of acting as a deterrent, the condition was treated as a procedural obstacle that could be bypassed. Women were pressured or coerced into second marriages arranged solely to satisfy the requirement of permissibility. These marriages were not built on companionship or intent, but on compliance. In such cases, the mistake of the original husband was corrected through the woman’s body, while his accountability remained intact only on paper.
+
+For women subjected to this practice, Nikah Halala ceased to be a legal condition and became an experience of profound loss of agency. Consent was often assumed rather than freely given. Religious language was invoked to frame obedience, even when the practice contradicted the ethical spirit of faith itself. Many scholars have openly condemned pre-arranged or transactional halala marriages, stating that they violate both moral and religious principles.
+
+Modern debates around Nikah Halala, particularly in South Asia, focus not on scripture alone but on lived reality. Critics argue that when religious law is stripped of its ethical purpose and applied mechanically, it can become a tool of harm rather than guidance. Supporters of reform emphasize that faith is meant to restrain power, not legitimize its misuse.
+
+Nikah Halala, as discussed today, stands not as a condemnation of belief, but as a warning. It illustrates how laws created to protect human dignity can be emptied of meaning when intent is ignored, and how women, placed at the intersection of law, tradition, and silence, often pay the highest price for distortions they did not create.
+`,
+  imageUrl: '/images/mus.jpg',
+  slug: 'nikah-halala-law-return',
+  tags: ['horror', 'cultural horror', 'psychological horror', 'marriage law', 'Nikah Halala', 'personal law', 'controversy'],
+  publishedDate: '02 January 2026',
+  month: '2026-01',
+  audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/islam.mp3'
 }
+
 
 ];

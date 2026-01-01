@@ -48,6 +48,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       className={`${nosifer.variable} ${cinzel.variable} ${lora.variable}`}
     >
+      <head>
+        <meta name="p:domain_verify" content="e6d747b19faecc508dbbcee4ffd6d6ae"/>
+      </head>
       <body>
         <ClientLayout>{children}</ClientLayout>
         <Analytics />
