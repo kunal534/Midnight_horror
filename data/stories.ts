@@ -667,6 +667,32 @@ Nikah Halala, as discussed today, stands not as a condemnation of belief, but as
   month: '2026-01',
   audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/islam.mp3'
 }
+,
+{
+  id: '14',
+  title: 'Willowbrook: Where Care Was Authorized to Harm',
+  pinterestUrl: 'https://pin.it/3Xk3jsr8p',
+  excerpt: 'At a state-run school meant to provide care, children became subjects of deliberate infection experiments justified through consent forms, research goals, and institutional necessity…',
+  fullContent: `
+Willowbrook State School was established in New York as a public institution for children with intellectual and developmental disabilities. By the mid-20th century, it was overcrowded, underfunded, and largely invisible to the public. Families were told it was one of the few places willing to provide long-term care. What they were not told was how easily care would merge with experimentation.
+
+Beginning in the 1950s, medical researchers at Willowbrook deliberately exposed children to hepatitis. The justification was scientific: the disease was already present in the institution, and controlled infection would allow researchers to study its progression and test potential vaccines. Consent forms were obtained from parents, often under pressure, sometimes as a condition for admission. On paper, everything was lawful.
+
+The children involved were not criminals, volunteers, or terminal patients. They were residents whose disabilities made refusal impossible. Once categorized as subjects rather than patients, their suffering became data. Illness was no longer an outcome to prevent, but a condition to observe. Harm was reframed as contribution.
+
+What makes Willowbrook unsettling is not secrecy, but transparency. The experiments were documented, reviewed, and defended within academic and medical communities. The ethical failure did not occur in isolation, it was distributed across administrators, researchers, and institutions that accepted diminished personhood as a practical necessity.
+
+Public awareness came decades later, after investigations and media exposure forced the conditions inside Willowbrook into view. By then, the damage had already been normalized. The children who endured these experiments were rarely centered in the discussions that followed. Accountability focused on reform, not on restitution.
+
+Willowbrook stands as a case study in how easily humanity can be reduced to eligibility. When care is conditional and ethics are measured against efficiency, consent becomes procedural, and vulnerability becomes justification. The system does not need cruelty to cause harm. It only needs permission.
+`,
+  imageUrl: '/images/willow.png',
+  slug: 'willowbrook-authorized-harm',
+  tags: ['horror', 'institutional horror', 'psychological horror', 'medical ethics', 'real cases', 'human experimentation'],
+  publishedDate: '04 January 2026',
+  month: '2026-01',
+  audioUrl: 'https://pub-702482bca0fa43a2969695fac4f3a877.r2.dev/midnight_audio/willow.mp3'
+}
 
 
 ];
