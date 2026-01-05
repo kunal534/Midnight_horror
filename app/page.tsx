@@ -14,7 +14,6 @@ const HorrorAnimation = dynamic(
   { ssr: false }
 );
 
-
 const HomeStoryGrid = dynamic(
   () => import('./HomeStoryGrid'),
   { ssr: false }
@@ -30,7 +29,17 @@ export default function HomePage() {
   const [selectedMonth, setSelectedMonth] = useState(
     format(new Date(), 'yyyy-MM')
   );
-  const [filteredStories, setFilteredStories] = useState(stories);
+  const [filteredStories, setFilteredStories] = useState(() => {
+    // Initialize with current month's stories
+    const currentMonth = format(new Date(), 'yyyy-MM');
+    return stories
+      .filter((story) => story.month === currentMonth)
+      .sort((a, b) => {
+        const timeA = getStoryDate(a.publishedDate).getTime();
+        const timeB = getStoryDate(b.publishedDate).getTime();
+        return timeB - timeA; // Descending order (newest first)
+      });
+  });
 
   useEffect(() => {
     const filtered = stories
@@ -38,13 +47,17 @@ export default function HomePage() {
       .sort((a, b) => {
         const timeA = getStoryDate(a.publishedDate).getTime();
         const timeB = getStoryDate(b.publishedDate).getTime();
-        if (timeA < timeB) return 1;
-        if (timeA > timeB) return -1;
-        return 0;
+        return timeB - timeA; // Fixed: Descending order (newest first)
       });
 
     setFilteredStories(filtered);
   }, [selectedMonth]);
+
+  // Reset to current month when component mounts
+  useEffect(() => {
+    const currentMonth = format(new Date(), 'yyyy-MM');
+    setSelectedMonth(currentMonth);
+  }, []); // Empty dependency array means this runs once on mount
 
   if (!isReady) return null;
 

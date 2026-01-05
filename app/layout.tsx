@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Nosifer, Cinzel, Lora } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import './globals.scss';
 import ClientLayout from './ClientLayout';
-
 
 const nosifer = Nosifer({
   weight: '400',
@@ -14,20 +12,17 @@ const nosifer = Nosifer({
   display: 'optional',
 });
 
-
 const cinzel = Cinzel({
   subsets: ['latin'],
   variable: '--font-cinzel',
   display: 'swap',
 });
 
-
 const lora = Lora({
   subsets: ['latin'],
   variable: '--font-lora',
   display: 'swap',
 });
-
 
 export const metadata: Metadata = {
   title: 'Midnight Horror Tales',
@@ -36,11 +31,7 @@ export const metadata: Metadata = {
   verification: {
     google: `7twLU_UC3ppJCSbOdFXPfPtbd7YT9LYJ5Fe01JdGD2Q`,
   },
-  other: {
-    'p:domain_verify': 'e6d747b19faecc508dbbcee4ffd6d6ae',
-  },
 };
-
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -49,12 +40,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${nosifer.variable} ${cinzel.variable} ${lora.variable}`}
     >
       <head>
-        <meta name="p:domain_verify" content="e6d747b19faecc508dbbcee4ffd6d6ae"/>
+        <meta name="p:domain_verify" content="e6d747b19faecc508dbbcee4ffd6d6ae" />
       </head>
       <body>
+        <GoogleAnalytics />
         <ClientLayout>{children}</ClientLayout>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
