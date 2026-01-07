@@ -9,6 +9,7 @@ export interface Thought {
 }
 
 export const thoughtsList: Thought[] = [
+ 
   {
   id: '8',
   title: 'Emotional Downregulation Is Not an Upgrade',
