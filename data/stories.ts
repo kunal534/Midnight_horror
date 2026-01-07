@@ -720,7 +720,7 @@ Historical records and modern psychological studies have noted that Tokoloshe en
 The spirit persists because it performs a social function. It allows communities to live alongside unspoken violence. It turns victims into witnesses of the supernatural rather than evidence of human wrongdoing. The Tokoloshe does not hunt randomly. It appears where vulnerability already exists.
 The horror of the Tokoloshe is not that it may be real. It is that belief in it was safer than justice.
 `,
-imageUrl: '/images/tokoloshe.jpg',
+imageUrl: '/images/Tokoloshe.jpg',
 slug: 'tokoloshe-spirit-used-to-bury-truth',
 tags: ['folk horror', 'psychological horror', 'real folklore', 'trauma', 'social horror', 'cultural belief'],
 publishedDate: '08 January 2026',
