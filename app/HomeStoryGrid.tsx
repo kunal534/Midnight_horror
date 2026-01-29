@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import styles from './page.module.scss';
-import type { Story } from '@/data/stories'; // adjust to your type
+import type { Story } from '@/data/stories'; 
 
 export default function HomeStoryGrid({ stories }: { stories: Story[] }) {
   if (!stories.length) {

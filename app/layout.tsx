@@ -29,9 +29,10 @@ export const metadata: Metadata = {
   description:
     'Experience spine-chilling horror stories curated for the midnight hour.',
   verification: {
-    google: `7twLU_UC3ppJCSbOdFXPfPtbd7YT9LYJ5Fe01JdGD2Q`,
+    google: `UE0snu9ggHt_Yhi7rutolU7On_ynYAcMAw5_kRdKVbo`,
   },
 };
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
