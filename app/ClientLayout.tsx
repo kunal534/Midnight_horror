@@ -23,7 +23,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     <HorrorCursor>
       <AgeProvider>
         {/* Skip JumpScare on initial Android debugging if needed */}
-        <JumpScare />
+        {/* <JumpScare /> */}
         <AgeGateOverlay />
         <BoneNavigation />
         <main className="main-content">{children}</main>
