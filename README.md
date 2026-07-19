@@ -120,16 +120,3 @@ midnight_page/
 ├── tsconfig.json
 └── next.config.js
 ```
-
-## errors
-```
-   1. It working for the laptop not for tablets and phones
-```
-
-
-
-## Current things to do:
-```
-   1. Add support for the mobile and tablet
-   2. See for affliliates 
-```
